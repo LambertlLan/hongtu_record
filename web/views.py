@@ -5,14 +5,11 @@ from django import views
 # Create your views here.
 class Index(views.View):
     def get(self, request):
-        return render(request, "index.html", {"active": "index"})
+        return render(request, "index.html")
 
 
-class Help(views.View):
+class Login(views.View):
     def get(self, request):
-        return render(request, "help.html", {"active": "help"})
+        return render(request, "login.html")
 
 
-class News(views.View):
-    def get(self, request):
-        return render(request, "news.html", {"active": "news"})

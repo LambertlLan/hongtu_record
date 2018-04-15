@@ -31,7 +31,6 @@ urlpatterns = [
     # 门户页面
     path('', web.views.Index.as_view()),
     path('index.html/', web.views.Index.as_view()),
-    path('news.html/', web.views.News.as_view()),
-    path('help.html/', web.views.Help.as_view()),
+    path('login.html/', web.views.Login.as_view()),
 
 ]

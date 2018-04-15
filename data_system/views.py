@@ -7,6 +7,9 @@ class Index(views.View):
     def get(self, request):
         return render(request, "record/index.html", {"active": "index"})
 
+    def post(self, request):
+        return render(request, "record/index.html", {"active": "index"})
+
 
 class PublicData(views.View):
     def get(self, request):
