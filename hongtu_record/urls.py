@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# 处理favicon.ico
+from django.views.generic.base import RedirectView
 # 门户网站路由
 import web.views
 # 查询系统路由
@@ -22,9 +24,14 @@ import data_system.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # favicon.ico
+    path('^favicon.ico/', RedirectView.as_view(url=r'static/favicon.ico')),
+    # 查询系统
     path('record/', include(data_system.urls)),
+    # 门户页面
     path('', web.views.Index.as_view()),
     path('index.html/', web.views.Index.as_view()),
-    path('contact.html/', web.views.Contact.as_view()),
+    path('news.html/', web.views.News.as_view()),
+    path('help.html/', web.views.Help.as_view()),
 
 ]
