@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/record/sky.css' %}">
+    <link rel="stylesheet" href="{% static 'css/record/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/record/base.css' %}">
+
+    <!--[if lte IE 9]>
+    <script src="javascript/respond.min.js"></script>
+    <script src="javascript/html5.js"></script>
+    <![endif]-->
+
+    <!-- JS -->
+    <script src="{% static 'js/vendor/jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'js/record/acc.js' %}"></script>
+    <script src="{% static 'js/record/utils.js' %}"></script>
+    {% block css %}
+
+    {% endblock %}
+</head>
+<body>
+<!-- Header Start -->
+<header>
+    <div class="header-acc container-fluid">
+        <div class="container">
+            <div class="top-bar-logo">
+                <a href="/index.html">
+                    <img src="{% static 'img/logo_max.png' %}" class="img-responsive">
+                </a>
+            </div>
+            <ul class="list-unstyled pull-right max-nav">
+                <li>
+                    <a>您好，</a>
+                    <a href="">18000000000</a>
+                </li>
+                <li>
+                    <a>可用积分</a>
+                    <a href="">100</a>
+                </li>
+                <li>
+                    <a class="quit">退出</a>
+                </li>
+            </ul>
+            <a class="min-nav pull-right">
+                <span></span>
+            </a>
+        </div>
+        <div class="mobileMenu" id="mobileMenu">
+            <ul class="list-unstyled">
+                <li class="title">
+                    <a href="index.html">账户首页</a>
+                </li>
+            </ul>
+            <ul class="list-unstyled">
+                <li class="title">
+                    <a>基础数据中心</a>
+                </li>
+                <li class="publicData">
+                    <a href="public_data.html">公众数据获取</a>
+                </li>
+                <!--<li class="netData"><a href="accTaobaoV.do">网络数据获取</a></li>-->
+            </ul>
+            <ul class="list-unstyled">
+                <li class="title">
+                    <a>征信报告中心</a>
+                </li>
+                <!--<li class="fraud"><a href="accFraudIdV.do">反欺诈报告</a></li>-->
+                <li class="Liabilities">
+                    <a href="">负债搜索报告</a>
+                </li>
+                <!--<li class="accReport"><a href="accBaseReportV.do">定制版报告</a></li>-->
+            </ul>
+            <ul class="list-unstyled">
+                <li class="title">
+                    <a>用户管理中心</a>
+                </li>
+                <li class="accInfo">
+                    <a href="">账户信息</a>
+                </li>
+                <li class="financeInfo">
+                    <a href="">财务信息</a>
+                </li>
+                <li class="queryRecords">
+                    <a href="">查询记录</a>
+                </li>
+            </ul>
+            <div class="container-fluid operating">
+                <a class="quit">退出</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".quit").click(function () {
+            sky.quit();
+        });
+        $(".mobileMenu .title a").click(function () {
+            var p = $(this).parents("ul");
+            if (p.hasClass("col")) {
+                p.removeClass("col");
+            } else {
+                p.addClass("col");
+            }
+        });
+    </script>
+</header>
+<div class="container main-content account-center">
+    <div class="row">
+        <!--账户中左侧导航栏-->
+        <div class="col-lg-3 col-md-3 col-sm-3 nav-left">
+            <ul class="list-unstyled">
+                <li class="title home {% if active == "index" %}active{% endif %}">
+                    <a href="index.html">
+                        <i class="icon-type home {% if active == "index" %}active{% endif %}"></i>账户首页</a>
+                </li>
+            </ul>
+            <ul class="list-unstyled">
+                <li class="title">
+                    <a>
+                        <i class="icon-type data"></i>基础数据中心
+                        <i class="arr"></i>
+                    </a>
+                </li>
+                <li class="publicData {% if active == "public_data" %}active{% endif %}">
+                    <a href="public_data.html">公众数据获取</a>
+                </li>
+                <!--<li class="netData"><a href="accTaobaoV.do">网络数据获取</a></li>-->
+            </ul>
+            <ul class="list-unstyled">
+                <li class="title">
+                    <a>
+                        <i class="icon-type report"></i>征信报告中心
+                        <i class="arr"></i>
+                    </a>
+                </li>
+                <!--<li class="fraud"><a href="accFraudIdV.do">反欺诈报告</a></li>-->
+                <li class="Liabilities">
+                    <a href="">负债搜索报告</a>
+                </li>
+                <li class="accReport">
+                    <a href="">定制版报告</a>
+                </li>
+            </ul>
+            <ul class="list-unstyled">
+                <li class="title">
+                    <a>
+                        <i class="icon-type search"></i>用户管理中心
+                        <i class="arr"></i>
+                    </a>
+                </li>
+                <li class="accInfo">
+                    <a href="">账户信息</a>
+                </li>
+                <li class="financeInfo">
+                    <a href="">财务信息</a>
+                </li>
+                <li class="queryRecords">
+                    <a href="">查询记录</a>
+                </li>
+            </ul>
+        </div>
+        <script>
+            $(".header .inquire").addClass("active");
+        </script>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- footer Start -->
+<footer>
+    <div class="footer">
+        <div class="copyright text-center">
+            <p>Copyright @ 2017-2017 深圳宏图数据有限公司粤ICP备00000000号</p>
+            <p>京公网安备 0000000000-00001号</p>
+        </div>
+    </div>
+</footer>
+<script src="{% static 'js/record/base.js' %}"></script>
+{% block javascript %}
+
+{% endblock %}
+</body>
+</html>

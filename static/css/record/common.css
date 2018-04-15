@@ -1,0 +1,56 @@
+
+label {
+    font-weight: 400; }
+
+input {
+    outline: none; }
+input.warn {
+    border-color: #fd6401;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6); }
+
+textarea {
+    resize: none; }
+textarea.warn {
+    border-color: #fd6401;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6); }
+
+.err {
+    padding-top: 150px;
+    padding-bottom: 150px;
+    background: #fff;
+    text-align: center}
+.err .box {
+    margin: 0px auto;
+    padding-top: 40px;
+    text-align: center; }
+.err .box > span, .err .box div, .err .box h1 {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px; }
+.err .box h1 {
+    font-size: 60px;
+    color: #454d4e; }
+.err .box .text {
+    font-size: 17px;
+    padding: 0px 25px;
+    color: #454d4e; }
+.err .box .hint {
+    border: 2px solid #fd5d01;
+    font-size: 17px;
+    color: #fd5d01;
+    padding: 13px 35px; }
+.err .box .hint span {
+    color: #fd5d01; }
+.serviceTerms {
+    padding-top: 120px;
+    padding-bottom: 50px; }
+.serviceTerms h1 {
+    font-size: 26px;
+    text-align: center; }
+.serviceTerms h2 {
+    font-size: 20px; }
+.serviceTerms li, .serviceTerms p {
+    text-indent: 2rem;
+    line-height: 2.5rem; }

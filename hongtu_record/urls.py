@@ -25,7 +25,7 @@ import data_system.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     # favicon.ico
-    path('^favicon.ico/', RedirectView.as_view(url=r'static/favicon.ico')),
+    path('favicon.ico/', RedirectView.as_view(url=r'static/favicon.ico')),
     # 查询系统
     path('record/', include(data_system.urls)),
     # 门户页面

@@ -1,400 +1,175 @@
-/*		Default Layout: 992px. 
-		Gutters: 24px.
-		Outer margins: 48px.
-		Leftover space for scrollbars @1024px: 32px.
--------------------------------------------------------------------------------
-cols    1     2      3      4      5      6      7      8      9      10
-px      68    160    252    344    436    528    620    712    804    896    */
-/*		Tablet Layout: 768px.
-		Gutters: 24px.
-		Outer margins: 28px.
-		Inherits styles from: Default Layout.
------------------------------------------------------------------
-cols    1     2      3      4      5      6      7      8
-px      68    160    252    344    436    528    620    712    */
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  /*---------------------------------------------
-					Index Start 
------------------------------------------------*/
-  /*--
-	wrapper Start 
---*/
-  #wrapper {
-    text-align: center;
-  }
-  #wrapper .block img {
-    padding-top: 100px;
-    width: 50%;
-  }
-  /*--
-	content Start 
---*/
-  #content {
-    text-align: center;
-  }
-  #content .block {
-    padding-bottom: 100px;
-  }
-  /*--
-	features Start 
---*/
-  #features {
-    text-align: center;
-  }
-  /*--
-	footer Start 
---*/
-  footer .navbar {
-    margin-bottom: 0px;
-    border: 0px;
-    min-height: 40px;
-  }
-  footer .navbar-default {
-    border: 0px;
-    width: 68%;
-  }
-  footer .navbar-default .navbar-nav li a {
-    color: #494949;
-    padding: 10px 10px;
-    font-size: 15px;
-  }
-  footer .navbar-default .navbar-nav li a:hover {
-    color: #000;
-  }
-  /*---------------------------------------------
-					Index Close 
------------------------------------------------*/
-  /*=============================================*/
-  /*---------------------------------------------
-					Work Start 
------------------------------------------------*/
-  /*--
-	slider-work Start 
---*/
-  #slider-work .block h1 {
-    font-size: 28px;
-  }
-  #slider-work .block p {
-    font-size: 15px;
-  }
-  /*--
-	portfolio Start 
---*/
-  #portfolio-work .block .portfolio-manu {
-    padding-left: 0px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .img-heading {
-    padding: 5px 0 5px 13px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .img-heading h2 {
-    font-size: 20px;
-    line-height: 25px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .img-heading p {
-    font-size: 11px;
-    line-height: 20px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .overlay {
-    padding-left: 15px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .overlay h2 {
-    padding-top: 30px;
-    padding-bottom: 15px;
-    font-size: 20px;
-    line-height: 25px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .overlay p {
-    font-size: 11px;
-    line-height: 20px;
-    padding-top: 15px;
-  }
-  /*--
-	wrapper Start 
---*/
-  #wrapper-work ul li .items-text {
-    padding-top: 0;
-    padding-left: 25px;
-  }
-  #wrapper-work ul li .items-text h2 {
-    padding-bottom: 10px;
-    padding-top: 40px;
-  }
-  #wrapper-work ul li .items-text p {
-    font-size: 14px;
-    line-height: 20px;
-    padding-right: 30px;
-  }
-  /*--
-	features Start 
---*/
-  #features-work .block ul li {
-    width: 49%;
-  }
-  /*---------------------------------------------
-					Work close 
------------------------------------------------*/
-  /*=============================================*/
-  /*---------------------------------------------
-					contact start 
------------------------------------------------*/
-  #wrapper-contact .block {
-    padding-bottom: 50px;
-  }
-  /*--
-	features-contact Start 
---*/
-  #features-contact .block ul li {
-    width: 49%;
-  }
-  /*---------------------------------------------
-					contact close 
------------------------------------------------*/
-  /*------------------*/
+/**********************************************
+
+Template Name: PRIDE - Personal Portfolio Template
+Author: perfect_coders
+Version: 1.0
+Design and Developed by: perfect_coders
+
+NOTE: This is responsive stylesheet of the template, This file contains the styling for various devices like mobile phone, tablet, laptop etc.
+
+*************************************************/
+
+/* Medium Layout: 1280px. */
+@media only screen and (min-width: 992px) and (max-width: 1200px) { 
+  
+    
 }
-/*		Mobile Layout: 320px.
-		Gutters: 24px.
-		Outer margins: 34px.
-		Inherits styles from: Default Layout.
----------------------------------------------
-cols    1     2      3
-px      68    160    252    */
-@media only screen and (max-width: 767px) {
-  /*---------------------------------------------
-					Index Start 
------------------------------------------------*/
-  .heading {
-    padding-left: 0px;
-  }
-  h2 {
-    font-size: 18px;
-  }
-  p {
-    font-size: 13px;
-  }
-  header .navbar-default .navbar-toggle {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  #slider {
-    padding-top: 90px;
-    padding-bottom: 100px;
-  }
-  #slider .block {
-    padding-left: 0px;
-  }
-  #slider .block h1 {
-    font-size: 20px;
-  }
-  #slider .block p {
-    font-size: 13px;
-  }
-  /*--
-	wrapper Start 
---*/
-  #wrapper {
-    text-align: center;
-    padding-top: 70px;
-    padding-bottom: 100px;
-  }
-  #wrapper .block img {
-    padding-top: 100px;
-    padding-left: 0px;
-    width: 100%;
-  }
-  /*--
-	service Start 
---*/
-  #service {
-    padding-top: 100px;
-  }
-  #service .thumbnail {
-    padding-bottom: 70px;
-  }
-  /*--
-	call-to-action Start 
---*/
-  #call-to-action p {
-    padding: 0px 0px 40px;
-  }
-  #call-to-action .btn {
-    padding: 10px 20px;
-    font-size: 15px;
-  }
-  /*--
-	content Start 
---*/
-  #content {
-    text-align: center;
-    padding-top: 70px;
-  }
-  #content .block {
-    padding-bottom: 100px;
-  }
-  #content .block h2 {
-    padding-top: 0px;
-  }
-  #content .block-bottom {
-    padding: 0px;
-  }
-  #content .block-bottom .item-img {
-    padding-left: 0px;
-  }
-  /*--
-	features Start 
---*/
-  #features .features-img {
-    text-align: center;
-  }
-  /*---------------------------------------------
-					Index Close 
------------------------------------------------*/
-  /*=============================================*/
-  /*---------------------------------------------
-					Work Start 
------------------------------------------------*/
-  #slider-work {
-    padding-top: 100px;
-    padding-bottom: 100px;
-  }
-  #slider-work .block {
-    padding-left: 0px;
-  }
-  #slider-work .block h1 {
-    font-size: 20px;
-  }
-  #slider-work .block p {
-    font-size: 11px;
-    line-height: 25px;
-  }
-  /*--
-	portfolio Start 
---*/
-  #portfolio-work .block .portfolio-manu {
-    padding-left: 0px;
-    text-align: center;
-  }
-  #portfolio-work .block .portfolio-manu ul li {
-    padding: 0 8px;
-  }
-  #portfolio-work .block .portfolio-contant ul li {
-    width: 100%;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .img-heading {
-    padding: 5px 0 5px 13px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .img-heading h2 {
-    font-size: 20px;
-    line-height: 25px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .img-heading p {
-    font-size: 11px;
-    line-height: 20px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .overlay {
-    padding-left: 15px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .overlay h2 {
-    padding-top: 65px;
-    padding-bottom: 15px;
-    font-size: 20px;
-    line-height: 25px;
-  }
-  #portfolio-work .block .portfolio-contant ul li a .overlay p {
-    font-size: 11px;
-    line-height: 20px;
-    padding-top: 15px;
-    padding-right: 5px;
-  }
-  /*--
-	wrapper Start 
---*/
-  #wrapper-work ul li {
+/* Tablet Layout: 768px. */
+@media only screen and (min-width: 768px) and (max-width: 991px) { 
+   
+    .about-section.section-padding {
+        padding: 120px 0 60px;
+    }
+    
+.about-text{
+    margin-top: 40px;
+}
+.single-review {
+  padding: 50px 60px 10px;
+}
+
+  
+    
+}
+
+
+/* Mobile Layout lower than: 320px. */
+@media only screen and (max-width: 767px) { 
+    
+
+/* HEADER AREA */  
+    
+.custom-navbar{
+    padding: 10px 0;
+    background: rgba(0, 0, 0, 0.8);
+}
+    .custom-navbar .navbar-toggle{
     float: none;
-    width: 100%;
-  }
-  #wrapper-work ul li .items-text {
-    padding-left: 15px;
-    padding-top: 30px;
-  }
-  #wrapper-work ul li .items-text h2 {
-    padding-top: 10px;
-    padding-bottom: 15px;
-    font-size: 20px;
-    line-height: 25px;
-  }
-  #wrapper-work ul li .items-text p {
-    font-size: 11px;
-    line-height: 20px;
-    padding-top: 15px;
-  }
-  /*--
-	features Start 
---*/
-  #features-work .block ul li {
-    display: block;
-    width: 100%;
-  }
-  /*---------------------------------------------
-					Work close 
------------------------------------------------*/
-  /*=============================================*/
-  /*---------------------------------------------
-					contact Start 
------------------------------------------------*/
-  /*--
-	slider-contact Start 
---*/
-  #slider-contact {
-    padding-top: 100px;
-    padding-bottom: 100px;
-  }
-  #slider-contact .block {
-    padding-left: 0px;
-  }
-  #slider-contact .block h1 {
-    font-size: 20px;
-  }
-  #slider-contact .block p {
-    font-size: 11px;
-    line-height: 25px;
-  }
-  /*--
-	wrapper-contact Start 
---*/
-  #wrapper-contact .block {
-    padding-bottom: 50px;
-  }
-  #wrapper-contact .block .location p {
-    width: 100%;
-  }
-  #wrapper-contact .block .social-media-icon a i {
-    padding-top: 30px;
-  }
-  /*--
-	features-contact Start 
---*/
-  #features-contact .block ul li {
-    display: block;
-    width: 100%;
-  }
-  /*---------------------------------------------
-					contact close 
------------------------------------------------*/
-  /*--
-	footer Start 
---*/
-  footer .footer-manu {
-    display: none;
-  }
+    margin: 0;
+    border-color: transparent;
+    padding: 9px;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
-/*		Wide Mobile Layout: 480px.
-		Gutters: 24px.
-		Outer margins: 22px.
-		Inherits styles from: Default Layout, Mobile Layout.
-------------------------------------------------------------
-cols    1     2      3      4      5
-px      68    160    252    344    436    */
-/*	Retina media query.
-	Overrides styles for devices with a 
-	device-pixel-ratio of 2+, such as iPhone 4.
------------------------------------------------    */
+    
+.logo a{
+    display: inline-block;
+    margin-top: 10px;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    color: #fff;
+    font-size: 16px;
+}
+.logo a span{
+    font-size: 14px;
+    }
+.main-menu ul.navbar-nav {
+    float: left;
+}
+.main-menu ul.navbar-nav li a{
+    padding: 10px 5px;
+   color: #fff;
+}
+.main-menu ul.nav.navbar-nav li.active:before{
+    display: none;
+}
+.navbar-collapse {
+  border-top: 1px solid transparent;
+  margin-top: 15px;
+}
+
+  .navbar-toggle {
+  border-color: #000;
+  float: none;
+  margin: 0;
+  padding: 10px;
+  -webkit-transition: all 0.5s ease-in-out 0s;
+  transition: all 0.5s ease-in-out 0s;
+}
+    .navbar-header .navbar-toggle .icon-bar {
+  background: none repeat scroll 0 0 #fff;
+}
+.navbar-header {
+    display: inline-block;
+    float: right;
+    margin-top: 5px;
+}
+.mobile-menu-activated ul.nav.navbar-nav{}
+.mobile-menu-activated ul.nav.navbar-nav li{display: block;text-align: left;}
+.mobile-menu-activated ul.nav.navbar-nav li a{}
+.main-menu ul.navbar-nav{
+    text-align: left !important;
+    display: block;
+}
+    
+    
+    
+/* WELCOME AREA */
+    .welcome-text {
+  width: 100%;
+}
+    .welcome-text h1 {
+  font-size: 30px;
+  letter-spacing: 4px;
+  line-height: 45px;
+}
+   .welcome-text h4 {
+  letter-spacing: 6px;
+}
+
+     
+  
+/* ABOUT SECTION */
+.author-image {
+    margin-bottom: 0px;
+}
+    .about-text{
+    margin-top: 40px;
+}
+    .about-text h3{
+    font-size: 26px;
+}
+
+
+    
+/* services section */
+    .single-services {
+      margin-bottom: 40px;
+}
+   
+    .single-services.last-service{
+        margin-bottom: 0px;
+    }
+
+    
+/* CONTACT INFO SECTION */
+form input[type="submit"] {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 14px 28px;
+  width: 100%;
+}
+    
+    .full-adress {
+  margin-top: 60px;
+    margin-left: 0px;
+}
+   .single-review {
+  padding: 50px 0px 10px;
+} 
+
+/* FOOTER SECTION */
+.footer{
+    
+}
+
+    
+    
+}
+
+
+/* Wide Mobile Layout: 480px. */
+@media only screen and (min-width: 480px) and (max-width: 767px) { 
+   
+}
+

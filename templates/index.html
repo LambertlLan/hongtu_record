@@ -1,226 +1,235 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-    <!-- Slider Start -->
-    <section id="slider">
-        <div class="container">
-            <div class="row">
-                <!-- .col-md-5 close -->
-                <div class="col-md-6 col-sm-12 col-md-offset-3">
-                    <div class="block">
-                        <h1 class="animated fadeInUp">同业征信报告 &#38;</h1>
-                        <p class="animated fadeInUp">同业征信报告是91征信的多重负债产品，利用信息共享平台获悉用户的隐性负债信息，
-                            可用于风控决策、数据建模、贷中监控、提高催收效率等多种用途。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Wrapper Start -->
-    <section id="intro">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <div class="block">
-                        <div class="section-title">
-                            <h2>规模大</h2>
-                            <p>近600家同业机构共享</p>
-                        </div>
-                        <p>近600家互联网金融公司，小额贷款公司，消费金融公司选择加入我们的同业征信联盟，实现数据实时共享。
-                            借贷数据在同业间的共享，大幅提升了每个参与者的风险识别能力，准确识别借款人的负债情况。</p>
-                    </div>
-                </div><!-- .col-md-7 close -->
-                <div class="col-md-6 col-sm-12">
-                    <div class="block">
-                        <img src="{% static 'img/img_02.png' %}" alt="Img">
-                    </div>
-                </div><!-- .col-md-5 close -->
-            </div>
-        </div>
-    </section>
-    <section id="feature">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-6">
-                    <div class="block">
-                        <div class="section-title">
-                            <h2>数据新</h2>
-                            <p>每条数据都是上一秒最新</p>
-                        </div>
-                        <p>我们为您搭建最快的数据通道，与数百家机构进行数据互联，采用先进的分布式数据解决方案，实现数据的秒级反馈，为您实时决策提供坚实依据。
-                            共享的数据被广泛应用到小微企业贷款，个人消费贷款，小额现金贷款等业务领域。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Service Start -->
-    <section id="service">
-        <div class="container">
-            <div class="row">
 
-                <div class="section-title">
-                    <h2>数据准</h2>
-                    <p>设计，为模型而生</p>
-
-                </div>
-                <p>我们为您设计的字段内容中，包括了FICO评分以及广泛信用模型中权重最高的数据内容。包括了借款
-                    人的信用偿还历史、信用账户数、信用年限、新开立信用账户，正在使用的信用类型。</p>
-            </div>
-            <div class="row ">
-                <div class="col-sm-6 col-md-4">
-                    <div class="service-item">
-                        <div class="block">
-                            <img src="{% static 'img/img_title_01.png' %}" alt="Img">
-                        </div>
-                        <h4>偿还历史</h4>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="service-item">
-                        <div class="block">
-                            <img src="{% static 'img/img_title_02.png' %}" alt="Img">
-                        </div>
-                        <h4>信用账户</h4>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="service-item">
-                        <div class="block">
-                            <img src="{% static 'img/img_title_03.png' %}" alt="Img">
-                        </div>
-                        <h4>信用年限</h4>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-md-offset-2">
-                    <div class="service-item">
-                        <div class="block">
-                            <img src="{% static 'img/img_title_04.png' %}" alt="Img">
-                        </div>
-                        <h4>新开账户数</h4>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="service-item">
-                        <div class="block">
-                            <img src="{% static 'img/img_title_05.png' %}" alt="Img">
-                        </div>
-                        <h4>信用类型</h4>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- Call to action Start -->
-    <section id="call-to-action">
+    <!--======**************** SERVICES SECTION ******************=======-->
+    <section id="services" class="services-section section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="block">
-                        <h2>数据准</h2>
-                        <p>我们为您设计的字段内容中，包括了FICO评分以及广泛信用模型中权重最高的数据内容。包括了借款
-                            人的信用偿还历史、信用账户数、信用年限、新开立信用账户，正在使用的信用类型。我们为您搭建
-                            最快的数据通道，与数百家机构进行数据互联，采用先进的分布式数据解决方案，实现数据的秒级反馈，为您实时决策提供坚实依据。 共享的数据被广泛应用到小微企业贷款，个人消费贷款，小额现金贷款等业务领域。</p>
-                        <a class="btn btn-default btn-call-to-action" href="#">加入我们</a>
+                    <div class="section-title">
+                        <h2>
+                            <span class="theme-color">What we offer</span> 数据服务</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single-services text-center wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="servise-icon">
+                            <i class="fa fa-address-card"></i>
+                        </div>
+                        <h4>实名认证</h4>
+                        <p>四要素精确匹配个人信息，有效降低欺诈风险。</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single-services text-center wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="servise-icon">
+                            <i class="fa fa-graduation-cap"></i>
+                        </div>
+                        <h4>学籍学历</h4>
+                        <p>通过学历学籍认证查询获得授信人的最高学历学籍信息和毕业学校信息，有效规避风险。</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single-services last-service text-center wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="servise-icon">
+                            <i class="fa fa-sellsy"></i>
+                        </div>
+                        <h4>运营商数据</h4>
+                        <p>通过手机消费行为对授信人做精确的消费画像, 更好的规避不良风险,同时为贷后管理做铺垫。</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single-services text-center wow fadeInUp" data-wow-delay="0.8s">
+                        <div class="servise-icon">
+                            <i class="fa fa-cart-arrow-down"></i>
+                        </div>
+                        <h4>电商数据</h4>
+                        <p>根据用户授权的信息，分析用户网购的消费历史，购买能力，消费习惯，区域分布等消费画像数据，把控用户还款能力和还款意愿。</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single-services text-center wow fadeInUp" data-wow-delay="1s">
+                        <div class="servise-icon">
+                            <i class="fa fa-address-card"></i>
+                        </div>
+                        <h4>职业数据</h4>
+                        <p>根据职场社交网站信息，整合分析个人职场/人脉情况。</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="single-services last-service text-center wow fadeInUp" data-wow-delay="1.2s">
+                        <div class="servise-icon">
+                            <i class="fa fa-money"></i>
+                        </div>
+                        <h4>多头借贷</h4>
+                        <p>查询用户的多头借贷历史，有效规避欺诈、违约风险。</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!--======*************** END SERVICES SECTION ****************=======-->
+
+
+    <!--QUOTES AREA-->
+    <div id="quotes" class="quotes-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="quotes-content text-center wow jackInTheBox" data-wow-delay="0.4s">
+                        <h3>宏图数据查询系统</h3>
+                        <p>中立的数据征信 服务平台</p>
+                        <a class="scroll-btn btn theme-color" href="/record/index.html">马上使用</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Content Start -->
-    <section id="testimonial">
+    </div>
+    <!--END QUOTES AREA-->
+
+
+    <!--======********** PORTFOLIO SECTION *********======-->
+    <section id="portfolio" class="section-padding">
         <div class="container">
             <div class="row">
-                <div class="section-title text-center">
-                    <h2>关于我们</h2>
-                    <p>科技征信”是91征信的核心理念，致力于依靠科技力量加速我国征信事业发展。旨在通过自身的市场化实践， 加大科技力量投入，
-                        不断实践以期打造符合当下时代，符合当前趋势，符合用户需求的征信产品。</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="block">
-                        <ul class="counter-box clearfix">
-                            <li>
-                                <div class="block">
-                                    <i class="ion-ios-chatboxes-outline"></i>
-                                    <h4 class="counter">20301</h4>
-                                    <span>身份证查询</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="block">
-                                    <i class="ion-ios-glasses-outline"></i>
-                                    <h4 class="counter">10090</h4>
-                                    <span>征信查询</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="block">
-                                    <i class="ion-ios-compose-outline"></i>
-                                    <h4 class="counter">17789</h4>
-                                    <span>反欺诈查询</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="block">
-                                    <i class="ion-ios-timer-outline"></i>
-                                    <h4 class="counter">39909</h4>
-                                    <span>三要素查询</span>
-                                </div>
-                            </li>
-
-                        </ul>
+                <div class="col-md-12">
+                    <div class="section-title wow fadeInUp" data-wow-delay="0.2s">
+                        <h2>
+                            <span class="theme-color">Data Application</span> 数据应用</h2>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="testimonial-carousel">
-                        <div id="testimonial-slider" class="owl-carousel">
-                            <div>
-                                <img src="{% static 'img/cotation.png' %}" alt="IMG">
-                                <p>"This Company created an e-commerce site with the tools to make our business a
-                                    success, with innovative ideas we feel that our site has unique elements that make
-                                    us stand out from the crowd."</p>
-                                <div class="user">
-                                    <img src="{% static 'img/item-img1.jpg' %}" alt="Pepole">
-                                    <p><span>Rose Ray</span> CEO-Themefisher</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-6 single-work wow flipInX" data-wow-delay="0.5s">
+                    <div class="data-application_num">01.</div>
+                    <div class="data-application_name">反欺诈</div>
+                    <div class="data-application_line"></div>
+                    <div class="data-application_textCon">收集、分析全网欺诈行为数据，并从欺诈者的角度学习欺诈策略、 技术、
+                        流程，再经过现实数据验真，得出反欺诈数据模型，为客户遇到的潜在风险及时预警。
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 single-work wow flipInX" data-wow-delay="0.8s">
+                    <div class="data-application_num">02.</div>
+                    <div class="data-application_name">信用评估</div>
+                    <div class="data-application_line"></div>
+                    <div class="data-application_textCon">
+                        通过消费行为历史数据、学历数据等个人信息数据，分析信用个体的还款能力及还款意愿，同时辅以多头借贷历史查询，精确勾勒信用个体的信用画像。
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 single-work wow flipInX" data-wow-delay="1.3s">
+                    <div class="data-application_num">03.</div>
+                    <div class="data-application_name">决策指引</div>
+                    <div class="data-application_line"></div>
+                    <div class="data-application_textCon">对个体数据及群体数据的多维度分析与整合，依据不同需求形成不同的数据模型，为客户在业务、营销等活动提供精准的决策指引工具。
+                    </div>
+                </div>
+
+            </div>
+            <!--/.row-->
+        </div>
+        <!--/.container-->
+    </section>
+    <!--======************ END PORTFOLIO SECTION **************======-->
+
+
+    <!--======**************** REVIEW SECTION *****************========-->
+    <div id="review" class="review-section section-padding">
+        <div class="container">
+            <div class="row wow flipInX">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2>
+                            <span class="theme-color">Here's what is our advantages</span> 我们的优势</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row wow rotateIn">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="review-full-area">
+                        <div class="review-list">
+                            <div class="single-review">
+                                <!-- start single carousel item -->
+                                <div class="review-content">
+                                    <p>通过不同信贷、消金等平台的广泛合作，多维交叉验证数据源。</p>
                                 </div>
+                                <h5 class="author"> 规模效应
+                                </h5>
                             </div>
-                            <div>
-                                <img src="{% static 'img/cotation.png' %}" alt="IMG">
-                                <p>"This Company created an e-commerce site with the tools to make our business a
-                                    success, with innovative ideas we feel that our site has unique elements that make
-                                    us stand out from the crowd."</p>
-                                <div class="user">
-                                    <img src="{% static 'img/item-img1.jpg' %}" alt="Pepole">
-                                    <p><span>Rose Ray</span> CEO-Themefisher</p>
+                            <!-- end single carousel item -->
+                            <div class="single-review">
+                                <!-- start single carousel item -->
+                                <div class="review-content">
+                                    <p>查询与共享一体，打破数据孤岛局面。</p>
                                 </div>
+                                <h5 class="author"> 共享互益</span>
+                                </h5>
                             </div>
-                            <div>
-                                <img src="{% static 'img/cotation.png' %}" alt="IMG">
-                                <p>"This Company created an e-commerce site with the tools to make our business a
-                                    success, with innovative ideas we feel that our site has unique elements that make
-                                    us stand out from the crowd."</p>
-                                <div class="user">
-                                    <img src="{% static 'img/item-img1.jpg' %}" alt="Pepole">
-                                    <p><span>Rose Ray</span> CEO-Themefisher</p>
+                            <!-- end single carousel item -->
+                            <div class="single-review">
+                                <!-- start single carousel item -->
+                                <div class="review-content">
+                                    <p>丰富的行业经验，完备的数据采集管控，确保数据及时、完整、准确。</p>
                                 </div>
+                                <h5 class="author"> 精准合规
+                                </h5>
                             </div>
-                            <div>
-                                <img src="{% static 'img/cotation.png' %}" alt="IMG">
-                                <p>"This Company created an e-commerce site with the tools to make our business a
-                                    success, with innovative ideas we feel that our site has unique elements that make
-                                    us stand out from the crowd."</p>
-                                <div class="user">
-                                    <img src="{% static 'img/item-img1.jpg' %}" alt="Pepole">
-                                    <p><span>Rose Ray</span> CEO-Themefisher</p>
+                            <!-- end start single carousel item -->
+                            <div class="single-review">
+                                <!-- start single carousel item -->
+                                <div class="review-content">
+                                    <p>十分钟快速自助对接，确保效率。</p>
                                 </div>
+                                <h5 class="author">快速对接</span>
+                                </h5>
                             </div>
+                            <!-- end start single carousel item -->
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
+    </div>
+    <!--======************* END REVIEW SECTION ***************========-->
+
+
+    <!--======******************** CONTACT INFO SECTION **********************======-->
+    <section id="contact" class="contact-area section-padding">
+        <div class="container wow flipInY">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2>
+                            <span class="theme-color">About Us</span> 关于我们</h2>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="about_text">“汇数据平台”整合行业主流信贷机构数据，产品线丰富，为客户提供一站式风控解
+                        决方案。本平台旨在给各领域客户提供便捷可触及的自助征信服务，积极推动行业
+                        间数据共享，并通过高新技术手段驱动机器的自我学习，丰富用户画像，为构筑诚
+                        信社会贡献自己的一份力量。“汇数据平台”当前主要服务对象为各机构，包括P2P、
+                        小额信贷、消费金融等，未来数据应用将扩展到租赁、购物、酒店、求职、婚恋、公益事业等多个领域。</p>
+                </div>
+            </div>
+
+        </div>
     </section>
+    <!--======**************** END CONTACT INFO SECTION ********************======-->
 {% endblock %}
