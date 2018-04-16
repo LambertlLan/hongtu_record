@@ -1,0 +1,74 @@
+{% extends 'record/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-lg-9 col-md-9 col-sm-9">
+        <!--公众数据导航-->
+        <div class="fnNav">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="records active" href="accFolkBorrowingV.do">
+                        <span>小贷记录统计值</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="recordDetails" href="accP2PRecordV.do">
+                        <span>小贷记录明细值<br>（多重负债）</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="container-fluid content form">
+        <div class="form-title">小贷记录统计</div>
+        <div class="form-inline">
+            <input class="form-control name" type="text" placeholder="姓名">
+            <input class="form-control idCard" type="text" placeholder="身份证号码">
+            <a class="m-btn" id="sub">确定（4分/次）</a>
+        </div>
+        <div class="form-inline">
+            <div class="checkbox">
+                <a><i></i>本人已获取该查询用户授权</a>
+            </div>
+            <a class="lookWarrant">《查看授权协议》</a>
+        </div>
+    </div>
+        <div class="container-fluid content">
+            <div class="tabs">
+                <ul class="list-unstyled tabs-nav">
+                    <li class="active result"><a>查询结果</a></li>
+                    <li class="record"><a>查询历史</a></li>
+                </ul>
+                <div class="tabs-content">
+                    <div id="result" class="tabs-main">
+                        <div class="container-fluid-min total">
+                            <p class="tab-title">小贷记录统计值<img class="icon-sample" src="{% static 'img/icon_sample.png' %}"></p>
+                            <table class="td-4 text-left m-t-2">
+                                <tbody><tr>
+                                    <td class="title">年份</td>
+                                    <td>2016</td>
+                                    <td class="title">受理机构数量</td>
+                                    <td>16</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">受理申请次数</td>
+                                    <td>1</td>
+                                    <td class="title">完成借款次数</td>
+                                    <td>16</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">借款成功金额</td>
+                                    <td colspan="3">10000~30000</td>
+                                </tr>
+                                </tbody></table>
+                        </div>
+                    </div>
+                    <div id="record" class="tabs-main">
+                        <div class="stretch-box">
+
+                        </div>
+                        <div class="layer-page" id="page"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

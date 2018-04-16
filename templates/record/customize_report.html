@@ -1,0 +1,480 @@
+{% extends 'record/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-lg-9 col-md-9 col-sm-9 report">
+        <!--定制报告导航-->
+        <div class="fnNav">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="baseReport active" href="accBaseReportV.do">
+                        <span>基础报告</span>
+                    </a>
+                </li>
+                <!--<li>
+                    <a class="depthReport" href="accDepthReportV.do">
+                        <span>深度报告</span>
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+        <div class="container-fluid content form">
+            <div class="form-title">基础报告</div>
+            <div class="form-inline">
+                <input class="form-control name" type="text" placeholder="姓名">
+                <!--<input class="form-control phone" type="text" placeholder="手机号">-->
+                <input class="form-control idCard" type="text" placeholder="身份证号">
+                <a class="m-btn" id="sub">购买（打包价格20分）</a>
+            </div>
+            <div class="form-inline">
+                <div class="checkbox">
+                    <a><i></i>本人已获取该查询用户授权</a>
+                </div>
+                <a class="lookWarrant">《查看授权协议》</a>
+            </div>
+        </div>
+        <div class="container-fluid content options-box">
+            <div class="row">
+                <div class="col-lg-2">
+                    基础版包括：
+                </div>
+                <div class="col-lg-2">
+                    <a class="options pull-left identityInfo anchor" href="#identityInfo">
+                        <i></i>
+                        <span>身份证+照片</span>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a class="options pull-left searchRecord anchor" href="#searchRecord">
+                        <i></i>
+                        <span>身份查询记录</span>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a class="options pull-left folkBorrowing anchor" href="#p2pRecord">
+                        <i></i>
+                        <span>小贷记录</span>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a class="options pull-left courtInfo anchor" href="#courtInfo">
+                        <i></i>
+                        <span>法院失信及被执行人</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-2">
+                    <a class="options pull-left p2pUrgeMoney anchor" href="#p2pUrgeMoney">
+                        <i></i>
+                        <span>逾期记录</span>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a class="options pull-left companyInfo anchor" href="#companyInfo">
+                        <i></i>
+                        <span>个人工商信息</span>
+                    </a>
+                </div>
+                <!-- <div class="col-lg-2">
+                    <a class="options pull-left overdueInfo anchor" href="#overdueRecord">
+                        <i></i>
+                        <span>逾期逾期记录</span>
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    <a class="options pull-left phoneDate anchor" href="#phoneDate">
+                        <i></i>
+                        <span>手机实名认证及入网时长</span>
+                    </a>
+                </div> -->
+            </div>
+
+        </div>
+        <div class="container-fluid content">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 report-main">
+                    <div class="container-fluid-min">
+                        <div class="top">基础报告（样例）</div>
+                        <a id="identityInfo"></a>
+                        <div class="category">
+                            <div><span class="identityInfo"><i class="icon"></i>身份验证信息</span></div>
+                        </div>
+                        <p class="result text-center identityInfo-msg">验证结果：二要素验证结果一致</p>
+                        <div class="box identityInfo-tab">
+                            <p class="tab-title text-center">身份证照片查询</p>
+                            <div class="stretch-box">
+                                <table class="text-left table m-t-2 photoTab">
+                                    <tbody>
+                                    <tr>
+                                        <td>姓名：张*三</td>
+                                        <td>年龄：30</td>
+                                        <td rowspan="3" class="text-center">
+                                            <img src="{% static 'img/icon_portrait_01.png' %}" class="photo">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>性别：男</td>
+                                        <td>出生日期：1986-01-01</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">证件号码：110102****6924</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <a id="searchRecord"></a>
+                        <div class="category">
+                            <div><span class="searchRecord"><i class="icon"></i>身份查询记录</span></div>
+                        </div>
+                        <div class="box searchRecord-tab text-center">
+                            <p class="tab-title"><span class="text-icon">机构查询</span></p>
+                            <table class="table td-4 m-t-2 companyTotal">
+                                <tbody>
+                                <tr>
+                                    <td class="title">机构数</td>
+                                    <td>1</td>
+                                    <td class="title">机构查询次数</td>
+                                    <td>1</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="stretch-box">
+                                <table class="table m-t-2 companyDetail">
+                                    <tbody>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>查询项目</th>
+                                        <th>查询时间</th>
+                                        <th>机构名称</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>身份证照片</td>
+                                        <td>2016-08-22 10:12:12</td>
+                                        <td>ABC098712</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="tab-title m-t-2"><span class="text-icon">个人查询</span></p>
+                            <table class="table td-4 m-t-2 userTotal">
+                                <tbody>
+                                <tr>
+                                    <td class="title">用户数</td>
+                                    <td>1</td>
+                                    <td class="title">用户查询次数</td>
+                                    <td>1</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="stretch-box">
+                                <table class="table m-t-2 userDetail">
+                                    <tbody>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>查询项目</th>
+                                        <th>查询时间</th>
+                                        <th>机构名称</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>同住址信息</td>
+                                        <td>2016-08-22 10:12:12</td>
+                                        <td>ABC098712</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <a id="p2pRecord"></a>
+                        <div class="category">
+                            <div><span class="p2pRecord"><i class="icon"></i>小贷记录</span></div>
+                        </div>
+                        <div class="box p2pRecord-tab text-center">
+                            <div class="stretch-box">
+                                <table class="record table borrowing">
+                                    <tbody>
+                                    <tr>
+                                        <th>年份</th>
+                                        <th>受理申请机构数</th>
+                                        <th>完成放款机构数</th>
+                                        <th>机构受理申请次数</th>
+                                        <th>借款成功金额</th>
+                                    </tr>
+                                    <tr>
+                                        <td>2016</td>
+                                        <td>10</td>
+                                        <td>20</td>
+                                        <td>18</td>
+                                        <td>10000~20000</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <a id="p2pUrgeMoney"></a>
+                        <div class="category">
+                            <div><span class="p2pUrgeMoney"><i class="icon"></i>逾期记录</span></div>
+                        </div>
+                        <div class="box p2pUrgeMoney-tab text-center">
+                            <div class="stretch-box">
+                                <table class="table record collection">
+                                    <tbody>
+                                    <tr>
+                                        <th>借款类型</th>
+                                        <th>借款金额</th>
+                                        <th>合同年月</th>
+                                        <th>逾期级别</th>
+                                        <th>数据报送时间</th>
+                                    </tr>
+                                    <tr>
+                                        <td>个人信贷</td>
+                                        <td>￥100,000</td>
+                                        <td>2015-10</td>
+                                        <td>M2</td>
+                                        <td>2016-10</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <a id="courtInfo"></a>
+                        <div class="category">
+                            <div><span class="courtInfo"><i class="icon"></i>法院失信及被执行信息查询</span></div>
+                        </div>
+                        <div class="box courtInfo-tab">
+                            <p class="tab-title text-center">失信及被执行信息汇总</p>
+                            <table class="table td-4 m-t-2 total">
+                                <tbody>
+                                <tr>
+                                    <td class="title">被执行人信息</td>
+                                    <td>1</td>
+                                    <td class="title">失信被执行人信息</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">行政处罚</td>
+                                    <td>0</td>
+                                    <td class="title">汇总</td>
+                                    <td>1</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p class="tab-title-small text-center">明细</p>
+                            <div class="stretch-box text-center">
+                                <table class="table record">
+                                    <tbody>
+                                    <tr>
+                                        <th>类型</th>
+                                        <th>执行法院</th>
+                                        <th>立案时间</th>
+                                        <th>案号</th>
+                                        <th>标的金额或履行情况</th>
+                                        <th>信息获取<br>时间</th>
+                                    </tr>
+                                    <tr>
+                                        <td>被执行人信息</td>
+                                        <td>北京朝阳人民法院</td>
+                                        <td>2015-2-18</td>
+                                        <td>京执800123号</td>
+                                        <td>￥10,000</td>
+                                        <td>2016-2-18</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <a id="companyInfo"></a>
+                        <div class="category">
+                            <div><span class="companyInfo"><i class="icon"></i>个人工商信息</span></div>
+                        </div>
+                        <div class="box companyInfo-tab text-left">
+                            <table class="table td-4 gs">
+                                <tbody>
+                                <tr>
+                                    <td class="title">公司名称</td>
+                                    <td colspan="3">北京**有限公司</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">注册号</td>
+                                    <td class="title">1505***0061</td>
+                                    <td class="title">公司类型</td>
+                                    <td class="title">有限公司</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">注册资本</td>
+                                    <td>￥1,000,000</td>
+                                    <td class="title">资本单位</td>
+                                    <td>人民币</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">企业状态</td>
+                                    <td>在营（开业）</td>
+                                    <td class="title">任职</td>
+                                    <td>执行董事</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">认缴金额</td>
+                                    <td>￥500,000</td>
+                                    <td class="title">股份比例</td>
+                                    <td>50%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--<a id="phoneDate"></a>
+                        <div class="category"><div><span class="phoneDate"><i class="icon"></i>手机实名认证及在网时长</span></div></div>
+                        <div class="box phoneDate-tab text-center">
+                            <table class="td-4 mobile">
+                                <tr>
+                                    <td class="title">姓名</td>
+                                    <td>张*三</td>
+                                    <td class="title">手机号</td>
+                                    <td>180****5214</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">运营商</td>
+                                    <td>中国移动</td>
+                                    <td class="title">实名检验</td>
+                                    <td>相同</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">入网时长</td>
+                                    <td colspan="3">大于24个月</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <a id="overdueRecord"></a>
+                        <div class="category"><div><span class="overdueRecord"><i class="icon"></i>逾期逾期记录查询</span></div></div>
+                        <div class="box overdueRecord-tab text-center">
+                            <div class="stretch-box">
+                                <table class="table text-left td-4">
+                                    <tr>
+                                        <td class="title">手机号</td>
+                                        <td>13000000000</td>
+                                        <td class="title">风险强度</td>
+                                        <td><span class="icon icon-orange ">中</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title vertical-middle">说明</td>
+                                        <td colspan="3">
+                                            <div class="textarea">
+                                                强：逾期3个月以上欠款人本人手机号<br>
+                                                中：逾期3个月以上欠款人朋友或亲属手机号<br>
+                                                弱：与逾期3个月以上欠款人存在二度人脉关系（手机号交叠）<br>
+                                                无：未检测到与逾期3个月以上欠款人存在关联<br>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="bg-color-lGreen text-center title"> 详情</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title">联系人姓名</td>
+                                        <td>张**</td>
+                                        <td class="title">联系人号码</td>
+                                        <td>13000000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title">与借款人关系</td>
+                                        <td>父子</td>
+                                        <td class="title">借款人姓名</td>
+                                        <td>张**</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title">借款金额</td>
+                                        <td>100000</td>
+                                        <td class="title">合同年月</td>
+                                        <td>2015-1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="title">逾期级别</td>
+                                        <td>中</td>
+                                        <td class="title">数据报送时间</td>
+                                        <td>2016-10-19</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div> -->
+                        <div class="box text-left hintTab">
+                            <table class="table td-3">
+                                <tbody>
+                                <tr>
+                                    <td colspan="3" class="text-center">报告中的风险信息提示</td>
+                                </tr>
+                                <tr class="bg-color-lGreen">
+                                    <th>风险项目</th>
+                                    <th>风险程度</th>
+                                    <th>规则</th>
+                                </tr>
+                                <tr>
+                                    <td>身份验证信息</td>
+                                    <td>高</td>
+                                    <td>身份验证不通过</td>
+                                </tr>
+                                <tr>
+                                    <td>身份查询记录</td>
+                                    <td>中</td>
+                                    <td>3个月内被查询5次以上</td>
+                                </tr>
+                                <tr>
+                                    <td>身份查询记录</td>
+                                    <td>高</td>
+                                    <td>3个月内被查询10次以上</td>
+                                </tr>
+                                <tr>
+                                    <td>逾期记录</td>
+                                    <td>高</td>
+                                    <td>存在逾期记录</td>
+                                </tr>
+                                <tr>
+                                    <td>小贷记录明细</td>
+                                    <td>中</td>
+                                    <td>存在小贷记录</td>
+                                </tr>
+                                <tr>
+                                    <td>法院失信及被执行人</td>
+                                    <td>高</td>
+                                    <td>存在失信或被执行信息</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <ul class="list-unstyled explain">
+                            <li class="title">报告说明：</li>
+                            <li>1.本报告著作权属于北京小崔时代信息服务有限公司，以下简称“91征信”，未经许可，不可擅自复制、摘录、编辑、转载、披露和发表。</li>
+                            <li>2.使用本报告，需经过被查询人授权，91征信不承担因授权不充分引起的任何法律责任。</li>
+                            <li>3.本报告中的信息由相关数据来源机构和信息主体提供，91征信不保证其真实性和准确性，但承诺在信息整合、汇总、展示的全过程中保持客观中立的地位。</li>
+                            <li>4.请妥善保管本报告，并注意保密。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 right-nav">
+                    <div class="operate">
+                        <a class="down" href="#">
+                            <!--<i class="save"></i>-->
+                            <span class="glyphicon glyphicon-file"></span>
+                            <span>下载</span>
+                        </a>
+                        <a onclick="atop()">
+                            <span class="glyphicon glyphicon-upload"></span>
+                            <span>顶部</span>
+                        </a>
+                    </div>
+                    <ul class="list-unstyled nav-main">
+                        <li><a class="active identityInfo" href="#identityInfo">身份验证信息</a></li>
+                        <li><a class="anchor searchRecord" href="#searchRecord">身份查询记录</a></li>
+                        <li><a class="anchor p2pRecord" href="#p2pRecord">小贷记录</a></li>
+                        <li><a class="anchor p2pUrgeMoney" href="#p2pUrgeMoney">逾期记录</a></li>
+                        <li><a class="anchor courtInfo" href="#courtInfo">法院失信及被执行信息查询</a></li>
+                        <li><a class="anchor companyInfo" href="#companyInfo">个人工商信息</a></li>
+                        <!--<li><a class="anchor phoneDate" href="#phoneDate">手机实名认证及在网时长</a></li>-->
+                        <!-- <li><a class="anchor overdueRecord" href="#overdueRecord">逾期逾期记录查询</a></li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

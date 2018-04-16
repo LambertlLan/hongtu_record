@@ -1,0 +1,162 @@
+{% extends 'record/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-lg-9 col-md-9 col-sm-9">
+        <!--查询记录导航-->
+        <div class="fnNav">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="data active" href="accDataSearchV.do">
+                        <span>基础数据查询记录</span>
+                    </a>
+                </li>
+                <!--<li>
+                    <a class="report" href="accReportRecordV.do">
+                        <span>征信报告查询记录</span>
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+        <div class="container-fluid content data-Search">
+            <p class="title-block">数据查询记录</p>
+            <div class="form">
+                <div class="form-inline">
+                    <label>类别：</label>
+                    <div class="row selectList">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="1">身份证信息</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="2">工商信息</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="3">人法信息</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="4">身份查询记录</a></div>
+                        <!--<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="34">犯罪在逃</a></div>-->
+                        <!--<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="6">同住址信息</a></div>-->
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="7">三要素认证</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="8">四要素认证</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="9">银行卡查询</a></div>
+                        <!--<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="35">银行卡画像</a></div>-->
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="11">地址信息</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="12">手机查询历史</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="13">银行卡查询记录</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="14">小贷记录明细</a></div>
+                        <!--<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="15">逾期记录</a></div>-->
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="16">小贷记录</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="17">逾期逾期记录查询</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="18">逾期明细查询</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="30">手机在网时长</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="31">手机实名认证</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="32">其他银行卡号查询</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="36">手机号反欺诈</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="37">身份反欺诈</a></div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data="28">基础报告</a></div>
+                    </div>
+                </div>
+                <!--<div class="form-inline">
+                    <label>关键字：</label>
+                    <input class="form-control key" type="text" placeholder="请输入关键字">
+                    <a class="m-btn" id="sub">查询</a>
+                </div>-->
+            </div>
+            <div class="stretch-box">
+                <table class="table text-center td-5">
+                    <tbody>
+                    <tr>
+                        <th>序号</th>
+                        <th>关键字</th>
+                        <th>类别</th>
+                        <th>查询时间</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>张家宁13022...</font><span
+                                class="h">张家宁130221199709180030</span></td>
+                        <td class="type">身份证信息</td>
+                        <td>2018-4-10</td>
+                        <td><a class="info" data="259766">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>37068319...</font><span
+                                class="h">370683198105080056</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-4-1</td>
+                        <td><a class="info" data="250917">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>44150219...</font><span
+                                class="h">441502198911252137</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-3-29</td>
+                        <td><a class="info" data="248889">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>46003119...</font><span
+                                class="h">460031196302010819</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-3-29</td>
+                        <td><a class="info" data="248887">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>46003119...</font><span
+                                class="h">460031196405240844</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-3-29</td>
+                        <td><a class="info" data="248886">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>46003119...</font><span
+                                class="h">46003119890615082X</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-3-23</td>
+                        <td><a class="info" data="243846">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>41302619...</font><span
+                                class="h">41302619710910575X</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-3-21</td>
+                        <td><a class="info" data="239946">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>41302619...</font><span
+                                class="h">413026196911175785</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-3-21</td>
+                        <td><a class="info" data="239942">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>32092519...</font><span
+                                class="h">320925198309011435</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-3-13</td>
+                        <td><a class="info" data="231181">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td class="key" style="text-overflow:ellipsis;overflow: hidden;"><font>15030319...</font><span
+                                class="h">150303197001193028</span></td>
+                        <td class="type">工商信息</td>
+                        <td>2018-3-7</td>
+                        <td><a class="info" data="225143">详情</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="layer-page" id="page">
+                <div name="laypage1.3" class="laypage_main laypageskin_default" id="laypage_0">
+                    <span class="laypage_curr">1</span>
+                    <a href="javascript:;" data-page="2">2</a>
+                    <a href="javascript:;" href="javascript:;" data-page="4">4</a>
+                    <a href="javascript:;" class="laypage_next" data-page="2">&gt;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

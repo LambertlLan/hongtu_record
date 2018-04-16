@@ -63,7 +63,7 @@
                     <a>基础数据中心</a>
                 </li>
                 <li class="publicData">
-                    <a href="public_data.html">公众数据获取</a>
+                    <a href="public_data/">公众数据获取</a>
                 </li>
                 <!--<li class="netData"><a href="accTaobaoV.do">网络数据获取</a></li>-->
             </ul>
@@ -73,7 +73,7 @@
                 </li>
                 <!--<li class="fraud"><a href="accFraudIdV.do">反欺诈报告</a></li>-->
                 <li class="Liabilities">
-                    <a href="">负债搜索报告</a>
+                    <a href="debt_search/">负债搜索报告</a>
                 </li>
                 <!--<li class="accReport"><a href="accBaseReportV.do">定制版报告</a></li>-->
             </ul>
@@ -116,7 +116,7 @@
         <div class="col-lg-3 col-md-3 col-sm-3 nav-left">
             <ul class="list-unstyled">
                 <li class="title home {% if active == "index" %}active{% endif %}">
-                    <a href="index.html">
+                    <a href="/record/index.html">
                         <i class="icon-type home {% if active == "index" %}active{% endif %}"></i>账户首页</a>
                 </li>
             </ul>
@@ -128,7 +128,7 @@
                     </a>
                 </li>
                 <li class="publicData {% if active == "public_data" %}active{% endif %}">
-                    <a href="public_data.html">公众数据获取</a>
+                    <a href="/record/public_data">公众数据获取</a>
                 </li>
                 <!--<li class="netData"><a href="accTaobaoV.do">网络数据获取</a></li>-->
             </ul>
@@ -140,11 +140,11 @@
                     </a>
                 </li>
                 <!--<li class="fraud"><a href="accFraudIdV.do">反欺诈报告</a></li>-->
-                <li class="Liabilities">
-                    <a href="">负债搜索报告</a>
+                <li class="Liabilities {% if active == "debt_search" %}active{% endif %}">
+                    <a href="/record/debt_search">负债搜索报告</a>
                 </li>
-                <li class="accReport">
-                    <a href="">定制版报告</a>
+                <li class="accReport {% if active == "customize_report" %}active{% endif %}">
+                    <a href="/record/customize_report">定制版报告</a>
                 </li>
             </ul>
             <ul class="list-unstyled">
@@ -154,14 +154,14 @@
                         <i class="arr"></i>
                     </a>
                 </li>
-                <li class="accInfo">
-                    <a href="">账户信息</a>
+                <li class="accInfo {% if active == "account_information" %}active{% endif %}">
+                    <a href="/record/account_information">账户信息</a>
                 </li>
-                <li class="financeInfo">
-                    <a href="">财务信息</a>
+                <li class="financeInfo {% if active == "financial_information" %}active{% endif %} ">
+                    <a href="/record/financial_information">财务信息</a>
                 </li>
-                <li class="queryRecords">
-                    <a href="">查询记录</a>
+                <li class="queryRecords {% if active == "select_records" %}active{% endif %} ">
+                    <a href="/record/select_records">查询记录</a>
                 </li>
             </ul>
         </div>

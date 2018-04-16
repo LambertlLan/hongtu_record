@@ -86,7 +86,7 @@ a:hover {
 }
 
 .bg-color-lGreen {
-    background: #fff7f2;
+    background: #E5F3FF;
 }
 
 .table-blue-black td {
@@ -378,8 +378,8 @@ span.icon.icon-green {
 }
 
 .account-center .nav-left ul li.hover {
-    background-color: #fff7f2;
-    border-color: #fff7f2;
+    background-color: #E5F3FF;
+    border-color: #E5F3FF;
 }
 
 .account-center .nav-left ul li.hover .arr {
@@ -566,7 +566,7 @@ span.icon.icon-green {
 }
 
 .account-center .fnNav ul li a:hover {
-    background: #fbd4b9;
+    background: #a8d3e6;
 }
 
 .account-center .fnNav ul li a.active {
@@ -750,7 +750,7 @@ span.icon.icon-green {
 .account-center table th {
     height: 44px;
     color: #282e3c;
-    background: #fff7f2;
+    background: #E5F3FF;
     text-align: center;
     font-weight: 400;
     border-top: 0px;
@@ -1082,7 +1082,7 @@ span.icon.icon-green {
 }
 
 .account-center .report .box table th {
-    background: #fff7f2;
+    background: #E5F3FF;
     color: #818489;
 }
 
@@ -1401,7 +1401,7 @@ span.icon.icon-green {
 }
 
 .account-center .recharge .m-progress li.active {
-    background: #fff7f2;
+    background: #E5F3FF;
 }
 
 .account-center .recharge .m-progress li.active i {
