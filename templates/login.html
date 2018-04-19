@@ -1,13 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang='zh'>
 
 <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>宏图数据</title>
+    <title>宏图数据-登录</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -57,7 +57,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>宏图数据</strong> 查询平台</h1>
+                    <h1><strong>宏图数据</strong> 用户登录</h1>
                     <div class="description">
                         <p>
                             中立的数据征信 <a href="#"><strong>数据征信</strong></a>服务平台
@@ -96,7 +96,7 @@
                             {% csrf_token %}
                             <button type="submit" class="btn">马上登录</button>
                             <div class="text-right">
-                                <a href="">注册</a> | <a id="forgetBtn" href="javascript:void(0)">忘记密码?</a>
+                                <a href="/register.html">注册</a> | <a id="forgetBtn" href="javascript:void(0)">忘记密码?</a>
                             </div>
                         </form>
                     </div>
@@ -104,7 +104,53 @@
             </div>
 
         </div>
-        {#        忘记密码#}
+        <!--忘记密码-->
+        <div class="modal fade ng-scope" id="divForgetPassword" tabindex="-1" role="dialog"
+             aria-hidden="false">
+            <div class="modal-dialog" role="document" style="top:200px;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">重置密码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form ng-pristine ng-valid">
+                            <div class="form-group">
+                                <input type="number" class="form-control ng-pristine ng-valid" placeholder="请输入手机号码"
+                                       ng-model="Model.accountName" ng-blur="Model.accountNameBlur()">
+                            </div>
+                            <div class="form-group" style="margin-top:10px;">
+                                <input type="password" class="form-control ng-pristine ng-valid" placeholder="请输入新密码"
+                                       ng-model="Model.password">
+                            </div>
+                            <div class="form-group" style="margin-top:10px;">
+                                <input type="password" class="form-control ng-pristine ng-valid" placeholder="请重新输入新密码"
+                                       ng-model="Model.rePassword">
+                            </div>
+                            <div class="form-group" style="margin-top:10px;">
+                                <div class="input-group">
+                                    <input type="number" class="form-control ng-pristine ng-valid"
+                                           placeholder="请输入短信随机码" style="border-right: none">
+                                    <span class="input-group-btn">
+									<button class="btn btn-primary forget-btn" type="button">
+										<span>发送短信随机码</span>
+                                    </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default close-forget" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn viigoo-btn-primary" style="width:100px;"
+                                ng-click="Model.submit($event);" data-loading-text="正在提交">提交
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <!--注册-->
         <div class="modal fade ng-scope" id="divForgetPassword" tabindex="-1" role="dialog"
              aria-hidden="false">
             <div class="modal-dialog" role="document" style="top:200px;">
@@ -163,7 +209,7 @@
 <script src="{% static 'js/login/scripts.js' %}"></script>
 
 <!--[if lt IE 10]>
-            <script src="{% static 'js/login/placeholder.js' %}"></script>
+            <script src="/static/js/login/placeholder.js"></script>
 <![endif]-->
 
 </body>

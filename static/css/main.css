@@ -1,0 +1,7 @@
+.btn:disabled {
+    background-color: #333;
+}
+
+.btn:disabled :hover {
+    background-color: #333;
+}
