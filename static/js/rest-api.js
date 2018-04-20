@@ -9,5 +9,8 @@ baseUrl = "";
 urls = {
     getMsgCode: baseUrl + "/getMsgCode/",
     checkMsgCode: baseUrl + "/checkMsgCode/",
-    register: baseUrl + "/register/"
+    register: baseUrl + "/register/",
+    login: baseUrl + "/login/",
+    logout: baseUrl + "/logout/",
+    reset_pwd:baseUrl+"/reset_pwd/"
 };

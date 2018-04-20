@@ -93,7 +93,7 @@ jQuery(document).ready(function () {
         if (!checkEmpty($(this))) {
             return false;
         }
-        if (pwd.length < 6) {
+        if (pwd.length < 6 || pwd.length > 16) {
             alert("请输入6-16位之间的字母和数字");
             return false;
         }
@@ -125,14 +125,13 @@ jQuery(document).ready(function () {
             email: email,
             password: $("#form-password").val(),
         };
-        console.log(data);
-        // $.post(urls.register, data, function (res) {
-        //     if (res.code === 0) {
-        //         window.location.href = "/index.html"
-        //     } else {
-        //         alert(res.msg)
-        //     }
-        // })
+        $.post(urls.register, data, function (res) {
+            if (res.code === 0) {
+                window.location.href = "/record/index/"
+            } else {
+                alert(res.msg)
+            }
+        })
         
         
     })

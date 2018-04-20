@@ -8,6 +8,7 @@ class UserInfo(models.Model):
     email = models.EmailField()
     name = models.CharField(max_length=32)
     date = models.DateTimeField(auto_now_add=True)
+    score = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return "%s %s" % (self.name, self.phone)

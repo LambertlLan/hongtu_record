@@ -8,7 +8,7 @@
 //正则验证手机号
 function checkMobile(phoneNum) {
     if (!(/^1[3|4|5|7|8|9][0-9]\d{5,8}$/.test(phoneNum))) {
-        alert("不是完整的11位手机号或者正确的手机号前七位");
+        alert("不是正确的手机号格式");
         return false;
     } else {
         return true;
@@ -18,7 +18,7 @@ function checkMobile(phoneNum) {
 
 //验证邮箱
 function checkEmail(email) {
-    let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+    let reg = new RegExp("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$");
     return (reg.test(email));
 }
 
@@ -30,9 +30,9 @@ function checkChinese(str) {
 
 //验证验证码
 function checkMsgCode(msgCode) {
-    msgCodeLen = msgCode.length;
-    msgCodeType = typeof msgCode;
-    if (msgCodeLen === 4 || msgCodeType === "number") {
+    let msgCodeLen = msgCode.length;
+    let msgCodeType = typeof msgCode;
+    if (msgCodeLen === 4 && msgCodeType === "number") {
         return true;
     }
 }

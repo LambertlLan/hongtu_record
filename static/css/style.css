@@ -620,7 +620,7 @@ a.banner-icon:focus {
     font-size: 18px;
     color: #fff;
     font-weight: 700;
-    margin-top: 12px;
+    /*margin-top: 12px;*/
     text-align: center;
     letter-spacing: 4px;
 }

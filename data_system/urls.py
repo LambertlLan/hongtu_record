@@ -13,4 +13,5 @@ urlpatterns = [
     path('financial_information/', views.FinancialInformation.as_view()),
     path('select_records/', views.SelectRecords.as_view()),
 
+
 ]

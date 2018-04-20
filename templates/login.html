@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/login/form-elements.css' %}">
     <link rel="stylesheet" href="{% static 'css/login/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,7 +22,8 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-
+    <!--urls-->
+    <script src="{% static 'js/rest-api.js' %}"></script>
 </head>
 
 <body>
@@ -81,20 +83,19 @@
                             <div class="form-group">
                                 <label class="sr-only" for="form-first-name">手机号</label>
                                 <input type="text" name="form-first-name" placeholder="手机号"
-                                       class="form-first-name form-control" id="form-first-name">
+                                       class="form-first-name form-control" id="form-phone">
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-last-name">密码</label>
-                                <input type="text" name="form-last-name" placeholder="密码"
-                                       class="form-last-name form-control" id="form-last-name">
+                                <input type="password" name="form-last-name" placeholder="密码"
+                                       class="form-control form-password" id="form-password">
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="sr-only" for="form-email">验证码</label>
                                 <input type="text" name="form-email" placeholder="验证码"
                                        class="form-email form-control" id="form-email">
-                            </div>
-                            {% csrf_token %}
-                            <button type="submit" class="btn">马上登录</button>
+                            </div>-->
+                            <button type="button" id="loginBtn" class="btn">马上登录</button>
                             <div class="text-right">
                                 <a href="/register/">注册</a> | <a id="forgetBtn" href="javascript:void(0)">忘记密码?</a>
                             </div>
@@ -163,23 +164,20 @@
                     <div class="modal-body">
                         <form class="form ng-pristine ng-valid">
                             <div class="form-group">
-                                <input type="number" class="form-control ng-pristine ng-valid" placeholder="请输入手机号码"
-                                       ng-model="Model.accountName" ng-blur="Model.accountNameBlur()">
+                                <input id="resetPhone" type="number" class="form-control ng-pristine ng-valid" placeholder="请输入手机号码">
                             </div>
                             <div class="form-group" style="margin-top:10px;">
-                                <input type="password" class="form-control ng-pristine ng-valid" placeholder="请输入新密码"
-                                       ng-model="Model.password">
+                                <input id="newPwd" type="password" class="form-control ng-pristine ng-valid" placeholder="请输入新密码">
                             </div>
                             <div class="form-group" style="margin-top:10px;">
-                                <input type="password" class="form-control ng-pristine ng-valid" placeholder="请重新输入新密码"
-                                       ng-model="Model.rePassword">
+                                <input id="repeatNewPwd" type="password" class="form-control ng-pristine ng-valid" placeholder="请重新输入新密码">
                             </div>
                             <div class="form-group" style="margin-top:10px;">
                                 <div class="input-group">
-                                    <input type="number" class="form-control ng-pristine ng-valid"
+                                    <input id="msgCode" type="number" class="form-control ng-pristine ng-valid"
                                            placeholder="请输入短信随机码" style="border-right: none">
                                     <span class="input-group-btn">
-									<button class="btn btn-primary forget-btn" type="button">
+									<button id="getMsgBtn" class="btn btn-primary forget-btn" type="button">
 										<span>发送短信随机码</span>
                                     </button>
                                     </span>
@@ -189,8 +187,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default close-forget" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn viigoo-btn-primary" style="width:100px;"
-                                ng-click="Model.submit($event);" data-loading-text="正在提交">提交
+                        <button id="resetPwdBtn" type="button" class="btn viigoo-btn-primary" style="width:100px;">提交
                         </button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -203,6 +200,7 @@
 
 <!-- Javascript -->
 <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/login/jquery.backstretch.min.js' %}"></script>
 <script src="{% static 'js/login/retina-1.1.0.min.js' %}"></script>

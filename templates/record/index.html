@@ -9,7 +9,7 @@
                         <img src="{% static 'img/icon_user_header.png' %}" class="img-responsive">
                     </i>
                     <div class="text">
-                        <p>欢迎，lambert</p>
+                        <p>欢迎，{{ request.session.user_data.name }}</p>
                         <p>当前为实名认证用户</p>
                     </div>
                     <a class="m-btn" href="http://www.91zhengxin.com/accUpgradeV.do">
@@ -25,7 +25,7 @@
                     <div class="text">
                         <p>可用积分</p>
                         <p>
-                            <strong>100分</strong>
+                            <strong>{{ request.session.user_data.score }}分</strong>
                         </p>
                     </div>
                     <a class="m-btn" href="http://www.91zhengxin.com/accRechargeV.do">立即充值</a>

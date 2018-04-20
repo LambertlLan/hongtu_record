@@ -171,8 +171,9 @@ ul.navbar-nav {
 }
 
 .navbar-brand {
-    width: 123px;
-    background: url(../../img/login_logo.png) left center no-repeat;
+    width: 218px;
+    height: 73px;
+    background: url(../../img/logo.png) left center no-repeat;
     text-indent: -99999px;
 }
 
@@ -342,16 +343,17 @@ ul.navbar-nav {
 
     /* logo */
     .navbar-brand {
-        background-image: url(../../img/login_logo@2x.png) !important;
+        background-image: url(../../img/logo.png) !important;
         background-repeat: no-repeat !important;
-        background-size: 123px 49px !important;
+        background-size: 134px 45px !important;
     }
 
 }
+
 /* forget password */
-.input-group-btn button.forget-btn{
+.input-group-btn button.forget-btn {
     line-height: inherit;
-    height:auto;
-    border:1px solid #ccc;
+    height: auto;
+    border: 1px solid #ccc;
     padding: 2px 20px;
 }

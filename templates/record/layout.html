@@ -31,21 +31,21 @@
     <div class="header-acc container-fluid">
         <div class="container">
             <div class="top-bar-logo">
-                <a href="/index.html">
-                    <img src="{% static 'img/logo_max.png' %}" class="img-responsive">
+                <a href="/index/">
+                    <img src="{% static 'img/logo.png' %}" style="max-width: 90%" class="img-responsive">
                 </a>
             </div>
             <ul class="list-unstyled pull-right max-nav">
                 <li>
-                    <a>您好，</a>
+                    <a>您好，{{ request.session.user_data.name }}:</a>
                     <a href="">{{ request.session.user_data.phone }}</a>
                 </li>
                 <li>
                     <a>可用积分</a>
-                    <a href="">100</a>
+                    <a href="">{{ request.session.user_data.score }}</a>
                 </li>
                 <li>
-                    <a class="quit">退出</a>
+                    <a class="quit" href="javascript:void(0)">退出</a>
                 </li>
             </ul>
             <a class="min-nav pull-right">
@@ -55,7 +55,7 @@
         <div class="mobileMenu" id="mobileMenu">
             <ul class="list-unstyled">
                 <li class="title">
-                    <a href="index.html">账户首页</a>
+                    <a href="/record/index">账户首页</a>
                 </li>
             </ul>
             <ul class="list-unstyled">
@@ -186,6 +186,7 @@
         </div>
     </div>
 </footer>
+<script src="{% static 'js/rest-api.js' %}"></script>
 <script src="{% static 'js/record/base.js' %}"></script>
 {% block javascript %}
 

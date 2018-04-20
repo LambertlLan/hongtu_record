@@ -10,7 +10,7 @@
     <meta name="author" content="Lambert">
     <meta name="email" content="453653020@qq.com">
     <title>宏图数据</title>
-
+    
     <!-- CSS -->
     <!--==== bootstrap ====-->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -22,12 +22,12 @@
     <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
     <!--==== animate css ====-->
     <link href="{% static 'css/animate.css' %}" rel="stylesheet">
-
+    
     <!--==== style css ====-->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <!--==== responsive css ====-->
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
-
+    
     <!-- Js -->
     <!--==== jquery ====-->
     <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
@@ -35,10 +35,10 @@
     <script src="{% static 'js/html5shiv/3.7.2/html5shiv.min.js'%}"></script>
     <script src="{% static 'js/respond/1.4.2/respond.min.js'%}"></script>
     <![endif]-->
-
-
+    
+    
     {% block css %}
-
+    
     {% endblock %}
 </head>
 <body>
@@ -59,8 +59,8 @@
         </div>
     </div> -->
     <!--==== DEMO COLOR PANEL ===-->
-
-
+    
+    
     <!--===== Preloader ====-->
     <div class="preloader">
         <div class="spinner">
@@ -70,7 +70,7 @@
     </div>
     <!--=====****************** INTRO SECTION ****************************=====-->
     <div id="home" class="intro-section">
-
+        
         <!--===== HEADER AREA =====-->
         <header class="navbar custom-navbar top-nav-collapse">
             <div class="container">
@@ -86,11 +86,11 @@
                                     <span class="icon-bar"></span>
                                 </button>
                             </div>
-                            <a href="#home">宏图数据</a>
+                            <a href="#home"><img src="{% static 'img/logo.png' %}" alt="logo" class="img-responsive"></a>
                             <!--== logo ==-->
                         </div>
                     </div>
-
+                    
                     <div class="col-md-9 col-sm-9 col-xs-12">
                         <nav class="main-menu">
                             <div class="navbar-collapse collapse">
@@ -113,7 +113,8 @@
                                     </li>
                                     <li class="smooth-scroll">
                                         {% if request.session.user_data %}
-                                            <span class="theme-color">欢迎您:{{ request.session.user_data.name }}</span>
+                                            <a class="theme-color"
+                                               href="javascript:void(0)">欢迎您:{{ request.session.user_data.name }}</a>
                                         {% else %}
                                             <a class="theme-color" href="/login/">登录</a>
                                         {% endif %}
@@ -122,13 +123,13 @@
                             </div>
                         </nav>
                     </div>
-
+                
                 </div>
-
+            
             </div>
         </header>
         <!--===== END HEADER AREA ======-->
-
+        
         <!--======= BANNER AREA =======-->
         <div class="welcome-area">
             <div id="particles-js"></div>
@@ -136,7 +137,7 @@
                 <div class="welcome-cell">
                     <div class="container">
                         <div class="row">
-
+                            
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="welcome-text text-center wow bounceInDown" data-wow-delay="0.2s">
                                     <h4>三步降低你的信贷风险</h4>
@@ -146,7 +147,7 @@
                                     <a class="btn theme-color" href="/record/index"> 马上使用</a>
                                 </div>
                             </div>
-
+                        
                         </div>
                     </div>
                 </div>
@@ -156,10 +157,10 @@
             </a>
         </div>
         <!--===== END WELCOME AREA =====-->
-
+    
     </div>
-
-
+    
+    
     <div class="content">
         {% block content %}
         {% endblock %}
@@ -172,9 +173,9 @@
                     <div class="footer-text wow fadeInUp" data-wow-delay="0.2s">
                         <p>联系电话：400-902-9822 邮箱：marketing@vigoomall.com</p>
                         <p>Copyright &copy; 2017.Company name All rights reserved.
-
+                        
                         </p>
-
+                    
                     </div>
                 </div>
             </div>

@@ -13,48 +13,51 @@ $(function () {
             o.addClass("active");
         }
     });
-    if(!placeholderSupport()){
-        $('[placeholder]').focus(function() {
+    if (!placeholderSupport()) {
+        $('[placeholder]').focus(function () {
             var input = $(this);
             if (input.val() == input.attr('placeholder')) {
                 input.val('');
                 input.removeClass('placeholder');
             }
-        }).blur(function() {
+        }).blur(function () {
             var input = $(this);
             if (input.val() == '' || input.val() == input.attr('placeholder')) {
                 input.addClass('placeholder');
                 input.val(input.attr('placeholder'));
             }
         }).blur();
-    };
+    }
+    ;
 });
+
 function placeholderSupport() {
     return 'placeholder' in document.createElement('input');
 }
+
 $(".header .min-nav").on("click", function () {
-    var e=$(this);
+    var e = $(this);
     var mobileMenu = $("#mobileMenu");
     if (mobileMenu.hasClass("open")) {
         mobileMenu.removeClass("open");
         e.removeClass("open");
         mobileMenu.animate({
-            "height":"0px",
-        },500,function () {
-            mobileMenu.css("visibility","hidden");
+            "height": "0px",
+        }, 500, function () {
+            mobileMenu.css("visibility", "hidden");
         });
     } else {
         mobileMenu.addClass("open");
         e.addClass("open");
         mobileMenu.animate({
-            "height":(mobileMenu.find("li").length*41)+2+"px",
-        },500);
-        mobileMenu.css("visibility","visible");
+            "height": (mobileMenu.find("li").length * 41) + 2 + "px",
+        }, 500);
+        mobileMenu.css("visibility", "visible");
     }
 })
 $(".header-acc .min-nav").on("click", function () {
     var mobileMenu = $("#mobileMenu");
-    var e=$(this);
+    var e = $(this);
     if (mobileMenu.hasClass("open")) {
         mobileMenu.removeClass("open");
         e.removeClass("open");
@@ -63,15 +66,16 @@ $(".header-acc .min-nav").on("click", function () {
         e.addClass("open");
     }
 })
+
 function returnCode(code) {
     switch (code) {
-        case "0000":
+        case 0:
             return true;
             break;
         case "9998":
-            if(userType==3){
-                sky.promptWin("提示","<p>您是企业账号请使用U-Key登录系统查询！</p>");
-            }else {
+            if (userType == 3) {
+                sky.promptWin("提示", "<p>您是企业账号请使用U-Key登录系统查询！</p>");
+            } else {
                 sky.permitPrompt(userType);
             }
             return false;
@@ -85,6 +89,7 @@ function returnCode(code) {
             break;
     }
 }
+
 function formatDate(t) {//格式化时间戳
     var time = new Date(parseInt(t));
     var year = time.getFullYear();
@@ -104,6 +109,7 @@ function formatDate(t) {//格式化时间戳
     }
     return year + "-" + month + "-" + date;
 }
+
 function formatDateMonth(t) {//格式化时间戳
     var time = new Date(t);
     var year = time.getFullYear();
@@ -123,6 +129,7 @@ function formatDateMonth(t) {//格式化时间戳
     }
     return year + "-" + month;
 }
+
 function GetRequest() {
     var url = location.search;
     var theRequest = new Object();
@@ -135,33 +142,35 @@ function GetRequest() {
     }
     return theRequest;
 }
+
 function cutOffData(str) {
     if (str.length != 6) {
         return str;
     }
     return str.substring(0, 4) + "-" + str.substring(4);
 }
-function setCookie(name,value)
-{
+
+function setCookie(name, value) {
     var Days = 30;
     var exp = new Date();
-    exp.setTime(exp.getTime() + Days*24*60*60*1000);
-    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
 }
-function getCookie(name)
-{
-    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
 
-    if(arr=document.cookie.match(reg))
-
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    
+    if (arr = document.cookie.match(reg))
+        
         return unescape(arr[2]);
     else
         return null;
 }
+
 //出生日期年龄计算
 function calculateAge(str) {
     var r = str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
-    if (r == null)return false;
+    if (r == null) return false;
     var d = new Date(r[1], r[3] - 1, r[4]);
     if (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4]) {
         var Y = new Date().getFullYear();
@@ -169,6 +178,7 @@ function calculateAge(str) {
     }
     return ("出生日期格式不正确");
 }
+
 var sky = (function () {
     var body = $("body");
     var winClose = function () {
@@ -242,6 +252,7 @@ var sky = (function () {
             '<a class="m-btn" id="sky_sub" style="display: block;background-color: #2a86ff;border-color: #2a86ff">登录</a><a class="pull-right forgetPwd" style="color:#2a86ff" onclick="sky.forgetPwd()">忘记密码</a>' +
             '</div>';
         form(html);
+        
         function sub() {
             var acc_input = $(".sky-win-form .acc");
             var pwd_input = $(".sky-win-form .pwd");
@@ -267,15 +278,15 @@ var sky = (function () {
                     password: pwd
                 },
                 success: function (res) {
-                    try{
+                    try {
                         sky.lodingClose();
                         if (returnCode(res.retCode)) {
-                            location.href="accIndexV.do";
+                            location.href = "accIndexV.do";
                         } else {
                             sky.msg(res.retMsg);
                         }
-                    }catch (e){
-                        sky.msg("发生异常："+e);
+                    } catch (e) {
+                        sky.msg("发生异常：" + e);
                     }
                 },
                 error: function (xhr, type) {
@@ -284,13 +295,14 @@ var sky = (function () {
                 }
             })
         }
+        
         $("#sky_sub").click(function () {
             sub()
         });
-
+        
     }
     //注册弹窗
-
+    
     //忘记密码
     var forgetPwd = function () {
         var html = '<div class="sky-form-header"><span class="title">忘记密码</span></div>' +
@@ -316,12 +328,12 @@ var sky = (function () {
             var code_input = $(".sky-win-form .code");
             var pwd_input = $(".sky-win-form .pwd");
             var cpwd_input = $(".sky-win-form .cpwd");
-
+            
             var phone = phone_input.find("input").val();
             var code = code_input.find("input").val();
             var pwd = pwd_input.find("input").val();
             var cpwd = cpwd_input.find("input").val();
-
+            
             if (!Utils.IsMobile(phone)) {
                 phone_input.addClass("warn");
                 sky.msg("您输入的手机号码不正确");
@@ -355,14 +367,14 @@ var sky = (function () {
                 success: function (res) {
                     $(".getImgCode").find("img").attr("src", "message/imageCode.do?" + Math.random());
                     sky.lodingClose();
-                    try{
+                    try {
                         if (returnCode(res.retCode)) {
                             location.replace(document.referrer);
                         } else {
                             sky.msg(res.retMsg);
                         }
-                    }catch (e){
-                        sky.msg("发生异常："+e);
+                    } catch (e) {
+                        sky.msg("发生异常：" + e);
                     }
                 },
                 error: function (xhr, type) {
@@ -423,7 +435,7 @@ var sky = (function () {
     }
     //消息弹窗
     var msg = function (text) {
-        if ($(".sky-msg").length!=0) {
+        if ($(".sky-msg").length != 0) {
             return;
         }
         var html = '<div class="sky-msg">' + text + '</div>';
@@ -494,10 +506,10 @@ var sky = (function () {
         $(".sky-win-bg").click(function () {
             winClose();
         });
-        $(document.body).css({
+        /*$(document.body).css({
             "overflow-x": "hidden",
             "overflow-y": "hidden"
-        });
+        });*/
         $(window).resize(function () {
             if (sky_main) {
                 if (isMobile()) {
@@ -517,20 +529,20 @@ var sky = (function () {
     };
     //退出
     var quit = function () {
-        var h='<div class="sky-quit"><p>您确定退出吗?</p><a class="cancel">取消</a><a class="ok">退出</a></div>';
-        promptWin("提示",h);
+        var h = '<div class="sky-quit"><p>您确定退出吗?</p><a class="cancel">取消</a><a class="ok">退出</a></div>';
+        promptWin("提示", h);
         $(".sky-quit .ok").click(function () {
             $.ajax({
                 type: 'post',
-                url: 'sign/out.do',
-                success: function(res){
-                    if(returnCode(res.retCode)){
-                        location.href="indexV.do";
-                    }else {
-                        sky.msg(res.retMsg);
+                url: urls.logout,
+                success: function (res) {
+                    if (returnCode(res.code)) {
+                        location.href = "/login/";
+                    } else {
+                        sky.msg(res.msg);
                     }
                 },
-                error: function(xhr, type){
+                error: function (xhr, type) {
                     sky.lodingClose();
                     sky.msg("服务器连接错误！");
                 }
@@ -542,17 +554,17 @@ var sky = (function () {
     }
     //免责声明
     var declare = function () {
-        var h='<div class="text-left sky-declare">' +
+        var h = '<div class="text-left sky-declare">' +
             '<p>91征信提醒您：在使用www.91zhengxin.com（以下简称91征信）前，请您务必仔细阅读并透彻理解本声明。您可以选择不使用91征信，但如果您使用，您的使用行为将被视为对本声明全部内容的认可</p>' +
             '<ul class="list-unstyled">' +
-                '<li>1.鉴于91征信以非人工检索方式、根据您提供的内容自动生成由第三方服务商提供的数据内容报告，除91征信注明之服务条款外，其他一切因使用91征信而可能遭致的意外、疏忽、侵权及其造成的损失，91征信对其概不负责，亦不承担任何法律责任。</li>' +
-                '<li>2.任何通过使用91征信而获得的数据信息均由第三方服务商制作或提供，91征信对其数据来源的真实性、准确性概不负责，亦不承担任何法律责任。</li>' +
-                '<li>3.您应该对使用91征信产品产生的结果自行承担风险。91征信不做任何形式的保证：不保证产品结果满足您的要求，不保证服务不中断。因网络状况、通讯线路、第三方网站等任何原因而导致您不能正常使用91征信，91征信不承担任何法律责任。</li>' +
-                '<li>4.91征信尊重并保护所有使用91征信的个人隐私权，您注册的用户名、电子邮件地址等个人资料，非经您亲自许可或根据相关法律、法规的强制性规定，91征信不会主动地泄露给第三方。91征信提醒您：您在使用本产品时所键入的查询信息将不被认为是您的个人隐私资料。</li>' +
-                '<li>5.任何单位或个人认为通过91征信所获得的内容可能涉嫌侵犯其相关权利的，应该及时向91征信提出书面权利通知，并提供身份证明、权属证明及详细侵权情况证明。91征信在收到上述法律文件后，将会依法保护您的权利不受侵犯。</li>' +
+            '<li>1.鉴于91征信以非人工检索方式、根据您提供的内容自动生成由第三方服务商提供的数据内容报告，除91征信注明之服务条款外，其他一切因使用91征信而可能遭致的意外、疏忽、侵权及其造成的损失，91征信对其概不负责，亦不承担任何法律责任。</li>' +
+            '<li>2.任何通过使用91征信而获得的数据信息均由第三方服务商制作或提供，91征信对其数据来源的真实性、准确性概不负责，亦不承担任何法律责任。</li>' +
+            '<li>3.您应该对使用91征信产品产生的结果自行承担风险。91征信不做任何形式的保证：不保证产品结果满足您的要求，不保证服务不中断。因网络状况、通讯线路、第三方网站等任何原因而导致您不能正常使用91征信，91征信不承担任何法律责任。</li>' +
+            '<li>4.91征信尊重并保护所有使用91征信的个人隐私权，您注册的用户名、电子邮件地址等个人资料，非经您亲自许可或根据相关法律、法规的强制性规定，91征信不会主动地泄露给第三方。91征信提醒您：您在使用本产品时所键入的查询信息将不被认为是您的个人隐私资料。</li>' +
+            '<li>5.任何单位或个人认为通过91征信所获得的内容可能涉嫌侵犯其相关权利的，应该及时向91征信提出书面权利通知，并提供身份证明、权属证明及详细侵权情况证明。91征信在收到上述法律文件后，将会依法保护您的权利不受侵犯。</li>' +
             '</ul>' +
             '</div>';
-        promptWin("免责声明",h);
+        promptWin("免责声明", h);
     }
     //企业用户UKey登录提示
     var loginPrompt = function () {
@@ -563,32 +575,32 @@ var sky = (function () {
     }
     //用户权限升级提示
     var permitPrompt = function (id) {
-        var user="";
-        switch (parseInt(id)){
+        var user = "";
+        switch (parseInt(id)) {
             case 0:
-                user="普通用户";
+                user = "普通用户";
                 break;
             case 1:
-                user="实名用户";
+                user = "实名用户";
                 break;
             case 2:
-                user="U-Key用户";
+                user = "U-Key用户";
                 break;
             case 3:
-                user="企业用户";
+                user = "企业用户";
                 break;
             default:
-                user="未知用户";
+                user = "未知用户";
                 break;
         }
-        var html = '<div class="permit"><p class="text-left">您当前为'+user+'，没有该项目查询权限，账户升级后即可查询。</p>' +
+        var html = '<div class="permit"><p class="text-left">您当前为' + user + '，没有该项目查询权限，账户升级后即可查询。</p>' +
             '<a class="m-btn">立刻升级</a></div>';
         promptWin("提示", html);
         $(".m-btn").click(function () {
-            if(parseInt(id)==1){
-                location.href="accUpgradeV.do";
-            }else if(parseInt(id)==0) {
-                location.href="accVerifiedV.do";
+            if (parseInt(id) == 1) {
+                location.href = "accUpgradeV.do";
+            } else if (parseInt(id) == 0) {
+                location.href = "accVerifiedV.do";
             }
         });
     }
@@ -598,7 +610,7 @@ var sky = (function () {
             '<a class="m-btn">立刻充值</a></div>';
         promptWin("提示", html);
         $(".m-btn").click(function () {
-            location.href="accRechargeV.do";
+            location.href = "accRechargeV.do";
         });
     }
     //授权说明
@@ -621,7 +633,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var data = res.data;
                         var html = '<div class="box"><div class="tabBox"><table class="text-center record table">' +
@@ -659,8 +671,8 @@ var sky = (function () {
                             '</table></div></div>';
                         win("逾期记录", html);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -681,7 +693,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var data = res.data.data;
                         var html = '<div class="box">' +
@@ -703,36 +715,36 @@ var sky = (function () {
                                 '<td>（开发中，暂无）</td>' +
                                 '</tr>';
                             for (var i in data) {
-                                if(data[i].borrowType==0){
-                                    data[i].borrowType="未知"
-                                }else if(data[i].borrowType==1){
-                                    data[i].borrowType="个人信贷"
-                                }else if(data[i].borrowType==2){
-                                    data[i].borrowType="个人抵押"
-                                }else if(data[i].borrowType==3){
-                                    data[i].borrowType="企业信贷"
-                                }else if(data[i].borrowType==4){
-                                    data[i].borrowType="企业抵押"
-                                }else {
-                                    data[i].borrowType="未知"
+                                if (data[i].borrowType == 0) {
+                                    data[i].borrowType = "未知"
+                                } else if (data[i].borrowType == 1) {
+                                    data[i].borrowType = "个人信贷"
+                                } else if (data[i].borrowType == 2) {
+                                    data[i].borrowType = "个人抵押"
+                                } else if (data[i].borrowType == 3) {
+                                    data[i].borrowType = "企业信贷"
+                                } else if (data[i].borrowType == 4) {
+                                    data[i].borrowType = "企业抵押"
+                                } else {
+                                    data[i].borrowType = "未知"
                                 }
-
-                                if(data[i].borrowState==0){
-                                    data[i].borrowState="未知"
-                                }else if(data[i].borrowState==1){
-                                    data[i].borrowState="拒贷"
-                                }else if(data[i].borrowState==2){
-                                    data[i].borrowState="批贷已放款"
-                                }else if(data[i].borrowState==4){
-                                    data[i].borrowState="借款人放弃申请"
-                                }else if(data[i].borrowState==5){
-                                    data[i].borrowState="审核中"
-                                }else if(data[i].borrowState==6){
-                                    data[i].borrowState="待放款"
-                                }else {
-                                    data[i].borrowState="未知"
+                                
+                                if (data[i].borrowState == 0) {
+                                    data[i].borrowState = "未知"
+                                } else if (data[i].borrowState == 1) {
+                                    data[i].borrowState = "拒贷"
+                                } else if (data[i].borrowState == 2) {
+                                    data[i].borrowState = "批贷已放款"
+                                } else if (data[i].borrowState == 4) {
+                                    data[i].borrowState = "借款人放弃申请"
+                                } else if (data[i].borrowState == 5) {
+                                    data[i].borrowState = "审核中"
+                                } else if (data[i].borrowState == 6) {
+                                    data[i].borrowState = "待放款"
+                                } else {
+                                    data[i].borrowState = "未知"
                                 }
-
+                                
                                 if (data[i].repayState == 0) {
                                     data[i].repayState = "未知"
                                 } else if (data[i].repayState == 1) {
@@ -749,34 +761,34 @@ var sky = (function () {
                                     data[i].repayState = "M5"
                                 } else if (data[i].repayState == 7) {
                                     data[i].repayState = "M6"
-                                } else if(data[i].repayState == 8){
+                                } else if (data[i].repayState == 8) {
                                     data[i].repayState = "M6+"
-                                }else if(data[i].repayState == 9){
+                                } else if (data[i].repayState == 9) {
                                     data[i].repayState = "已还清"
-                                }else {
+                                } else {
                                     data[i].repayState = "未知"
                                 }
-                                var borrowAmount=parseInt(data[i].borrowAmount);
-                                if(borrowAmount==-7){
-                                    borrowAmount="0~1000";
-                                }else if(borrowAmount==-6){
-                                    borrowAmount="1000~2000";
-                                }else if(borrowAmount==-5){
-                                    borrowAmount="2000~3000";
-                                }else if(borrowAmount==-4){
-                                    borrowAmount="3000~4000";
-                                }else if(borrowAmount==-3){
-                                    borrowAmount="4000~6000";
-                                }else if(borrowAmount==-2){
-                                    borrowAmount="6000~8000";
-                                }else if(borrowAmount==-1){
-                                    borrowAmount="8000~10000";
-                                }else if(borrowAmount==0){
-                                    borrowAmount="未知";
-                                }else if(borrowAmount==1){
-                                    borrowAmount="1~2万";
-                                }else{
-                                    borrowAmount=borrowAmount*2-2+"~"+borrowAmount*2+"万";
+                                var borrowAmount = parseInt(data[i].borrowAmount);
+                                if (borrowAmount == -7) {
+                                    borrowAmount = "0~1000";
+                                } else if (borrowAmount == -6) {
+                                    borrowAmount = "1000~2000";
+                                } else if (borrowAmount == -5) {
+                                    borrowAmount = "2000~3000";
+                                } else if (borrowAmount == -4) {
+                                    borrowAmount = "3000~4000";
+                                } else if (borrowAmount == -3) {
+                                    borrowAmount = "4000~6000";
+                                } else if (borrowAmount == -2) {
+                                    borrowAmount = "6000~8000";
+                                } else if (borrowAmount == -1) {
+                                    borrowAmount = "8000~10000";
+                                } else if (borrowAmount == 0) {
+                                    borrowAmount = "未知";
+                                } else if (borrowAmount == 1) {
+                                    borrowAmount = "1~2万";
+                                } else {
+                                    borrowAmount = borrowAmount * 2 - 2 + "~" + borrowAmount * 2 + "万";
                                 }
                                 html += '<tr>' +
                                     '<td class="bg-color-lGreen text-center" colspan="4"><span class="icon icon-number">' + (parseInt(i) + 1) + '</span></td>' +
@@ -801,7 +813,7 @@ var sky = (function () {
                                     '</tr>' +
                                     '<tr>' +
                                     '<td class="title">欠款金额</td>' +
-                                    '<td>' + (data[i].arrearsAmount/100000) + '</td>' +
+                                    '<td>' + (data[i].arrearsAmount / 100000) + '</td>' +
                                     '<td class="title">数据反馈商</td>' +
                                     '<td>' + data[i].companyCode + '</td>' +
                                     '</tr>';
@@ -825,8 +837,8 @@ var sky = (function () {
                             '</div>';
                     }
                     win("小贷记录明细（多重负债）", html);
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -837,7 +849,7 @@ var sky = (function () {
     };
     //地址信息
     var addressInfo = function (id) {
-
+        
         sky.loding();
         $.ajax({
             type: 'post',
@@ -848,7 +860,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var data = res.data;
                         var html = '<div class="box">' +
@@ -897,8 +909,8 @@ var sky = (function () {
                         '</div>';
                     }
                     win("地址信息", html);
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -919,7 +931,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var data = res.data;
                         var html = '<div class="box"><div class="tabBox"><table class="table td-4">' +
@@ -984,8 +996,8 @@ var sky = (function () {
                             '</div></div>';
                     }
                     win("失信及被执行信息汇总", html);
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -995,7 +1007,7 @@ var sky = (function () {
         });
     };
     //犯罪在逃信息
-    var criminalInfo = function (id,realName,idCard) {
+    var criminalInfo = function (id, realName, idCard) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1006,7 +1018,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     var data = res.data;
                     var html = '<div class="box">' +
                         '<div class="tabBox"><table class="table td-4">';
@@ -1020,27 +1032,27 @@ var sky = (function () {
                                 '</tr>' +
                                 '<tr>' +
                                 '<td class="bg-color-lGreen color-red text-center" colspan="4">' + data.message + '</td>' +
-                                '</tr>'+
-                                '<table class="table td-3 m-t-2">'+
+                                '</tr>' +
+                                '<table class="table td-3 m-t-2">' +
                                 '<tr>' +
                                 '<td colspan="2" class="title">案件时间</td>' +
                                 '<td class="title">案件类型</td>' +
                                 '<td class="title">案件类型描述</td>' +
-                                '</tr>' ;
-                            if(data.data!=null){
-                                for(var i in data.data){
-                                    html+='<tr>'+
-                                        '<td colspan="2">'+data.data[i].caseTime+'</td>'+
-                                        '<td>'+data.data[i].caseType+'</td>'+
-                                        '<td>'+data.data[i].caseSource+'</td>'+
+                                '</tr>';
+                            if (data.data != null) {
+                                for (var i in data.data) {
+                                    html += '<tr>' +
+                                        '<td colspan="2">' + data.data[i].caseTime + '</td>' +
+                                        '<td>' + data.data[i].caseType + '</td>' +
+                                        '<td>' + data.data[i].caseSource + '</td>' +
                                         '</tr>';
                                 }
-                            }else{
-                                html+='<tr>'+
-                                '<td colspan="4">暂无相关数据</td>'+
-                                '</tr>';
+                            } else {
+                                html += '<tr>' +
+                                    '<td colspan="4">暂无相关数据</td>' +
+                                    '</tr>';
                             }
-                            html+='</table>';
+                            html += '</table>';
                         } else {
                             html += '<tr>' +
                                 '<td class="title">姓名</td>' +
@@ -1053,9 +1065,9 @@ var sky = (function () {
                                 '<p class="result color-green text-center">比对结果：无犯罪在逃记录</p>' +
                                 '</div>';
                         }
-                    html += '</table>' +
-                        '</div>' +
-                        '</div>';
+                        html += '</table>' +
+                            '</div>' +
+                            '</div>';
                     } else {
                         sky.msg(res.retMsg);
                         html += '<tr>' +
@@ -1066,8 +1078,8 @@ var sky = (function () {
                             '</div>';
                     }
                     win("犯罪在逃信息查询", html);
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1088,7 +1100,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var data = res.data;
                         var html = '<div class="box">' +
@@ -1210,8 +1222,8 @@ var sky = (function () {
                             '</div>';
                         win("个人工商信息", html);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1232,7 +1244,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var html = '<div class="box">' +
                             '<div class="tabBox">' +
@@ -1271,15 +1283,15 @@ var sky = (function () {
                             '<div class="tabBox">' +
                             '<table class="table m-t-2 td-4">' +
                             '<tr>' +
-                            '<td class="text-center" colspan="4">暂无数据</td>'+
+                            '<td class="text-center" colspan="4">暂无数据</td>' +
                             '</tr>' +
                             '</table>' +
                             '</div>' +
                             '</div>';
                     }
                     win("小贷记录统计值", html);
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1300,7 +1312,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var companySearchInfo = res.data.companySearchInfo;
                         var userSearchInfo = res.data.userSearchInfo;
@@ -1403,8 +1415,8 @@ var sky = (function () {
                             '</div>';
                         win("身份查询记录", html);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1425,13 +1437,13 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     var html = null;
                     if (res.retCode == "0000") {
                         var data = res.data;
                         if (data.status == "SAME") {
                             if (data.photo != null) {
-                                html ='<div class="box">' +
+                                html = '<div class="box">' +
                                     '<div class="tabBox"><table class="table">' +
                                     '<tr><td>姓名：' + data.realName + '</td><td>年龄：' + calculateAge(data.data.birthday) + '</td><td rowspan="3" class="text-center"><img class="photo" src="data:img/jpeg;base64,' + data.photo + '"></td></tr>' +
                                     '<tr><td>性别：' + data.data.sex + '</td><td>出生日期：' + data.data.birthday + '</td></tr>' +
@@ -1464,8 +1476,8 @@ var sky = (function () {
                             '</div>';
                     }
                     win("身份证照片查询", html);
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1486,7 +1498,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var data = res.data;
                         var html = '<div class="box">';
@@ -1550,14 +1562,14 @@ var sky = (function () {
                         win("同住址成员信息", html);
                     } else {
                         sky.msg(res.retMsg);
-                        var html = '<div class="box">'+
+                        var html = '<div class="box">' +
                             '<div class="tabBox"><table class="table"><tr>' +
                             '<td class="text-center">查询失败</td>' +
                             '</tr></table></div></div>';
                         win("同住址成员信息", html);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1635,7 +1647,7 @@ var sky = (function () {
                 id: id
             },
             success: function (res) {
-                try{
+                try {
                     sky.lodingClose();
                     if (returnCode(res.retCode)) {
                         var status = null;
@@ -1678,8 +1690,8 @@ var sky = (function () {
                             '</div>';
                         win("手机实名认证", html);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1735,42 +1747,42 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
-                    var data=res.data;
-                    if(returnCode(res.retCode)){
-                        var html='<div class="box"><div class="tabBox"><table class="text-center table">' +
+                try {
+                    var data = res.data;
+                    if (returnCode(res.retCode)) {
+                        var html = '<div class="box"><div class="tabBox"><table class="text-center table">' +
                             '<tr>' +
                             '<td class="sky-tab-title">银行卡</td>' +
-                            '<td>'+data.bankNo+'</td>' +
-                            '</tr>' ;
-                        if(data.datas.length!=0){
-                            for(var i in data.datas){
-                                html+='<tr class="sky-tab-title">' +
+                            '<td>' + data.bankNo + '</td>' +
+                            '</tr>';
+                        if (data.datas.length != 0) {
+                            for (var i in data.datas) {
+                                html += '<tr class="sky-tab-title">' +
                                     '<td>其他银行卡号</td>' +
                                     '<td>被查询时间</td>' +
                                     '</tr>' +
                                     '<tr>' +
-                                    '<td>'+data.datas[i].bankNo+'</td>' +
-                                    '<td>'+data.datas[i].searchTime+'</td>' +
-                                    '</tr>' ;
+                                    '<td>' + data.datas[i].bankNo + '</td>' +
+                                    '<td>' + data.datas[i].searchTime + '</td>' +
+                                    '</tr>';
                             }
-                        }else{
-                            html+='<tr>'+
-                                '<td class="text-center" colspan="2">暂无数据</td>'+
-                                '</tr>' ;
+                        } else {
+                            html += '<tr>' +
+                                '<td class="text-center" colspan="2">暂无数据</td>' +
+                                '</tr>';
                         }
-                        html+='</table></div></div>';
+                        html += '</table></div></div>';
                         win("银行卡查询记录", html);
-                    }else{
-                        var html='<div class="box"><div class="tabBox"><table class="text-center table">' +
+                    } else {
+                        var html = '<div class="box"><div class="tabBox"><table class="text-center table">' +
                             '<tr>' +
-                            '<td class="text-center" colspan="2">暂无数据</td>'+
-                            '</tr>'+
+                            '<td class="text-center" colspan="2">暂无数据</td>' +
+                            '</tr>' +
                             '</table></div></div>';
                         sky.msg(res.retMsg);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1796,7 +1808,7 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var html = '<div class="box">' +
                             '<div class="searchResult text-center"><div class="result" style="padding-top: 20px">'
@@ -1814,7 +1826,7 @@ var sky = (function () {
                                     '<p class="color-red">未查到相关数据</p>'
                                 break;
                         }
-
+                        
                         html += '</div>' +
                             '</div>' +
                             '</div>';
@@ -1823,16 +1835,16 @@ var sky = (function () {
                         sky.msg(res.retMsg);
                         var html = '<div class="box">' +
                             '<div class="searchResult text-center">' +
-                                '<div class="result" style="padding-top: 20px">' +
-                                    '<img src="img/icon_fails.png" class="img-responsive">' +
-                                    '<p class="color-red">未查到相关数据</p>' +
-                                '</div>' +
+                            '<div class="result" style="padding-top: 20px">' +
+                            '<img src="img/icon_fails.png" class="img-responsive">' +
+                            '<p class="color-red">未查到相关数据</p>' +
+                            '</div>' +
                             '</div>' +
                             '</div>';
                         win(type, html);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -1853,14 +1865,14 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var data = res.data;
                         var html = '<div class="box">' +
                             '<p class="small sky-title bg-color-lGreen">基础信息</p>' +
                             '<div class="tabBox">';
-                        if(data){
-                            html+='<table class="table m-t-2 text-left td-4">' +
+                        if (data) {
+                            html += '<table class="table m-t-2 text-left td-4">' +
                                 '<tr>' +
                                 '<td class="title">是否有房</td>' +
                                 '<td>' + (data.assetIndex.hasRoom == true ? "有" : "无") + '</td>' +
@@ -1971,7 +1983,7 @@ var sky = (function () {
                                 '<td>消费笔数</td>' +
                                 '<td>消费金额</td>' +
                                 '</tr>';
-
+                            
                             if (data.consumeCategory.length != 0) {
                                 html += '<tr>' +
                                     '<td>' + data.consumeCategory[i].categoryName + '</td>' +
@@ -2009,7 +2021,7 @@ var sky = (function () {
                             html += '</table>' +
                                 '</div>' +
                                 '</div>';
-                        }else {
+                        } else {
                             html += '<table class="table m-t-2 text-center"><tr><td>暂无数据</td></tr></table>' +
                                 '</div>' +
                                 '</div>';
@@ -2019,14 +2031,14 @@ var sky = (function () {
                         sky.msg(res.retMsg);
                         var html = '<div class="box">' +
                             '<p class="small sky-title bg-color-lGreen">基础信息</p>' +
-                            '<div class="tabBox">'+
+                            '<div class="tabBox">' +
                             '<table class="table m-t-2 text-center"><tr><td>暂无数据</td></tr></table>' +
                             '</div>' +
                             '</div>';
                         win("银行卡画像", html);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -2046,318 +2058,318 @@ var sky = (function () {
             },
             success: function (res) {
                 sky.lodingClose();
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var data = res.data;
                         var html = '<div class="box">' +
                             '<div class="tabBox">';
-                        if(!$.isEmptyObject(data.centreConsumeIndex)){
-                            var centreConsumeIndex=data.centreConsumeIndex;
-                            html+='<table class="table text-left td-4 base">'+
-                                '<tr>'+
-                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 基础信息</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">银行卡类型</td>'+
-                                '	<td>'+centreConsumeIndex.cardProperty+'</td>'+
-                                '	<td class="title">取现总金额</td>'+
-                                '	<td>'+centreConsumeIndex.cashTotalAmt+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">取现总笔数</td>'+
-                                '	<td>'+centreConsumeIndex.cashTotalCnt+'</td>'+
-                                '	<td class="title">首次交易日期</td>'+
-                                '	<td>'+centreConsumeIndex.firstTransDate+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">常住城市</td>'+
-                                '	<td>'+centreConsumeIndex.fromCity+'</td>'+
-                                '	<td class="title">最大单月消费金额</td>'+
-                                '	<td>'+centreConsumeIndex.monthCardLargeAmt+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">12月没有交易周数占比</td>'+
-                                '	<td>'+centreConsumeIndex.noTransWeekPre+'</td>'+
-                                '	<td class="title">还款总金额</td>'+
-                                '	<td>'+centreConsumeIndex.refundTotalAmt+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">还款总笔数</td>'+
-                                '	<td>'+centreConsumeIndex.refundTotalCnt+'</td>'+
-                                '	<td class="title">刚需类消费占比</td>'+
-                                '	<td>'+centreConsumeIndex.rigidTransAmtPre+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">消费总金额</td>'+
-                                '	<td>'+centreConsumeIndex.transTotalAmt+'</td>'+
-                                '	<td class="title">消费总笔数</td>'+
-                                '	<td>'+centreConsumeIndex.transTotalCnt+'</td>'+
-                                '</tr>'+
+                        if (!$.isEmptyObject(data.centreConsumeIndex)) {
+                            var centreConsumeIndex = data.centreConsumeIndex;
+                            html += '<table class="table text-left td-4 base">' +
+                                '<tr>' +
+                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 基础信息</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">银行卡类型</td>' +
+                                '	<td>' + centreConsumeIndex.cardProperty + '</td>' +
+                                '	<td class="title">取现总金额</td>' +
+                                '	<td>' + centreConsumeIndex.cashTotalAmt + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">取现总笔数</td>' +
+                                '	<td>' + centreConsumeIndex.cashTotalCnt + '</td>' +
+                                '	<td class="title">首次交易日期</td>' +
+                                '	<td>' + centreConsumeIndex.firstTransDate + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">常住城市</td>' +
+                                '	<td>' + centreConsumeIndex.fromCity + '</td>' +
+                                '	<td class="title">最大单月消费金额</td>' +
+                                '	<td>' + centreConsumeIndex.monthCardLargeAmt + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">12月没有交易周数占比</td>' +
+                                '	<td>' + centreConsumeIndex.noTransWeekPre + '</td>' +
+                                '	<td class="title">还款总金额</td>' +
+                                '	<td>' + centreConsumeIndex.refundTotalAmt + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">还款总笔数</td>' +
+                                '	<td>' + centreConsumeIndex.refundTotalCnt + '</td>' +
+                                '	<td class="title">刚需类消费占比</td>' +
+                                '	<td>' + centreConsumeIndex.rigidTransAmtPre + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">消费总金额</td>' +
+                                '	<td>' + centreConsumeIndex.transTotalAmt + '</td>' +
+                                '	<td class="title">消费总笔数</td>' +
+                                '	<td>' + centreConsumeIndex.transTotalCnt + '</td>' +
+                                '</tr>' +
                                 '</table>';
-                        }else{
-                            html+='<table class="table text-left td-4 base">'+
-                                '<tr>'+
-                                '	<td class="text-center"> 暂无数据</td>'+
-                                '</tr>'+
-                                '</table>';
-                        }
-                        if(!$.isEmptyObject(data.tradingBehaviour)){
-                            var tradingBehaviour=data.tradingBehaviour;
-                            if(tradingBehaviour.ifHasFamily!="Na") tradingBehaviour.ifHasFamily=tradingBehaviour.ifHasFamily==1?"有":"无";
-                            if(tradingBehaviour.ifHasLotteryTrans!="Na") tradingBehaviour.ifHasLotteryTrans=tradingBehaviour.ifHasLotteryTrans==1?"有":"无";
-                            if(tradingBehaviour.ifHasOverseasTrans!="Na") tradingBehaviour.ifHasOverseasTrans=tradingBehaviour.ifHasOverseasTrans==1?"有":"无";
-                            if(tradingBehaviour.ifHasUnemployed!="Na") tradingBehaviour.ifHasUnemployed=tradingBehaviour.ifHasUnemployed==1?"有":"无";
-                            if(tradingBehaviour.nightConsumptions!="Na") tradingBehaviour.nightConsumptions=tradingBehaviour.nightConsumptions==1?"有":"无";
-                            if(tradingBehaviour.travelConsumptions!="Na") tradingBehaviour.travelConsumptions=tradingBehaviour.travelConsumptions==1?"有":"无";
-                            if(tradingBehaviour.weddingConsumptions!="Na") tradingBehaviour.weddingConsumptions=tradingBehaviour.weddingConsumptions==1?"有":"无";
-                            html+='<table class="table m-t-2 text-left td-4 behavior">'+
-                                '<tr>'+
-                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 交易行为</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">有无家庭特征</td>'+
-                                '	<td>'+tradingBehaviour.ifHasFamily+'</td>'+
-                                '	<td class="title">有无博彩业消费</td>'+
-                                '	<td>'+tradingBehaviour.ifHasLotteryTrans+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">有无境外消费</td>'+
-                                '	<td>'+tradingBehaviour.ifHasOverseasTrans+'</td>'+
-                                '	<td class="title">有无无业特征</td>'+
-                                '	<td>'+tradingBehaviour.ifHasUnemployed+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">有无夜消费</td>'+
-                                '	<td>'+tradingBehaviour.nightConsumptions+'</td>'+
-                                '	<td class="title">有无出差消费</td>'+
-                                '	<td>'+tradingBehaviour.travelConsumptions+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">有无婚庆消费</td>'+
-                                '	<td colspan="3">'+tradingBehaviour.weddingConsumptions+'</td>'+
-                                '</tr>'+
-                                '</table>';
-                        }else{
-                            html+='<table class="table text-left td-4 behavior">'+
-                                '<tr>'+
-                                '	<td class="text-center"> 暂无数据</td>'+
-                                '</tr>'+
+                        } else {
+                            html += '<table class="table text-left td-4 base">' +
+                                '<tr>' +
+                                '	<td class="text-center"> 暂无数据</td>' +
+                                '</tr>' +
                                 '</table>';
                         }
-                        if(!$.isEmptyObject(data.consumeCitys)){
-                            html+='<table class="table m-t-2 td-2 area">'+
-                                '<tr>'+
-                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 消费地域分布</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td colspan="2" class="title text-center">金额分布</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td>城市</td>'+
-                                '	<td>占比</td>'+
+                        if (!$.isEmptyObject(data.tradingBehaviour)) {
+                            var tradingBehaviour = data.tradingBehaviour;
+                            if (tradingBehaviour.ifHasFamily != "Na") tradingBehaviour.ifHasFamily = tradingBehaviour.ifHasFamily == 1 ? "有" : "无";
+                            if (tradingBehaviour.ifHasLotteryTrans != "Na") tradingBehaviour.ifHasLotteryTrans = tradingBehaviour.ifHasLotteryTrans == 1 ? "有" : "无";
+                            if (tradingBehaviour.ifHasOverseasTrans != "Na") tradingBehaviour.ifHasOverseasTrans = tradingBehaviour.ifHasOverseasTrans == 1 ? "有" : "无";
+                            if (tradingBehaviour.ifHasUnemployed != "Na") tradingBehaviour.ifHasUnemployed = tradingBehaviour.ifHasUnemployed == 1 ? "有" : "无";
+                            if (tradingBehaviour.nightConsumptions != "Na") tradingBehaviour.nightConsumptions = tradingBehaviour.nightConsumptions == 1 ? "有" : "无";
+                            if (tradingBehaviour.travelConsumptions != "Na") tradingBehaviour.travelConsumptions = tradingBehaviour.travelConsumptions == 1 ? "有" : "无";
+                            if (tradingBehaviour.weddingConsumptions != "Na") tradingBehaviour.weddingConsumptions = tradingBehaviour.weddingConsumptions == 1 ? "有" : "无";
+                            html += '<table class="table m-t-2 text-left td-4 behavior">' +
+                                '<tr>' +
+                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 交易行为</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">有无家庭特征</td>' +
+                                '	<td>' + tradingBehaviour.ifHasFamily + '</td>' +
+                                '	<td class="title">有无博彩业消费</td>' +
+                                '	<td>' + tradingBehaviour.ifHasLotteryTrans + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">有无境外消费</td>' +
+                                '	<td>' + tradingBehaviour.ifHasOverseasTrans + '</td>' +
+                                '	<td class="title">有无无业特征</td>' +
+                                '	<td>' + tradingBehaviour.ifHasUnemployed + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">有无夜消费</td>' +
+                                '	<td>' + tradingBehaviour.nightConsumptions + '</td>' +
+                                '	<td class="title">有无出差消费</td>' +
+                                '	<td>' + tradingBehaviour.travelConsumptions + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">有无婚庆消费</td>' +
+                                '	<td colspan="3">' + tradingBehaviour.weddingConsumptions + '</td>' +
+                                '</tr>' +
+                                '</table>';
+                        } else {
+                            html += '<table class="table text-left td-4 behavior">' +
+                                '<tr>' +
+                                '	<td class="text-center"> 暂无数据</td>' +
+                                '</tr>' +
+                                '</table>';
+                        }
+                        if (!$.isEmptyObject(data.consumeCitys)) {
+                            html += '<table class="table m-t-2 td-2 area">' +
+                                '<tr>' +
+                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 消费地域分布</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td colspan="2" class="title text-center">金额分布</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td>城市</td>' +
+                                '	<td>占比</td>' +
                                 '</tr>';
-                            if(!$.isEmptyObject(data.consumeCitys.consumptionAmt)){
-                                var consumptionAmt=data.consumeCitys.consumptionAmt;
-                                for(var i in consumptionAmt){
-                                    html+='<tr>'+
-                                        '	<td>'+consumptionAmt[i].city+'</td>'+
-                                        '	<td>'+consumptionAmt[i].per+'</td>'+
+                            if (!$.isEmptyObject(data.consumeCitys.consumptionAmt)) {
+                                var consumptionAmt = data.consumeCitys.consumptionAmt;
+                                for (var i in consumptionAmt) {
+                                    html += '<tr>' +
+                                        '	<td>' + consumptionAmt[i].city + '</td>' +
+                                        '	<td>' + consumptionAmt[i].per + '</td>' +
                                         '</tr>';
                                 }
-                            }else{
-                                html+='<tr>'+
-                                    '	<td colspan="2">暂无数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '	<td colspan="2">暂无数据</td>' +
                                     '</tr>';
                             }
-                            html+='<tr>'+
-                                '	<td colspan="2" class="title text-center">笔数分布</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td>城市</td>'+
-                                '	<td>占比</td>'+
+                            html += '<tr>' +
+                                '	<td colspan="2" class="title text-center">笔数分布</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td>城市</td>' +
+                                '	<td>占比</td>' +
                                 '</tr>';
-                            if(!$.isEmptyObject(data.consumeCitys.consumptionTime)){
-                                var consumptionTime=data.consumeCitys.consumptionTime;
-                                for(var i in consumptionTime){
-                                    html+='<tr>'+
-                                        '	<td>'+consumptionTime[i].city+'</td>'+
-                                        '	<td>'+consumptionTime[i].per+'</td>'+
+                            if (!$.isEmptyObject(data.consumeCitys.consumptionTime)) {
+                                var consumptionTime = data.consumeCitys.consumptionTime;
+                                for (var i in consumptionTime) {
+                                    html += '<tr>' +
+                                        '	<td>' + consumptionTime[i].city + '</td>' +
+                                        '	<td>' + consumptionTime[i].per + '</td>' +
                                         '</tr>';
                                 }
-                            }else{
-                                html+='<tr>'+
-                                    '	<td colspan="2">暂无数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '	<td colspan="2">暂无数据</td>' +
                                     '</tr>';
                             }
-
-                            html+='</table>';
-                        }else{
-                            html+='<table class="table text-left td-4 area">'+
-                                '<tr>'+
-                                '	<td class="text-center"> 暂无数据</td>'+
-                                '</tr>'+
+                            
+                            html += '</table>';
+                        } else {
+                            html += '<table class="table text-left td-4 area">' +
+                                '<tr>' +
+                                '	<td class="text-center"> 暂无数据</td>' +
+                                '</tr>' +
                                 '</table>';
                         }
-                        if(!$.isEmptyObject(data.monthConsumption)){
-                            html+='<table class="table m-t-2 text-left td-4 month">'+
-                                '<tr>'+
-                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 每月消费情况</td>'+
+                        if (!$.isEmptyObject(data.monthConsumption)) {
+                            html += '<table class="table m-t-2 text-left td-4 month">' +
+                                '<tr>' +
+                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 每月消费情况</td>' +
                                 '</tr>'
-                            var monthConsumption=data.monthConsumption;
-                            if(!$.isEmptyObject(monthConsumption)){
-                                for(var i in monthConsumption){
-                                    html+='<tr>'+
-                                        '	<th colspan="4">'+(parseInt(i)+1)+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '	<td class="title">消费金额</td>'+
-                                        '	<td>'+monthConsumption[i].amount+'</td>'+
-                                        '	<td class="title">消费笔数</td>'+
-                                        '	<td>'+monthConsumption[i].totalTimes+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '	<td class="title">取现金额</td>'+
-                                        '	<td>'+monthConsumption[i].cashAmt+'</td>'+
-                                        '	<td class="title">取现笔数</td>'+
-                                        '	<td>'+monthConsumption[i].cashCnt+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '	<td class="title">金额本市排名</td>'+
-                                        '	<td>'+monthConsumption[i].amountRanking+'</td>'+
-                                        '	<td class="title">笔数本市排名</td>'+
-                                        '	<td>'+monthConsumption[i].timesRanking+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '	<td class="title">年月</td>'+
-                                        '	<td colspan="3">'+monthConsumption[i].month+'</td>'+
+                            var monthConsumption = data.monthConsumption;
+                            if (!$.isEmptyObject(monthConsumption)) {
+                                for (var i in monthConsumption) {
+                                    html += '<tr>' +
+                                        '	<th colspan="4">' + (parseInt(i) + 1) + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '	<td class="title">消费金额</td>' +
+                                        '	<td>' + monthConsumption[i].amount + '</td>' +
+                                        '	<td class="title">消费笔数</td>' +
+                                        '	<td>' + monthConsumption[i].totalTimes + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '	<td class="title">取现金额</td>' +
+                                        '	<td>' + monthConsumption[i].cashAmt + '</td>' +
+                                        '	<td class="title">取现笔数</td>' +
+                                        '	<td>' + monthConsumption[i].cashCnt + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '	<td class="title">金额本市排名</td>' +
+                                        '	<td>' + monthConsumption[i].amountRanking + '</td>' +
+                                        '	<td class="title">笔数本市排名</td>' +
+                                        '	<td>' + monthConsumption[i].timesRanking + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '	<td class="title">年月</td>' +
+                                        '	<td colspan="3">' + monthConsumption[i].month + '</td>' +
                                         '</tr>';
                                 }
-                            }else{
-                                html+='<tr>'+
-                                    '	<td class="text-center"> 暂无数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '	<td class="text-center"> 暂无数据</td>' +
                                     '</tr>';
                             }
-                            html+='</table>';
-                        }else{
-                            html+='<table class="table text-left td-4 month">'+
-                                '<tr>'+
-                                '	<td class="text-center"> 暂无数据</td>'+
-                                '</tr>'+
+                            html += '</table>';
+                        } else {
+                            html += '<table class="table text-left td-4 month">' +
+                                '<tr>' +
+                                '	<td class="text-center"> 暂无数据</td>' +
+                                '</tr>' +
                                 '</table>';
                         }
-                        if(!$.isEmptyObject(data.specialTradeStatistics)){
-                            var specialTradeStatistics=data.specialTradeStatistics;
-                            html+='<table class="table m-t-2 text-left td-4 special">'+
-                                '<tr>'+
-                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 特殊交易统计</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">博彩业消费金额</td>'+
-                                '	<td>'+specialTradeStatistics.lotteryTransAmt+'</td>'+
-                                '	<td class="title">博彩业消费笔数</td>'+
-                                '	<td>'+specialTradeStatistics.lotteryTransCnt+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">夜消费金额</td>'+
-                                '	<td>'+specialTradeStatistics.nightTransAmt+'</td>'+
-                                '	<td class="title">夜消费笔数</td>'+
-                                '	<td>'+specialTradeStatistics.nightTransCnt+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">网上消费金额</td>'+
-                                '	<td>'+specialTradeStatistics.onlineTransAmt+'</td>'+
-                                '	<td class="title">网上消费笔数</td>'+
-                                '	<td>'+specialTradeStatistics.onlineTransCnt+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">公共事业缴费笔数</td>'+
-                                '	<td>'+specialTradeStatistics.publicPayAmt+'</td>'+
-                                '	<td class="title">公共事业缴费金额</td>'+
-                                '	<td>'+specialTradeStatistics.publicPayCnt+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">纳税金额</td>'+
-                                '	<td>'+specialTradeStatistics.taxAmt+'</td>'+
-                                '	<td class="title">纳税笔数</td>'+
-                                '	<td>'+specialTradeStatistics.taxCnt+'</td>'+
-                                '</tr>'+
+                        if (!$.isEmptyObject(data.specialTradeStatistics)) {
+                            var specialTradeStatistics = data.specialTradeStatistics;
+                            html += '<table class="table m-t-2 text-left td-4 special">' +
+                                '<tr>' +
+                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 特殊交易统计</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">博彩业消费金额</td>' +
+                                '	<td>' + specialTradeStatistics.lotteryTransAmt + '</td>' +
+                                '	<td class="title">博彩业消费笔数</td>' +
+                                '	<td>' + specialTradeStatistics.lotteryTransCnt + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">夜消费金额</td>' +
+                                '	<td>' + specialTradeStatistics.nightTransAmt + '</td>' +
+                                '	<td class="title">夜消费笔数</td>' +
+                                '	<td>' + specialTradeStatistics.nightTransCnt + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">网上消费金额</td>' +
+                                '	<td>' + specialTradeStatistics.onlineTransAmt + '</td>' +
+                                '	<td class="title">网上消费笔数</td>' +
+                                '	<td>' + specialTradeStatistics.onlineTransCnt + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">公共事业缴费笔数</td>' +
+                                '	<td>' + specialTradeStatistics.publicPayAmt + '</td>' +
+                                '	<td class="title">公共事业缴费金额</td>' +
+                                '	<td>' + specialTradeStatistics.publicPayCnt + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">纳税金额</td>' +
+                                '	<td>' + specialTradeStatistics.taxAmt + '</td>' +
+                                '	<td class="title">纳税笔数</td>' +
+                                '	<td>' + specialTradeStatistics.taxCnt + '</td>' +
+                                '</tr>' +
                                 '</table>';
-                        }else{
-                            html+='<table class="table text-left td-4 special">'+
-                                '<tr>'+
-                                '	<td class="text-center"> 暂无数据</td>'+
-                                '</tr>'+
+                        } else {
+                            html += '<table class="table text-left td-4 special">' +
+                                '<tr>' +
+                                '	<td class="text-center"> 暂无数据</td>' +
+                                '</tr>' +
                                 '</table>';
                         }
-                        if(!$.isEmptyObject(data.strConsumeCategory)){
-                            html+='<table class="table m-t-2 td-2 type">'+
-                                '<tr>'+
-                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 消费大类分布</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td colspan="4" class="title text-center">金额分布</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">行业</td>'+
-                                '	<td class="title">比例</td>'+
+                        if (!$.isEmptyObject(data.strConsumeCategory)) {
+                            html += '<table class="table m-t-2 td-2 type">' +
+                                '<tr>' +
+                                '	<td colspan="4" class="bg-color-lGreen text-center title"> 消费大类分布</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td colspan="4" class="title text-center">金额分布</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">行业</td>' +
+                                '	<td class="title">比例</td>' +
                                 '</tr>';
-                            if(!$.isEmptyObject(data.strConsumeCategory.consumptionAmountDistribution)){
-                                var consumptionAmountDistribution=data.strConsumeCategory.consumptionAmountDistribution;
-                                for(var i in consumptionAmountDistribution){
-                                    html+='<tr>'+
-                                        '	<td>'+consumptionAmountDistribution[i].industry+'</td>'+
-                                        '	<td>'+consumptionAmountDistribution[i].percentage+'</td>'+
+                            if (!$.isEmptyObject(data.strConsumeCategory.consumptionAmountDistribution)) {
+                                var consumptionAmountDistribution = data.strConsumeCategory.consumptionAmountDistribution;
+                                for (var i in consumptionAmountDistribution) {
+                                    html += '<tr>' +
+                                        '	<td>' + consumptionAmountDistribution[i].industry + '</td>' +
+                                        '	<td>' + consumptionAmountDistribution[i].percentage + '</td>' +
                                         '</tr>';
                                 }
-
-                            }else{
-                                html+='<tr>'+
-                                    '	<td colspan="2">暂无数据</td>'+
+                                
+                            } else {
+                                html += '<tr>' +
+                                    '	<td colspan="2">暂无数据</td>' +
                                     '</tr>';
                             }
-                            html+='<tr>'+
-                                '	<td colspan="2" class="title text-center">笔数分布</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '	<td class="title">行业</td>'+
-                                '	<td class="title">比例</td>'+
+                            html += '<tr>' +
+                                '	<td colspan="2" class="title text-center">笔数分布</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '	<td class="title">行业</td>' +
+                                '	<td class="title">比例</td>' +
                                 '</tr>';
-                            if(!$.isEmptyObject(data.strConsumeCategory.consumptionTimesDistribution)){
-                                var consumptionTimesDistribution=data.strConsumeCategory.consumptionTimesDistribution;
-                                for(var i in consumptionTimesDistribution){
-                                    html+='<tr>'+
-                                        '	<td>'+consumptionTimesDistribution[i].industry+'</td>'+
-                                        '	<td>'+consumptionTimesDistribution[i].percentage+'</td>'+
+                            if (!$.isEmptyObject(data.strConsumeCategory.consumptionTimesDistribution)) {
+                                var consumptionTimesDistribution = data.strConsumeCategory.consumptionTimesDistribution;
+                                for (var i in consumptionTimesDistribution) {
+                                    html += '<tr>' +
+                                        '	<td>' + consumptionTimesDistribution[i].industry + '</td>' +
+                                        '	<td>' + consumptionTimesDistribution[i].percentage + '</td>' +
                                         '</tr>';
                                 }
-                            }else{
-                                html+='<tr>'+
-                                    '	<td colspan="2">暂无数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '	<td colspan="2">暂无数据</td>' +
                                     '</tr>';
                             }
-                            html+='</table>';
-                        }else{
-                            html+='<table class="table text-left td-4 type">'+
-                                '<tr>'+
-                                '	<td class="text-center"> 暂无数据</td>'+
-                                '</tr>'+
+                            html += '</table>';
+                        } else {
+                            html += '<table class="table text-left td-4 type">' +
+                                '<tr>' +
+                                '	<td class="text-center"> 暂无数据</td>' +
+                                '</tr>' +
                                 '</table>';
                         }
-                        html+='</div></div>';
+                        html += '</div></div>';
                         console.log(html);
                         win("银行卡画像", html);
                     } else {
                         sky.msg(res.retMsg);
                         var html = '<div class="box">' +
                             '<p class="small sky-title bg-color-lGreen">基础信息</p>' +
-                            '<div class="tabBox">'+
+                            '<div class="tabBox">' +
                             '<table class="table m-t-2 text-center"><tr><td>暂无数据</td></tr></table>' +
                             '</div>' +
                             '</div>';
                         win("银行卡画像", html);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -2365,7 +2377,7 @@ var sky = (function () {
             }
         });
     };
-
+    
     //反欺诈A类
     var antiFraudA = function (id) {
         sky.loding();
@@ -2381,168 +2393,168 @@ var sky = (function () {
                 try {
                     if (returnCode(res.retCode)) {
                         var data = res.data.data;
-                        var html = '<div class="box"><div class="tabBox">'+
+                        var html = '<div class="box"><div class="tabBox">' +
                             '<div class="stretch-box"><table class="td-4 text-left table">';
-                        if(res.data.hasData) {
-                            if(res.data.operators=="CHINA_MOBILE"){
-                                res.data.operators="中国移动"
-                            } else if(res.data.operators=="CHINA_UNION"){
-                                res.data.operators="中国联通"
-                            } else if(res.data.operators=="CHINA_TELECOM") {
-                                res.data.operators="中国电信"
+                        if (res.data.hasData) {
+                            if (res.data.operators == "CHINA_MOBILE") {
+                                res.data.operators = "中国移动"
+                            } else if (res.data.operators == "CHINA_UNION") {
+                                res.data.operators = "中国联通"
+                            } else if (res.data.operators == "CHINA_TELECOM") {
+                                res.data.operators = "中国电信"
                             } else {
-                                res.data.operators="未知"
+                                res.data.operators = "未知"
                             }
-                            html += '<tr>'+
-                                '<th colspan="4">基本信息</th>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<td class="title">姓名</td>'+
-                                '<td>'+res.data.realName+'</td>'+
-                                '<td class="title">运营商</td>'+
-                                '<td>'+res.data.operators+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<td class="title">性别</td>'+
-                                '<td>'+res.data.sex+'</td>'+
-                                '<td class="title">年龄</td>'+
-                                '<td>'+res.data.age+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<td class="title">身份证</td>'+
-                                '<td colspan="3">'+res.data.idCard+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<th colspan="4">通讯录分析</th>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<td class="title" colspan="2">地域集中度</td>'+
-                                '<td class="title" colspan="2">获取时间</td>'+
+                            html += '<tr>' +
+                                '<th colspan="4">基本信息</th>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title">姓名</td>' +
+                                '<td>' + res.data.realName + '</td>' +
+                                '<td class="title">运营商</td>' +
+                                '<td>' + res.data.operators + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title">性别</td>' +
+                                '<td>' + res.data.sex + '</td>' +
+                                '<td class="title">年龄</td>' +
+                                '<td>' + res.data.age + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title">身份证</td>' +
+                                '<td colspan="3">' + res.data.idCard + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<th colspan="4">通讯录分析</th>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title" colspan="2">地域集中度</td>' +
+                                '<td class="title" colspan="2">获取时间</td>' +
                                 '</tr>';
-                            if(data.siteContactInfo.length != 0){
-                                for(var i in data.siteContactInfo){
-                                    html += '<tr>'+
-                                        '<td colspan="2">'+data.siteContactInfo[i].area+'</td>'+
-                                        '<td colspan="2">'+formatDate(data.siteContactInfo[i].time)+'</td>'+
+                            if (data.siteContactInfo.length != 0) {
+                                for (var i in data.siteContactInfo) {
+                                    html += '<tr>' +
+                                        '<td colspan="2">' + data.siteContactInfo[i].area + '</td>' +
+                                        '<td colspan="2">' + formatDate(data.siteContactInfo[i].time) + '</td>' +
                                         '</tr>';
                                 }
-                            }else {
-                                html += '<tr>'+
-                                    '<td colspan="4" class="text-center">暂无相关数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '<td colspan="4" class="text-center">暂无相关数据</td>' +
                                     '</tr>';
                             }
-                            html += '<tr>'+
-                                '<td class="title text-center" colspan="4">黑名单失联度</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<th colspan="4" class="title text-center">黑名单本人逾期记录</th>'+
+                            html += '<tr>' +
+                                '<td class="title text-center" colspan="4">黑名单失联度</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<th colspan="4" class="title text-center">黑名单本人逾期记录</th>' +
                                 '</tr>';
-                            if(data.siteBlackSelf.length != 0) {
-                                html += '<tr>'+
-                                    '<td class="title">姓名</td>'+
-                                    '<td class="title">逾期时间</td>'+
-                                    '<td class="title">逾期级别</td>'+
-                                    '<td class="title">信息获取时间</td>'+
+                            if (data.siteBlackSelf.length != 0) {
+                                html += '<tr>' +
+                                    '<td class="title">姓名</td>' +
+                                    '<td class="title">逾期时间</td>' +
+                                    '<td class="title">逾期级别</td>' +
+                                    '<td class="title">信息获取时间</td>' +
                                     '</tr>';
-                                for(var i in data.siteBlackSelf){
-                                    html += '<tr>'+
-                                        '<td>'+data.siteBlackSelf[i].realName+'</td>'+
-                                        '<td>'+data.siteBlackSelf[i].overDate+'</td>'+
-                                        '<td>'+data.siteBlackSelf[i].overLevel+'</td>'+
-                                        '<td>'+formatDate(data.siteBlackSelf[i].time)+'</td>'+
+                                for (var i in data.siteBlackSelf) {
+                                    html += '<tr>' +
+                                        '<td>' + data.siteBlackSelf[i].realName + '</td>' +
+                                        '<td>' + data.siteBlackSelf[i].overDate + '</td>' +
+                                        '<td>' + data.siteBlackSelf[i].overLevel + '</td>' +
+                                        '<td>' + formatDate(data.siteBlackSelf[i].time) + '</td>' +
                                         '</tr>';
                                 }
-                            }else {
-                                html += '<tr>'+
-                                    '<td colspan="4" class="text-center">暂无相关数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '<td colspan="4" class="text-center">暂无相关数据</td>' +
                                     '</tr>';
                             }
-                            html += '<tr>'+
-                                '<th colspan="4" class="title text-center">黑名单联系人信息</th>'+
+                            html += '<tr>' +
+                                '<th colspan="4" class="title text-center">黑名单联系人信息</th>' +
                                 '</tr>';
-                            if(data.siteBlackSecond.length != 0) {
-                                html += '<tr>'+
-                                    '<td class="title">姓名</td>'+
-                                    '<td class="title">手机号</td>'+
-                                    '<td class="title">关系</td>'+
-                                    '<td class="title">信息获取时间</td>'+
+                            if (data.siteBlackSecond.length != 0) {
+                                html += '<tr>' +
+                                    '<td class="title">姓名</td>' +
+                                    '<td class="title">手机号</td>' +
+                                    '<td class="title">关系</td>' +
+                                    '<td class="title">信息获取时间</td>' +
                                     '</tr>';
-                                for(var i in data.siteBlackSecond){
-                                    html += '<tr>'+
-                                        '<td>'+data.siteBlackSecond[i].realName+'</td>'+
-                                        '<td>'+data.siteBlackSecond[i].phone+'</td>'+
-                                        '<td>'+data.siteBlackSecond[i].relationship+'</td>'+
-                                        '<td>'+formatDate(data.siteBlackSecond[i].time)+'</td>'+
+                                for (var i in data.siteBlackSecond) {
+                                    html += '<tr>' +
+                                        '<td>' + data.siteBlackSecond[i].realName + '</td>' +
+                                        '<td>' + data.siteBlackSecond[i].phone + '</td>' +
+                                        '<td>' + data.siteBlackSecond[i].relationship + '</td>' +
+                                        '<td>' + formatDate(data.siteBlackSecond[i].time) + '</td>' +
                                         '</tr>';
                                 }
-                            }else {
-                                html += '<tr>'+
-                                    '<td colspan="4" class="text-center">暂无相关数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '<td colspan="4" class="text-center">暂无相关数据</td>' +
                                     '</tr>';
                             }
-                            html += '<tr>'+
-                                '<th colspan="4" class="title text-center">黑名单二度人脉逾期记录</th>'+
+                            html += '<tr>' +
+                                '<th colspan="4" class="title text-center">黑名单二度人脉逾期记录</th>' +
                                 '</tr>';
-                            if(data.siteBlackThree.length != 0) {
-                                html += '<tr>'+
-                                    '<td class="title">姓名</td>'+
-                                    '<td class="title">逾期时间</td>'+
-                                    '<td class="title">逾期级别</td>'+
-                                    '<td class="title">信息获取时间</td>'+
+                            if (data.siteBlackThree.length != 0) {
+                                html += '<tr>' +
+                                    '<td class="title">姓名</td>' +
+                                    '<td class="title">逾期时间</td>' +
+                                    '<td class="title">逾期级别</td>' +
+                                    '<td class="title">信息获取时间</td>' +
                                     '</tr>';
-                                for(var i in data.siteBlackThree){
-                                    html += '<tr>'+
-                                        '<td>'+data.siteBlackThree[i].realName+'</td>'+
-                                        '<td>'+data.siteBlackThree[i].overDate+'</td>'+
-                                        '<td>'+data.siteBlackThree[i].overLevel+'</td>'+
-                                        '<td>'+formatDate(data.siteBlackThree[i].time)+'</td>'+
+                                for (var i in data.siteBlackThree) {
+                                    html += '<tr>' +
+                                        '<td>' + data.siteBlackThree[i].realName + '</td>' +
+                                        '<td>' + data.siteBlackThree[i].overDate + '</td>' +
+                                        '<td>' + data.siteBlackThree[i].overLevel + '</td>' +
+                                        '<td>' + formatDate(data.siteBlackThree[i].time) + '</td>' +
                                         '</tr>';
                                 }
-                            }else {
-                                html += '<tr>'+
-                                    '<td colspan="4" class="text-center">暂无相关数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '<td colspan="4" class="text-center">暂无相关数据</td>' +
                                     '</tr>';
                             }
-                            html += '<tr>'+
-                                '<th colspan="4">手机号码被查询次数</th>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<td class="title" colspan="2">过去7天被查询次数</td>'+
-                                '<td colspan="2">'+res.data.weekCount+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<td class="title" colspan="2">过去15天被查询次数</td>'+
-                                '<td colspan="2">'+res.data.halfMonthCount+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<td class="title" colspan="2">过去30天被查询次数</td>'+
-                                '<td colspan="2">'+res.data.monthCount+'</td>'+
-                                '</tr>'+
-                                '<tr>'+
-                                '<td class="title" colspan="2">过去3个月被查询次数</td>'+
-                                '<td colspan="2">'+res.data.threeMonthCount+'</td>'+
+                            html += '<tr>' +
+                                '<th colspan="4">手机号码被查询次数</th>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title" colspan="2">过去7天被查询次数</td>' +
+                                '<td colspan="2">' + res.data.weekCount + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title" colspan="2">过去15天被查询次数</td>' +
+                                '<td colspan="2">' + res.data.halfMonthCount + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title" colspan="2">过去30天被查询次数</td>' +
+                                '<td colspan="2">' + res.data.monthCount + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title" colspan="2">过去3个月被查询次数</td>' +
+                                '<td colspan="2">' + res.data.threeMonthCount + '</td>' +
                                 '</tr>';
-                        }else{
-                            html += '<tr>'+
-                                '<td colspan="4" class="text-center">暂无相关数据</td>'+
+                        } else {
+                            html += '<tr>' +
+                                '<td colspan="4" class="text-center">暂无相关数据</td>' +
                                 '</tr>';
                         }
-                        html+='</table></div></div></div>';
-
+                        html += '</table></div></div></div>';
+                        
                         win("手机号反欺诈", html);
-                    }else {
+                    } else {
                         sky.msg(res.retMsg);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
-            error:function(){
+            error: function () {
                 sky.msg("服务器连接错误！");
             }
         });
     };
-
+    
     //反欺诈B类
     var antiFraudB = function (id) {
         sky.loding();
@@ -2557,241 +2569,241 @@ var sky = (function () {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
-                        var html=null;
-                        var data=res.data.data;
-                        if(res.data.apiComparedStatusEnum=="SAME"){
-                            if(res.data.hasData==true){
-                                html='<div class="box"><div class="tabBox">'+
-                                    '<div class="stretch-box">'+
-                                    '<table class="td-4 text-left table">'+
-                                    '<tr>'+
-                                    '<th colspan="4">相关联系方式</th>'+
+                        var html = null;
+                        var data = res.data.data;
+                        if (res.data.apiComparedStatusEnum == "SAME") {
+                            if (res.data.hasData == true) {
+                                html = '<div class="box"><div class="tabBox">' +
+                                    '<div class="stretch-box">' +
+                                    '<table class="td-4 text-left table">' +
+                                    '<tr>' +
+                                    '<th colspan="4">相关联系方式</th>' +
                                     '</tr>';
-                                    if(data.siteLinkMobile.length!=0){
-                                        for(var i in data.siteLinkMobile){
-                                            html+='<tr>'+
-                                                '<td>手机号码</td>'+
-                                                '<td>'+data.siteLinkMobile[i].mobile+'</td>'+
-                                                '<td>获取时间</td>'+
-                                                '<td>'+formatDate(data.siteLinkMobile[i].time)+'</td>'+
-                                                '</tr>';
-                                        }
-                                    }else {
-                                        html+='<tr>'+
-                                            '<td class="text-center" colspan="4">暂无相关数据</td>'+
-                                            '</tr>'
+                                if (data.siteLinkMobile.length != 0) {
+                                    for (var i in data.siteLinkMobile) {
+                                        html += '<tr>' +
+                                            '<td>手机号码</td>' +
+                                            '<td>' + data.siteLinkMobile[i].mobile + '</td>' +
+                                            '<td>获取时间</td>' +
+                                            '<td>' + formatDate(data.siteLinkMobile[i].time) + '</td>' +
+                                            '</tr>';
                                     }
-                                    html+='<tr>'+
-                                        '<th colspan="4">地址信息</th>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td class="text-center" colspan="4">暂无相关数据</td>' +
+                                        '</tr>'
+                                }
+                                html += '<tr>' +
+                                    '<th colspan="4">地址信息</th>' +
+                                    '</tr>';
+                                if (data.addressData.length != 0) {
+                                    for (var i in data.addressData) {
+                                        html += '<tr>' +
+                                            '<td class="title">地址类型</td>' +
+                                            '<td colspan="3"><span class="icon-orange icon">居</span>居住地址</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">地址位置</td>' +
+                                            '<td colspan="3">' + data.addressData[i].homeAddress + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">地址类型</td>' +
+                                            '<td colspan="3"><span class="icon-green icon">工</span>工作地址</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">地址位置</td>' +
+                                            '<td colspan="3">' + data.addressData[i].companyAddress + '</td>' +
+                                            '</tr>';
+                                    }
+                                } else {
+                                    html += '<tr>' +
+                                        '<td class="text-center" colspan="4">暂无相关数据</td>' +
                                         '</tr>';
-                                    if(data.addressData.length!=0){
-                                        for(var i in data.addressData){
-                                            html+='<tr>'+
-                                                '<td class="title">地址类型</td>'+
-                                                '<td colspan="3"><span class="icon-orange icon">居</span>居住地址</td>'+
-                                                '</tr>'+
-                                                '<tr>'+
-                                                '<td class="title">地址位置</td>'+
-                                                '<td colspan="3">'+data.addressData[i].homeAddress+'</td>'+
-                                                '</tr>'+
-                                                '<tr>'+
-                                                '<td class="title">地址类型</td>'+
-                                                '<td colspan="3"><span class="icon-green icon">工</span>工作地址</td>'+
-                                                '</tr>'+
-                                                '<tr>'+
-                                                '<td class="title">地址位置</td>'+
-                                                '<td colspan="3">'+data.addressData[i].companyAddress+'</td>'+
-                                                '</tr>';
-                                        }
-                                    }else {
-                                        html+='<tr>'+
-                                            '<td class="text-center" colspan="4">暂无相关数据</td>'+
+                                }
+                                html += '</table>' +
+                                    '</div>' +
+                                    '<p class="sky-title small text-center m-t-2 bg-color-lGreen">行业黑名单</p><table class="td-4 text-left m-t-2 table">';
+                                if (data.siteBlackInfo.length != 0) {
+                                    for (var i in data.siteBlackInfo) {
+                                        html += '<tr><th class="tab-title-small" colspan="4"><span class="icon icon-number">' + (parseInt(i) + 1) + '</span></th></tr>' +
+                                            '<tr>' +
+                                            '<td class="title">借款日期</td>' +
+                                            '<td>' + data.siteBlackInfo[i].borrowDate + '</td>' +
+                                            '<td class="title">贷款区间</td>' +
+                                            '<td>' + data.siteBlackInfo[i].balance + '万</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">逾期期数</td>' +
+                                            '<td>' + data.siteBlackInfo[i].periods + '</td>' +
+                                            '<td class="title">逾期时间</td>' +
+                                            '<td>' + data.siteBlackInfo[i].overdueDate + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">逾期等级</td>' +
+                                            '<td>' + data.siteBlackInfo[i].overdueLevel + '</td>' +
+                                            '<td class="title">逾期金额</td>' +
+                                            '<td>' + data.siteBlackInfo[i].overdueAmount + '万</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">公司名字</td>' +
+                                            '<td>' + data.siteBlackInfo[i].companyName + '</td>' +
+                                            '<td class="title">公司联系电话</td>' +
+                                            '<td>' + data.siteBlackInfo[i].companyPhone + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">家庭联系电话</td>' +
+                                            '<td>' + data.siteBlackInfo[i].familyPhone + '</td>' +
+                                            '<td class="title">联系人姓名</td>' +
+                                            '<td>' + data.siteBlackInfo[i].contactName + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">联系人电话</td>' +
+                                            '<td>' + data.siteBlackInfo[i].contactPhone + '</td>' +
+                                            '<td class="title">数据获取时间</td>' +
+                                            '<td>' + formatDate(data.siteBlackInfo[i].recTime) + '</td>' +
                                             '</tr>';
                                     }
-                                    html+='</table>'+
-                                        '</div>'+
-                                        '<p class="sky-title small text-center m-t-2 bg-color-lGreen">行业黑名单</p><table class="td-4 text-left m-t-2 table">';
-                                    if(data.siteBlackInfo.length!=0){
-                                        for (var i in data.siteBlackInfo){
-                                            html+='<tr><th class="tab-title-small" colspan="4"><span class="icon icon-number">'+(parseInt(i)+1)+'</span></th></tr>'+
-                                                '<tr>'+
-                                                '<td class="title">借款日期</td>'+
-                                                '<td>'+data.siteBlackInfo[i].borrowDate+'</td>'+
-                                                '<td class="title">贷款区间</td>'+
-                                                '<td>'+data.siteBlackInfo[i].balance+'万</td>'+
-                                                '</tr>'+
-                                                '<tr>'+
-                                                '<td class="title">逾期期数</td>'+
-                                                '<td>'+data.siteBlackInfo[i].periods+'</td>'+
-                                                '<td class="title">逾期时间</td>'+
-                                                '<td>'+data.siteBlackInfo[i].overdueDate+'</td>'+
-                                                '</tr>'+
-                                                '<tr>'+
-                                                '<td class="title">逾期等级</td>'+
-                                                '<td>'+data.siteBlackInfo[i].overdueLevel+'</td>'+
-                                                '<td class="title">逾期金额</td>'+
-                                                '<td>'+data.siteBlackInfo[i].overdueAmount+'万</td>'+
-                                                '</tr>'+
-                                                '<tr>'+
-                                                '<td class="title">公司名字</td>'+
-                                                '<td>'+data.siteBlackInfo[i].companyName+'</td>'+
-                                                '<td class="title">公司联系电话</td>'+
-                                                '<td>'+data.siteBlackInfo[i].companyPhone+'</td>'+
-                                                '</tr>'+
-                                                '<tr>'+
-                                                '<td class="title">家庭联系电话</td>'+
-                                                '<td>'+data.siteBlackInfo[i].familyPhone+'</td>'+
-                                                '<td class="title">联系人姓名</td>'+
-                                                '<td>'+data.siteBlackInfo[i].contactName+'</td>'+
-                                                '</tr>'+
-                                                '<tr>'+
-                                                '<td class="title">联系人电话</td>'+
-                                                '<td>'+data.siteBlackInfo[i].contactPhone+'</td>'+
-                                                '<td class="title">数据获取时间</td>'+
-                                                '<td>'+formatDate(data.siteBlackInfo[i].recTime)+'</td>'+
-                                                '</tr>';
-                                        }
-                                    }else {
-                                        html+='<tr>'+
-                                        '<td class="text-center">暂无数据</td>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td class="text-center">暂无数据</td>' +
                                         '</tr>';
-                                    }
-                                    html+='</table>';
-                                    html+='<table class="td-4 text-left m-t-2 table">'+
-                                        '<tr>'+
-                                        '<th colspan="4">法院失信被执行记录</th>'+
+                                }
+                                html += '</table>';
+                                html += '<table class="td-4 text-left m-t-2 table">' +
+                                    '<tr>' +
+                                    '<th colspan="4">法院失信被执行记录</th>' +
+                                    '</tr>';
+                                if (data.sitePunishData.jyPunishBreak.length != 0 || data.sitePunishData.jyPunished.length != 0) {
+                                    html += '<tr>' +
+                                        '<td class="title">被执行人信息</td>' +
+                                        '<td>' + data.sitePunishData.jyPunished.length + '</td>' +
+                                        '<td class="title">失信被执行人信息</td>' +
+                                        '<td>' + data.sitePunishData.jyPunishBreak.length + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">汇总</td>' +
+                                        '<td colspan="3">' + (data.sitePunishData.jyPunished.length + data.sitePunishData.jyPunishBreak.length) + '</td>' +
+                                        '</tr>' +
+                                        '</table>' +
+                                        '<div class="stretch-box">' +
+                                        '<table class="table m-t-2">' +
+                                        '<th colspan="6">明细</th>' +
+                                        '<tr>' +
+                                        '<td class="title">类型</td>' +
+                                        '<td class="title">执行法院</td>' +
+                                        '<td class="title">立案时间</td>' +
+                                        '<td class="title">案号</td>' +
+                                        '<td class="title">标的金额或履行情况</td>' +
+                                        '<td class="title">信息获取<br>时间</td>' +
                                         '</tr>';
-                                    if(data.sitePunishData.jyPunishBreak.length!=0 || data.sitePunishData.jyPunished.length!=0){
-                                        html+='<tr>'+
-                                            '<td class="title">被执行人信息</td>'+
-                                            '<td>'+data.sitePunishData.jyPunished.length+'</td>'+
-                                            '<td class="title">失信被执行人信息</td>'+
-                                            '<td>'+data.sitePunishData.jyPunishBreak.length+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">汇总</td>'+
-                                            '<td colspan="3">'+(data.sitePunishData.jyPunished.length+data.sitePunishData.jyPunishBreak.length)+'</td>'+
-                                            '</tr>'+
-                                            '</table>'+
-                                            '<div class="stretch-box">'+
-                                            '<table class="table m-t-2">'+
-                                            '<th colspan="6">明细</th>'+
-                                            '<tr>'+
-                                            '<td class="title">类型</td>'+
-                                            '<td class="title">执行法院</td>'+
-                                            '<td class="title">立案时间</td>'+
-                                            '<td class="title">案号</td>'+
-                                            '<td class="title">标的金额或履行情况</td>'+
-                                            '<td class="title">信息获取<br>时间</td>'+
-                                            '</tr>';
-                                        if(data.sitePunishData.jyPunished.length!=0){
-                                            for (var i in data.sitePunishData.jyPunished){
-                                                html+='<tr>'+
-                                                    '<td>被执行人信息</td>'+
-                                                    '<td>'+data.sitePunishData.jyPunished[i].courtName+'</td>'+
-                                                    '<td>'+formatDate(data.sitePunishData.jyPunished[i].regDate)+'</td>'+
-                                                    '<td>'+data.sitePunishData.jyPunished[i].caseCode+'</td>'+
-                                                    '<td>'+data.sitePunishData.jyPunished[i].execMoney+'</td>'+
-                                                    '<td></td>'+
-                                                    '</tr>';
-                                            }
-                                        }else {
-                                            html+='<tr>'+
-                                                '<td class="text-center" colspan="6">暂无相关数据</td>'+
+                                    if (data.sitePunishData.jyPunished.length != 0) {
+                                        for (var i in data.sitePunishData.jyPunished) {
+                                            html += '<tr>' +
+                                                '<td>被执行人信息</td>' +
+                                                '<td>' + data.sitePunishData.jyPunished[i].courtName + '</td>' +
+                                                '<td>' + formatDate(data.sitePunishData.jyPunished[i].regDate) + '</td>' +
+                                                '<td>' + data.sitePunishData.jyPunished[i].caseCode + '</td>' +
+                                                '<td>' + data.sitePunishData.jyPunished[i].execMoney + '</td>' +
+                                                '<td></td>' +
                                                 '</tr>';
                                         }
-                                        if(data.sitePunishData.jyPunishBreak.length){
-                                            for (var i in data.sitePunishData.jyPunishBreak){
-                                                html+='<tr>'+
-                                                    '<td>失信被执行信息</td>'+
-                                                    '<td>'+data.sitePunishData.jyPunishBreak[i].courName+'</td>'+
-                                                    '<td>'+formatDate(data.sitePunishData.jyPunishBreak[i].regDate)+'</td>'+
-                                                    '<td>'+data.sitePunishData.jyPunishBreak[i].caseCode+'</td>'+
-                                                    '<td>'+data.sitePunishData.jyPunishBreak[i].performance+'</td>'+
-                                                    '<td>'+formatDate(data.sitePunishData.jyPunishBreak[i].publishDate)+'</td>'+
-                                                    '</tr>';
-                                            }
-                                        }else {
-                                            html+='<tr>'+
-                                                '<td class="text-center" colspan="6">暂无相关数据</td>'+
-                                                '</tr>';
-                                        }
-                                    }else {
-                                        html+='<tr>'+
-                                            '<td colspan="4" class="text-center">暂无相关数据</td>'+
+                                    } else {
+                                        html += '<tr>' +
+                                            '<td class="text-center" colspan="6">暂无相关数据</td>' +
                                             '</tr>';
                                     }
-                                    html+= '</table>'+
-                                        '</div>'+
-                                        '<table class="td-4 text-left m-t-2 table">'+
-                                        '<tr>'+
-                                        '<th colspan="4">犯罪记录</th>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">姓名</td>'+
-                                        '<td>'+res.data.realName+'</td>'+
-                                        '<td class="title">身份证号</td>'+
-                                        '<td>'+res.data.idCard+'</td>'+
-                                        '</tr>'+
-                                        '</table>';
-                                    if(data.negetiveMessage!=""){
-                                        html+='<!--查询成功有结果-->'+
-                                            '<div class="searchResult">'+
-                                            '<p class="result color-red m-t-2 bg-color-lGreen" style="text-align:center">'+data.negetiveMessage+'</p>'+
-                                            '<table class="text-left m-t-2 table">'+
-                                            '<tr>'+
-                                            '<td class="title">案件时间</td>'+
-                                            '<td class="title">案件类型</td>'+
-                                            '<td class="title">案件类型描述</td>'+
-                                            '</tr>';
-                                        if(data.hasCrimeData==true){
-                                            for(var i in data.crimeDetailIfs){
-                                                html+='<tr>'+
-                                                    '<td>'+data.crimeDetailIfs[i].caseTime+'</td>'+
-                                                    '<td>'+data.crimeDetailIfs[i].caseType+'</td>'+
-                                                    '<td>'+data.crimeDetailIfs[i].caseSource+'</td>'+
-                                                    '</tr>';
-                                            }
-                                        }else {
-                                            html+='<tr>'+
-                                                '<td colspan="3" class="text-center">暂无相关数据</td>'+
+                                    if (data.sitePunishData.jyPunishBreak.length) {
+                                        for (var i in data.sitePunishData.jyPunishBreak) {
+                                            html += '<tr>' +
+                                                '<td>失信被执行信息</td>' +
+                                                '<td>' + data.sitePunishData.jyPunishBreak[i].courName + '</td>' +
+                                                '<td>' + formatDate(data.sitePunishData.jyPunishBreak[i].regDate) + '</td>' +
+                                                '<td>' + data.sitePunishData.jyPunishBreak[i].caseCode + '</td>' +
+                                                '<td>' + data.sitePunishData.jyPunishBreak[i].performance + '</td>' +
+                                                '<td>' + formatDate(data.sitePunishData.jyPunishBreak[i].publishDate) + '</td>' +
                                                 '</tr>';
                                         }
-                                        html+='</table>'+
-                                            '</div>';
-                                    }else {
-                                        html+='<div class="searchResult">'+
-                                            '<p class="result color-red m-t-2 bg-color-lGreen" style="margin-bottom: 0px;text-align:center">比对结果：无犯罪在逃记录</p>'+
-                                            '</div>';
+                                    } else {
+                                        html += '<tr>' +
+                                            '<td class="text-center" colspan="6">暂无相关数据</td>' +
+                                            '</tr>';
                                     }
-                                html+='</div></div>';
-                            }else {
-                                html='<div class="box"><div class="tabBox">'+
-                                    '<div class="stretch-box">'+
-                                    '<table class="td-4 text-left m-t-2 table">'+
-                                    '<tr>'+
-                                    '<td colspan="4" style="text-align:center;">暂无相关数据</td>'+
-                                    '</tr>'+
-                                    '</table>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td colspan="4" class="text-center">暂无相关数据</td>' +
+                                        '</tr>';
+                                }
+                                html += '</table>' +
+                                    '</div>' +
+                                    '<table class="td-4 text-left m-t-2 table">' +
+                                    '<tr>' +
+                                    '<th colspan="4">犯罪记录</th>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td class="title">姓名</td>' +
+                                    '<td>' + res.data.realName + '</td>' +
+                                    '<td class="title">身份证号</td>' +
+                                    '<td>' + res.data.idCard + '</td>' +
+                                    '</tr>' +
+                                    '</table>';
+                                if (data.negetiveMessage != "") {
+                                    html += '<!--查询成功有结果-->' +
+                                        '<div class="searchResult">' +
+                                        '<p class="result color-red m-t-2 bg-color-lGreen" style="text-align:center">' + data.negetiveMessage + '</p>' +
+                                        '<table class="text-left m-t-2 table">' +
+                                        '<tr>' +
+                                        '<td class="title">案件时间</td>' +
+                                        '<td class="title">案件类型</td>' +
+                                        '<td class="title">案件类型描述</td>' +
+                                        '</tr>';
+                                    if (data.hasCrimeData == true) {
+                                        for (var i in data.crimeDetailIfs) {
+                                            html += '<tr>' +
+                                                '<td>' + data.crimeDetailIfs[i].caseTime + '</td>' +
+                                                '<td>' + data.crimeDetailIfs[i].caseType + '</td>' +
+                                                '<td>' + data.crimeDetailIfs[i].caseSource + '</td>' +
+                                                '</tr>';
+                                        }
+                                    } else {
+                                        html += '<tr>' +
+                                            '<td colspan="3" class="text-center">暂无相关数据</td>' +
+                                            '</tr>';
+                                    }
+                                    html += '</table>' +
+                                        '</div>';
+                                } else {
+                                    html += '<div class="searchResult">' +
+                                        '<p class="result color-red m-t-2 bg-color-lGreen" style="margin-bottom: 0px;text-align:center">比对结果：无犯罪在逃记录</p>' +
+                                        '</div>';
+                                }
+                                html += '</div></div>';
+                            } else {
+                                html = '<div class="box"><div class="tabBox">' +
+                                    '<div class="stretch-box">' +
+                                    '<table class="td-4 text-left m-t-2 table">' +
+                                    '<tr>' +
+                                    '<td colspan="4" style="text-align:center;">暂无相关数据</td>' +
+                                    '</tr>' +
+                                    '</table>' +
                                     '</div></div></div>';
                             }
-                        }else {
+                        } else {
                             sky.msg("查询失败！");
                         }
                         win("身份反欺诈", html);
-                    }else {
+                    } else {
                         sky.msg(res.retMsg);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
-            error:function(){
+            error: function () {
                 sky.msg("服务器连接错误！");
             }
         });
     };
-
+    
     //支付提示
     var payPrompt = function (orderNum) {
         var html = '<div class="box payPrompt">' +
@@ -2804,18 +2816,18 @@ var sky = (function () {
             $.ajax({
                 type: 'post',
                 url: "pay/status.do",
-                data:{
-                    orderNum:orderNum
+                data: {
+                    orderNum: orderNum
                 },
                 success: function (res) {
-                    try{
+                    try {
                         if (returnCode(res.retCode)) {
                             location.href = "accRecharge2V.do";
                         } else {
                             sky.msg(res.retMsg);
                         }
-                    }catch (e){
-                        sky.msg("发生异常："+e);
+                    } catch (e) {
+                        sky.msg("发生异常：" + e);
                     }
                 },
                 error: function (xhr, type) {
@@ -2834,21 +2846,21 @@ var sky = (function () {
         $.ajax({
             type: 'post',
             url: "wx/pay.do",
-            data:{amount:money},
+            data: {amount: money},
             success: function (res) {
-                try{
+                try {
                     if (returnCode(res.retCode)) {
                         var html = '<div class="box payPrompt weChat">' +
                             '<p class="payTitle">请扫码已完成微信支付</p>' +
-                            '<img src="data:image/png;base64,'+res.payStr+'">' +
+                            '<img src="data:image/png;base64,' + res.payStr + '">' +
                             '</div>';
                         win("支付提示", html);
                         isPay(res.orderNum);
                     } else {
                         sky.msg(res.retMsg);
                     }
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
             },
             error: function (xhr, type) {
@@ -2856,27 +2868,28 @@ var sky = (function () {
                 sky.msg("服务器连接错误！");
             }
         });
+        
         function isPay(num) {
             setTimeout(function () {
                 $.ajax({
                     type: 'post',
                     url: "pay/status.do",
-                    data:{
-                        orderNum:num
+                    data: {
+                        orderNum: num
                     },
                     success: function (res) {
-                        try{
+                        try {
                             if (returnCode(res.retCode)) {
-                                location.href="accRecharge2V.do";
+                                location.href = "accRecharge2V.do";
                             } else {
-                                if(res.retCode=="9973") {
+                                if (res.retCode == "9973") {
                                     isPay(num);
-                                }else{
+                                } else {
                                     sky.msg(res.retMsg);
                                 }
                             }
-                        }catch (e){
-                            sky.msg("发生异常："+e);
+                        } catch (e) {
+                            sky.msg("发生异常：" + e);
                         }
                     },
                     error: function (xhr, type) {
@@ -2884,11 +2897,11 @@ var sky = (function () {
                         sky.msg("服务器连接错误！");
                     }
                 });
-            },5000);
+            }, 5000);
         }
     }
     //报告弹窗
-    var report=function (id) {
+    var report = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -2897,12 +2910,12 @@ var sky = (function () {
             data: {
                 id: id
             },
-            success: function(res){
+            success: function (res) {
                 sky.lodingClose();
-                try{
-                    var html ="";
-                    if(returnCode(res.retCode)){
-                        var res=res.data;
+                try {
+                    var html = "";
+                    if (returnCode(res.retCode)) {
+                        var res = res.data;
                         //身份证照片
                         if (res.apiComparedStatusEnum == "SAME") {
                             if (res.data.photo != null) {
@@ -2923,7 +2936,7 @@ var sky = (function () {
                                     '</table></div>';
                             }
                             //身份查询记录
-                            if( res.data.siteIdentityLog){
+                            if (res.data.siteIdentityLog) {
                                 var companySearchInfo = res.data.siteIdentityLog.companySearchInfo;
                                 var userSearchInfo = res.data.siteIdentityLog.userSearchInfo;
                                 html += '<p class="sky-title text-center m-t-2"><span class="text-icon">机构查询</span></p>' +
@@ -3000,7 +3013,7 @@ var sky = (function () {
                                 html += '</table></div></div>';
                             }
                             //小贷记录
-                            if(res.data.personLoanInfoData){
+                            if (res.data.personLoanInfoData) {
                                 html += '<p class="sky-title text-center m-t-2">小贷记录</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">' +
@@ -3012,25 +3025,25 @@ var sky = (function () {
                                     '<th>机构受理申请次数</th>' +
                                     '<th>借款成功金额</th>' +
                                     '</tr>';
-                                if(res.data.personLoanInfoData.length!=0){
-                                    for(var i in res.data.personLoanInfoData){
-                                        html+='<tr class="text-center">'+
-                                            '<td>'+res.data.personLoanInfoData[i].reqYear+'</td>'+
-                                            '<td>'+res.data.personLoanInfoData[i].companyCount+'</td>'+
-                                            '<td>'+res.data.personLoanInfoData[i].acceptCount+'</td>'+
-                                            '<td>'+res.data.personLoanInfoData[i].borrowCount+'</td>'+
-                                            '<td>'+res.data.personLoanInfoData[i].amountTotal+'（万）</td>'+
+                                if (res.data.personLoanInfoData.length != 0) {
+                                    for (var i in res.data.personLoanInfoData) {
+                                        html += '<tr class="text-center">' +
+                                            '<td>' + res.data.personLoanInfoData[i].reqYear + '</td>' +
+                                            '<td>' + res.data.personLoanInfoData[i].companyCount + '</td>' +
+                                            '<td>' + res.data.personLoanInfoData[i].acceptCount + '</td>' +
+                                            '<td>' + res.data.personLoanInfoData[i].borrowCount + '</td>' +
+                                            '<td>' + res.data.personLoanInfoData[i].amountTotal + '（万）</td>' +
                                             '</tr>';
                                     }
-                                }else{
-                                    html+='<tr>'+
-                                        '<td class="text-center" colspan="5">暂无数据</td>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td class="text-center" colspan="5">暂无数据</td>' +
                                         '</tr>';
                                 }
-                                html +='</table></div></div>';
+                                html += '</table></div></div>';
                             }
                             //逾期记录
-                            if(res.data.collectionData){
+                            if (res.data.collectionData) {
                                 html += '<p class="sky-title text-center m-t-2">逾期记录</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">' +
@@ -3042,731 +3055,731 @@ var sky = (function () {
                                     '<th >逾期级别</th>' +
                                     '<th >数据报送时间</th>' +
                                     '</tr>';
-                                if(res.data.collectionData.length!=0){
-                                    for(var i in res.data.collectionData){
-                                        html+='<tr class="text-center">'+
-                                            '<td>'+res.data.collectionData[i].borrowType+'</td>'+
-                                            '<td>'+res.data.collectionData[i].borrowAmount+'</td>'+
-                                            '<td>'+cutOffData(res.data.collectionData[i].contractDate)+'</td>'+
-                                            '<td>'+res.data.collectionData[i].overdueType+'</td>'+
-                                            '<td>'+cutOffData(res.data.collectionData[i].time)+'</td>'+
+                                if (res.data.collectionData.length != 0) {
+                                    for (var i in res.data.collectionData) {
+                                        html += '<tr class="text-center">' +
+                                            '<td>' + res.data.collectionData[i].borrowType + '</td>' +
+                                            '<td>' + res.data.collectionData[i].borrowAmount + '</td>' +
+                                            '<td>' + cutOffData(res.data.collectionData[i].contractDate) + '</td>' +
+                                            '<td>' + res.data.collectionData[i].overdueType + '</td>' +
+                                            '<td>' + cutOffData(res.data.collectionData[i].time) + '</td>' +
                                             '</tr>';
                                     }
-                                }else{
-                                    html+='<tr>'+
-                                        '<td colspan="5" class="text-center">暂无数据</td>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td colspan="5" class="text-center">暂无数据</td>' +
                                         '</tr>';
                                 }
-                                html +='</table></div></div>';
+                                html += '</table></div></div>';
                             }
                             html += '<p class="sky-title text-center m-t-2">法院失信及被执行信息查询</p>' +
                                 '<div class="stretch-box">' +
                                 '<div class="tabBox">';
-                            if(res.data.gsDataInfo.caseInfoCount!=0||res.data.gsDataInfo.punishBreakInfoCount!=0||res.data.gsDataInfo.punishedInfoCount!=0){
-                                html+='<table class="table m-t-2 td-4"><tr>'+
-                                    '<td class="title">被执行人信息</td>'+
-                                    '<td>'+res.data.gsDataInfo.punishedInfoCount+'</td>'+
-                                    '<td class="title">失信被执行人信息</td>'+
-                                    '<td>'+res.data.gsDataInfo.punishBreakInfoCount+'</td>'+
-                                    '</tr>'+
-                                    '<tr>'+
-                                    '<td class="title">行政处罚</td>'+
-                                    '<td>'+res.data.gsDataInfo.caseInfoCount+'</td>'+
-                                    '<td class="title">汇总</td>'+
-                                    '<td>'+(res.data.gsDataInfo.caseInfoCount+res.data.gsDataInfo.punishBreakInfoCount+res.data.gsDataInfo.punishedInfoCount)+'</td>'+
+                            if (res.data.gsDataInfo.caseInfoCount != 0 || res.data.gsDataInfo.punishBreakInfoCount != 0 || res.data.gsDataInfo.punishedInfoCount != 0) {
+                                html += '<table class="table m-t-2 td-4"><tr>' +
+                                    '<td class="title">被执行人信息</td>' +
+                                    '<td>' + res.data.gsDataInfo.punishedInfoCount + '</td>' +
+                                    '<td class="title">失信被执行人信息</td>' +
+                                    '<td>' + res.data.gsDataInfo.punishBreakInfoCount + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td class="title">行政处罚</td>' +
+                                    '<td>' + res.data.gsDataInfo.caseInfoCount + '</td>' +
+                                    '<td class="title">汇总</td>' +
+                                    '<td>' + (res.data.gsDataInfo.caseInfoCount + res.data.gsDataInfo.punishBreakInfoCount + res.data.gsDataInfo.punishedInfoCount) + '</td>' +
                                     '</tr></table>';
-                                html+='<table class="table m-t-2"><tr>'+
-                                    '<th>类型</th>'+
-                                    '<th>执行法院</th>'+
-                                    '<th>立案时间</th>'+
-                                    '<th>案号</th>'+
-                                    '<th>标的金额或履行情况</th>'+
-                                    '<th>信息获取<br>时间</th>'+
+                                html += '<table class="table m-t-2"><tr>' +
+                                    '<th>类型</th>' +
+                                    '<th>执行法院</th>' +
+                                    '<th>立案时间</th>' +
+                                    '<th>案号</th>' +
+                                    '<th>标的金额或履行情况</th>' +
+                                    '<th>信息获取<br>时间</th>' +
                                     '</tr>';
-                                if(res.data.gsDataInfo.caseInfoCount!=0){
-                                    for (var i=0;i<res.data.gsDataInfo.caseInfo.length;i++) {
-                                        html+='<tr>'+
-                                            '<td>行政处罚</td>'+
-                                            '<td>'+res.data.gsDataInfo.caseInfo[i].penAuth+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.caseInfo[i].caseTime+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.caseInfo[i].cardNo+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.caseInfo[i].penAm+'</td>'+
-                                            '<td>2016-2-18</td>'+
+                                if (res.data.gsDataInfo.caseInfoCount != 0) {
+                                    for (var i = 0; i < res.data.gsDataInfo.caseInfo.length; i++) {
+                                        html += '<tr>' +
+                                            '<td>行政处罚</td>' +
+                                            '<td>' + res.data.gsDataInfo.caseInfo[i].penAuth + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.caseInfo[i].caseTime + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.caseInfo[i].cardNo + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.caseInfo[i].penAm + '</td>' +
+                                            '<td>2016-2-18</td>' +
                                             '</tr>';
                                     }
                                 }
-                                if(res.data.gsDataInfo.punishBreakInfoCount!=0){
-                                    for (var i=0;i<res.data.gsDataInfo.punishBreakInfo.length;i++) {
-                                        html+='<tr>'+
-                                            '<td>失信被执行人信息</td>'+
-                                            '<td>'+res.data.gsDataInfo.punishBreakInfo[i].courName+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.punishBreakInfo[i].regDate+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.punishBreakInfo[i].caseCode+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.punishBreakInfo[i].performance+'</td>'+
-                                            '<td>2016-2-18</td>'+
+                                if (res.data.gsDataInfo.punishBreakInfoCount != 0) {
+                                    for (var i = 0; i < res.data.gsDataInfo.punishBreakInfo.length; i++) {
+                                        html += '<tr>' +
+                                            '<td>失信被执行人信息</td>' +
+                                            '<td>' + res.data.gsDataInfo.punishBreakInfo[i].courName + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.punishBreakInfo[i].regDate + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.punishBreakInfo[i].caseCode + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.punishBreakInfo[i].performance + '</td>' +
+                                            '<td>2016-2-18</td>' +
                                             '</tr>';
                                     }
                                 }
-                                if(res.data.gsDataInfo.punishedInfoCount!=0){
-                                    for (var i=0;i<res.data.gsDataInfo.punishedInfo.length;i++) {
-                                        html+='<tr>'+
-                                            '<td>被执行人信息</td>'+
-                                            '<td>'+res.data.gsDataInfo.punishedInfo[i].courtName+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.punishedInfo[i].regDate+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.punishedInfo[i].caseCode+'</td>'+
-                                            '<td>'+res.data.gsDataInfo.punishedInfo[i].execMoney+'</td>'+
-                                            '<td>2016-2-18</td>'+
+                                if (res.data.gsDataInfo.punishedInfoCount != 0) {
+                                    for (var i = 0; i < res.data.gsDataInfo.punishedInfo.length; i++) {
+                                        html += '<tr>' +
+                                            '<td>被执行人信息</td>' +
+                                            '<td>' + res.data.gsDataInfo.punishedInfo[i].courtName + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.punishedInfo[i].regDate + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.punishedInfo[i].caseCode + '</td>' +
+                                            '<td>' + res.data.gsDataInfo.punishedInfo[i].execMoney + '</td>' +
+                                            '<td>2016-2-18</td>' +
                                             '</tr>';
                                     }
                                 }
-                                html+='</table>';
-                            }else{
-                                html+='<table class="table m-t-2 td-4"><tr>'+
-                                    '<td class="title">被执行人信息</td>'+
-                                    '<td>0</td>'+
-                                    '<td class="title">失信被执行人信息</td>'+
-                                    '<td>0</td>'+
-                                    '</tr>'+
-                                    '<tr>'+
-                                    '<td class="title">行政处罚</td>'+
-                                    '<td>0</td>'+
-                                    '<td class="title">汇总</td>'+
-                                    '<td>0</td>'+
-                                    '</tr></table><table class="table m-t-2"><tr>'+
-                                    '<th>类型</th>'+
-                                    '<th>执行法院</th>'+
-                                    '<th>立案时间</th>'+
-                                    '<th>案号</th>'+
-                                    '<th>标的金额或履行情况</th>'+
-                                    '<th>信息获取<br>时间</th>'+
-                                    '</tr>'+
-                                    '<tr>'+
-                                    '<td colspan="6" class="text-center">暂无相关信息</td>'+
+                                html += '</table>';
+                            } else {
+                                html += '<table class="table m-t-2 td-4"><tr>' +
+                                    '<td class="title">被执行人信息</td>' +
+                                    '<td>0</td>' +
+                                    '<td class="title">失信被执行人信息</td>' +
+                                    '<td>0</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td class="title">行政处罚</td>' +
+                                    '<td>0</td>' +
+                                    '<td class="title">汇总</td>' +
+                                    '<td>0</td>' +
+                                    '</tr></table><table class="table m-t-2"><tr>' +
+                                    '<th>类型</th>' +
+                                    '<th>执行法院</th>' +
+                                    '<th>立案时间</th>' +
+                                    '<th>案号</th>' +
+                                    '<th>标的金额或履行情况</th>' +
+                                    '<th>信息获取<br>时间</th>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td colspan="6" class="text-center">暂无相关信息</td>' +
                                     '</tr></table>';
                             }
-                            html +='</div></div>';
+                            html += '</div></div>';
                             //工商信息
                             html += '<p class="sky-title text-center m-t-2">工商信息</p>' +
                                 '<div class="stretch-box">' +
                                 '<div class="tabBox">' +
                                 '<table class="table m-t-2">';
-                            if (res.data.gsDataInfo.corporateInfo.length!=0||res.data.gsDataInfo.shareholderInfo.length!=0||res.data.gsDataInfo.managerInfo.length!=0) {
-                                for (var i=0;i<res.data.gsDataInfo.corporateInfo.length;i++) {
-                                    html+='<tr>'+
-                                        '<td class="title">公司名称</td>'+
-                                        '<td colspan="3">'+res.data.gsDataInfo.corporateInfo[i].entName+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">注册号</td>'+
-                                        '<td class="title">'+res.data.gsDataInfo.corporateInfo[i].regNo+'</td>'+
-                                        '<td class="title">公司类型</td>'+
-                                        '<td class="title">'+res.data.gsDataInfo.corporateInfo[i].entType+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">注册资本</td>'+
-                                        '<td>'+res.data.gsDataInfo.corporateInfo[i].regCap+'</td>'+
-                                        '<td class="title">资本单位</td>'+
-                                        '<td>'+res.data.gsDataInfo.corporateInfo[i].regCapCur+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">企业状态</td>'+
-                                        '<td>'+res.data.gsDataInfo.corporateInfo[i].entStatus+'</td>'+
-                                        '<td class="title">任职</td>'+
-                                        '<td></td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">认缴金额</td>'+
-                                        '<td></td>'+
-                                        '<td class="title">股份比例</td>'+
-                                        '<td></td>'+
+                            if (res.data.gsDataInfo.corporateInfo.length != 0 || res.data.gsDataInfo.shareholderInfo.length != 0 || res.data.gsDataInfo.managerInfo.length != 0) {
+                                for (var i = 0; i < res.data.gsDataInfo.corporateInfo.length; i++) {
+                                    html += '<tr>' +
+                                        '<td class="title">公司名称</td>' +
+                                        '<td colspan="3">' + res.data.gsDataInfo.corporateInfo[i].entName + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">注册号</td>' +
+                                        '<td class="title">' + res.data.gsDataInfo.corporateInfo[i].regNo + '</td>' +
+                                        '<td class="title">公司类型</td>' +
+                                        '<td class="title">' + res.data.gsDataInfo.corporateInfo[i].entType + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">注册资本</td>' +
+                                        '<td>' + res.data.gsDataInfo.corporateInfo[i].regCap + '</td>' +
+                                        '<td class="title">资本单位</td>' +
+                                        '<td>' + res.data.gsDataInfo.corporateInfo[i].regCapCur + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">企业状态</td>' +
+                                        '<td>' + res.data.gsDataInfo.corporateInfo[i].entStatus + '</td>' +
+                                        '<td class="title">任职</td>' +
+                                        '<td></td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">认缴金额</td>' +
+                                        '<td></td>' +
+                                        '<td class="title">股份比例</td>' +
+                                        '<td></td>' +
                                         '</tr>';
                                 }
-                                for (var i=0;i<res.data.gsDataInfo.shareholderInfo.length;i++) {
-                                    html+='<tr>'+
-                                        '<td class="title">公司名称</td>'+
-                                        '<td colspan="3">'+res.data.gsDataInfo.shareholderInfo[i].entName+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">注册号</td>'+
-                                        '<td class="title">'+res.data.gsDataInfo.shareholderInfo[i].regNo+'</td>'+
-                                        '<td class="title">公司类型</td>'+
-                                        '<td class="title">'+res.data.gsDataInfo.shareholderInfo[i].entType+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">注册资本</td>'+
-                                        '<td>'+res.data.gsDataInfo.shareholderInfo[i].regCap+'</td>'+
-                                        '<td class="title">资本单位</td>'+
-                                        '<td>'+res.data.gsDataInfo.shareholderInfo[i].regCapCur+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">企业状态</td>'+
-                                        '<td>'+res.data.gsDataInfo.shareholderInfo[i].entStatus+'</td>'+
-                                        '<td class="title">任职</td>'+
-                                        '<td></td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">认缴金额</td>'+
-                                        '<td>'+res.data.gsDataInfo.shareholderInfo[i].subConam+'</td>'+
-                                        '<td class="title">股份比例</td>'+
-                                        '<td>'+res.data.gsDataInfo.shareholderInfo[i].fundedRatio+'</td>'+
+                                for (var i = 0; i < res.data.gsDataInfo.shareholderInfo.length; i++) {
+                                    html += '<tr>' +
+                                        '<td class="title">公司名称</td>' +
+                                        '<td colspan="3">' + res.data.gsDataInfo.shareholderInfo[i].entName + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">注册号</td>' +
+                                        '<td class="title">' + res.data.gsDataInfo.shareholderInfo[i].regNo + '</td>' +
+                                        '<td class="title">公司类型</td>' +
+                                        '<td class="title">' + res.data.gsDataInfo.shareholderInfo[i].entType + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">注册资本</td>' +
+                                        '<td>' + res.data.gsDataInfo.shareholderInfo[i].regCap + '</td>' +
+                                        '<td class="title">资本单位</td>' +
+                                        '<td>' + res.data.gsDataInfo.shareholderInfo[i].regCapCur + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">企业状态</td>' +
+                                        '<td>' + res.data.gsDataInfo.shareholderInfo[i].entStatus + '</td>' +
+                                        '<td class="title">任职</td>' +
+                                        '<td></td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">认缴金额</td>' +
+                                        '<td>' + res.data.gsDataInfo.shareholderInfo[i].subConam + '</td>' +
+                                        '<td class="title">股份比例</td>' +
+                                        '<td>' + res.data.gsDataInfo.shareholderInfo[i].fundedRatio + '</td>' +
                                         '</tr>';
                                 }
-                                for (var i=0;i<res.data.gsDataInfo.managerInfo.length;i++) {
-                                    html+='<tr>'+
-                                        '<td class="title">公司名称</td>'+
-                                        '<td colspan="3">'+res.data.gsDataInfo.managerInfo[i].entName+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">注册号</td>'+
-                                        '<td class="title">'+res.data.gsDataInfo.managerInfo[i].regNo+'</td>'+
-                                        '<td class="title">公司类型</td>'+
-                                        '<td class="title">'+res.data.gsDataInfo.managerInfo[i].entType+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">注册资本</td>'+
-                                        '<td>'+res.data.gsDataInfo.managerInfo[i].regCap+'</td>'+
-                                        '<td class="title">资本单位</td>'+
-                                        '<td>'+res.data.gsDataInfo.managerInfo[i].regCapCur+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">企业状态</td>'+
-                                        '<td>'+res.data.gsDataInfo.managerInfo[i].entStatus+'</td>'+
-                                        '<td class="title">任职</td>'+
-                                        '<td>'+res.data.gsDataInfo.managerInfo[i].position+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">认缴金额</td>'+
-                                        '<td></td>'+
-                                        '<td class="title">股份比例</td>'+
-                                        '<td></td>'+
+                                for (var i = 0; i < res.data.gsDataInfo.managerInfo.length; i++) {
+                                    html += '<tr>' +
+                                        '<td class="title">公司名称</td>' +
+                                        '<td colspan="3">' + res.data.gsDataInfo.managerInfo[i].entName + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">注册号</td>' +
+                                        '<td class="title">' + res.data.gsDataInfo.managerInfo[i].regNo + '</td>' +
+                                        '<td class="title">公司类型</td>' +
+                                        '<td class="title">' + res.data.gsDataInfo.managerInfo[i].entType + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">注册资本</td>' +
+                                        '<td>' + res.data.gsDataInfo.managerInfo[i].regCap + '</td>' +
+                                        '<td class="title">资本单位</td>' +
+                                        '<td>' + res.data.gsDataInfo.managerInfo[i].regCapCur + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">企业状态</td>' +
+                                        '<td>' + res.data.gsDataInfo.managerInfo[i].entStatus + '</td>' +
+                                        '<td class="title">任职</td>' +
+                                        '<td>' + res.data.gsDataInfo.managerInfo[i].position + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">认缴金额</td>' +
+                                        '<td></td>' +
+                                        '<td class="title">股份比例</td>' +
+                                        '<td></td>' +
                                         '</tr>';
                                 }
-                            } else{
-                                html+='<tr>'+
-                                    '<td colspan="4" class="text-center">暂无数据</td>'+
+                            } else {
+                                html += '<tr>' +
+                                    '<td colspan="4" class="text-center">暂无数据</td>' +
                                     '</tr>';
                             }
-                            html +='</table></div></div>';
+                            html += '</table></div></div>';
                             //手机在网时间
-                            if(res.data.mobileData){
+                            if (res.data.mobileData) {
                                 html += '<p class="sky-title text-center m-t-2">手机实名认证及在网时长</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">' +
                                     '<table class="table m-t-2">';
-                                if(res.data.mobileData.status=="SAME"){
-                                    res.data.mobileData.status="相同"
-                                } else if (res.data.mobileData.status=="DIFFERENT"){
-                                    res.data.mobileData.status="不相同"
-                                }else {
-                                    res.data.mobileData.status="没有数据"
+                                if (res.data.mobileData.status == "SAME") {
+                                    res.data.mobileData.status = "相同"
+                                } else if (res.data.mobileData.status == "DIFFERENT") {
+                                    res.data.mobileData.status = "不相同"
+                                } else {
+                                    res.data.mobileData.status = "没有数据"
                                 }
-                                if(res.data.mobileData.status=="相同"){
-                                    html+='<tr>'+
-                                        '<td class="title">姓名</td>'+
-                                        '<td>'+res.realName+'</td>'+
-                                        '<td class="title">手机号</td>'+
-                                        '<td>'+res.mobile+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">运营商</td>'+
-                                        '<td>'+res.data.mobileData.operator+'</td>'+
-                                        '<td class="title">实名检验</td>'+
-                                        '<td>'+res.data.mobileData.status+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">入网时长</td>'+
-                                        '<td colspan="3">'+res.data.mobileData.onlineTime+'</td>'+
+                                if (res.data.mobileData.status == "相同") {
+                                    html += '<tr>' +
+                                        '<td class="title">姓名</td>' +
+                                        '<td>' + res.realName + '</td>' +
+                                        '<td class="title">手机号</td>' +
+                                        '<td>' + res.mobile + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">运营商</td>' +
+                                        '<td>' + res.data.mobileData.operator + '</td>' +
+                                        '<td class="title">实名检验</td>' +
+                                        '<td>' + res.data.mobileData.status + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">入网时长</td>' +
+                                        '<td colspan="3">' + res.data.mobileData.onlineTime + '</td>' +
                                         '</tr>';
-                                }else if(res.data.mobileData.status=="不相同"){
-                                    html+='<tr>'+
-                                        '<td colspan="4" class="text-center">姓名手机号不一致</td>'+
+                                } else if (res.data.mobileData.status == "不相同") {
+                                    html += '<tr>' +
+                                        '<td colspan="4" class="text-center">姓名手机号不一致</td>' +
                                         '</tr>'
                                 }
-                                else{
-                                    html+='<tr>'+
-                                        '<td colspan="4" class="text-center">暂无数据</td>'+
+                                else {
+                                    html += '<tr>' +
+                                        '<td colspan="4" class="text-center">暂无数据</td>' +
                                         '</tr>'
                                 }
-                                html +='</table></div></div>';
+                                html += '</table></div></div>';
                             }
                             //同住址成员信息
-                            if(res.data.jyIdCardInfo){
+                            if (res.data.jyIdCardInfo) {
                                 html += '<p class="sky-title text-center m-t-2">同住址成员信息</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">' +
                                     '<table class="table m-t-2">';
-                                if(!$.isEmptyObject(res.data.jyIdCardInfo)){
-                                    html+='<tr>'+
-                                        '<td class="title">姓名</td>'+
-                                        '<td >'+res.data.jyIdCardInfo.realName+'</td>'+
-                                        '<td class="title">生日</td>'+
-                                        '<td >'+res.data.jyIdCardInfo.birthday+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">婚否</td>'+
-                                        '<td >'+res.data.jyIdCardInfo.maritalStatus+'</td>'+
-                                        '<td class="title">民族</td>'+
-                                        '<td >'+res.data.jyIdCardInfo.nation+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">证件号码</td>'+
-                                        '<td class="text-left" colspan="3">'+res.data.jyIdCardInfo.idCard+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">户籍地址</td>'+
-                                        '<td class="text-left" colspan="3">'+res.data.jyIdCardInfo.address+'</td>'+
+                                if (!$.isEmptyObject(res.data.jyIdCardInfo)) {
+                                    html += '<tr>' +
+                                        '<td class="title">姓名</td>' +
+                                        '<td >' + res.data.jyIdCardInfo.realName + '</td>' +
+                                        '<td class="title">生日</td>' +
+                                        '<td >' + res.data.jyIdCardInfo.birthday + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">婚否</td>' +
+                                        '<td >' + res.data.jyIdCardInfo.maritalStatus + '</td>' +
+                                        '<td class="title">民族</td>' +
+                                        '<td >' + res.data.jyIdCardInfo.nation + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">证件号码</td>' +
+                                        '<td class="text-left" colspan="3">' + res.data.jyIdCardInfo.idCard + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">户籍地址</td>' +
+                                        '<td class="text-left" colspan="3">' + res.data.jyIdCardInfo.address + '</td>' +
                                         '</tr>';
-                                }else {
-                                    html+='<tr>'+
-                                        '<td colspan="4">暂无相关信息</td>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td colspan="4">暂无相关信息</td>' +
                                         '</tr>';
                                 }
-                                html +='</table></div></div>';
+                                html += '</table></div></div>';
                             }
                             //小贷记录明细（多重负债）
-                            if(res.data.siteLoanInfo){
+                            if (res.data.siteLoanInfo) {
                                 html += '<p class="sky-title text-center m-t-2">小贷记录明细（多重负债）</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">' +
                                     '<table class="table m-t-2">';
-                                if(res.data.siteLoanInfo.hit==true){
-                                    res.data.siteLoanInfo.hit="是"
-                                }else {
-                                    res.data.siteLoanInfo.hit="否"
+                                if (res.data.siteLoanInfo.hit == true) {
+                                    res.data.siteLoanInfo.hit = "是"
+                                } else {
+                                    res.data.siteLoanInfo.hit = "否"
                                 }
-                                if(res.data.siteLoanInfo.data.length!=0){
-                                    html+='<tr>'+
-                                        '<td colspan="2" class="title">是否命中行业风险名单</td>'+
-                                        '<td colspan="2">'+res.data.siteLoanInfo.hit+'</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">名单添加时间</td>'+
-                                        '<td>（开发中，暂无）</td>'+
-                                        '<td class="title">名单添加机构</td>'+
-                                        '<td>（开发中，暂无）</td>'+
+                                if (res.data.siteLoanInfo.data.length != 0) {
+                                    html += '<tr>' +
+                                        '<td colspan="2" class="title">是否命中行业风险名单</td>' +
+                                        '<td colspan="2">' + res.data.siteLoanInfo.hit + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">名单添加时间</td>' +
+                                        '<td>（开发中，暂无）</td>' +
+                                        '<td class="title">名单添加机构</td>' +
+                                        '<td>（开发中，暂无）</td>' +
                                         '</tr>';
-                                    for(var i in res.data.siteLoanInfo.data){
-                                        if(res.data.siteLoanInfo.data[i].borrowType==0){
-                                            res.data.siteLoanInfo.data[i].borrowType="未知"
-                                        }else if(res.data.siteLoanInfo.data[i].borrowType==1){
-                                            res.data.siteLoanInfo.data[i].borrowType="个人信贷"
-                                        }else if(res.data.siteLoanInfo.data[i].borrowType==2){
-                                            res.data.siteLoanInfo.data[i].borrowType="个人抵押"
-                                        }else if(res.data.siteLoanInfo.data[i].borrowType==3){
-                                            res.data.siteLoanInfo.data[i].borrowType="企业信贷"
-                                        }else{
-                                            res.data.siteLoanInfo.data[i].borrowType="企业抵押"
+                                    for (var i in res.data.siteLoanInfo.data) {
+                                        if (res.data.siteLoanInfo.data[i].borrowType == 0) {
+                                            res.data.siteLoanInfo.data[i].borrowType = "未知"
+                                        } else if (res.data.siteLoanInfo.data[i].borrowType == 1) {
+                                            res.data.siteLoanInfo.data[i].borrowType = "个人信贷"
+                                        } else if (res.data.siteLoanInfo.data[i].borrowType == 2) {
+                                            res.data.siteLoanInfo.data[i].borrowType = "个人抵押"
+                                        } else if (res.data.siteLoanInfo.data[i].borrowType == 3) {
+                                            res.data.siteLoanInfo.data[i].borrowType = "企业信贷"
+                                        } else {
+                                            res.data.siteLoanInfo.data[i].borrowType = "企业抵押"
                                         }
-                                        if(res.data.siteLoanInfo.data[i].borrowState==0){
-                                            res.data.siteLoanInfo.data[i].borrowState="未知"
-                                        }else if(res.data.siteLoanInfo.data[i].borrowState==1){
-                                            res.data.siteLoanInfo.data[i].borrowState="拒贷"
-                                        }else if(res.data.siteLoanInfo.data[i].borrowState==2){
-                                            res.data.siteLoanInfo.data[i].borrowState="批贷已放款"
-                                        }else if(res.data.siteLoanInfo.data[i].borrowState==3){
-                                            res.data.siteLoanInfo.data[i].borrowState="批贷未放款"
-                                        }else if(res.data.siteLoanInfo.data[i].borrowState==4){
-                                            res.data.siteLoanInfo.data[i].borrowState="借款人放弃申请"
-                                        }else if(res.data.siteLoanInfo.data[i].borrowState==5){
-                                            res.data.siteLoanInfo.data[i].borrowState="审核中"
-                                        }else{
-                                            res.data.siteLoanInfo.data[i].borrowState="待放款"
+                                        if (res.data.siteLoanInfo.data[i].borrowState == 0) {
+                                            res.data.siteLoanInfo.data[i].borrowState = "未知"
+                                        } else if (res.data.siteLoanInfo.data[i].borrowState == 1) {
+                                            res.data.siteLoanInfo.data[i].borrowState = "拒贷"
+                                        } else if (res.data.siteLoanInfo.data[i].borrowState == 2) {
+                                            res.data.siteLoanInfo.data[i].borrowState = "批贷已放款"
+                                        } else if (res.data.siteLoanInfo.data[i].borrowState == 3) {
+                                            res.data.siteLoanInfo.data[i].borrowState = "批贷未放款"
+                                        } else if (res.data.siteLoanInfo.data[i].borrowState == 4) {
+                                            res.data.siteLoanInfo.data[i].borrowState = "借款人放弃申请"
+                                        } else if (res.data.siteLoanInfo.data[i].borrowState == 5) {
+                                            res.data.siteLoanInfo.data[i].borrowState = "审核中"
+                                        } else {
+                                            res.data.siteLoanInfo.data[i].borrowState = "待放款"
                                         }
-                                        if(res.data.siteLoanInfo.data[i].repayState==0){
-                                            res.data.siteLoanInfo.data[i].repayState="未知"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==1){
-                                            res.data.siteLoanInfo.data[i].repayState="正常"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==2){
-                                            res.data.siteLoanInfo.data[i].repayState="M1"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==3){
-                                            res.data.siteLoanInfo.data[i].repayState="M2"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==4){
-                                            res.data.siteLoanInfo.data[i].repayState="M3"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==5){
-                                            res.data.siteLoanInfo.data[i].repayState="M4"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==6){
-                                            res.data.siteLoanInfo.data[i].repayState="M5"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==7){
-                                            res.data.siteLoanInfo.data[i].repayState="M6"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==8){
-                                            res.data.siteLoanInfo.data[i].repayState="M6+"
-                                        }else if(res.data.siteLoanInfo.data[i].repayState==9){
-                                            res.data.siteLoanInfo.data[i].repayState="已还清"
-                                        }else{
-                                            res.data.siteLoanInfo.data[i].repayState="未知"
+                                        if (res.data.siteLoanInfo.data[i].repayState == 0) {
+                                            res.data.siteLoanInfo.data[i].repayState = "未知"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 1) {
+                                            res.data.siteLoanInfo.data[i].repayState = "正常"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 2) {
+                                            res.data.siteLoanInfo.data[i].repayState = "M1"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 3) {
+                                            res.data.siteLoanInfo.data[i].repayState = "M2"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 4) {
+                                            res.data.siteLoanInfo.data[i].repayState = "M3"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 5) {
+                                            res.data.siteLoanInfo.data[i].repayState = "M4"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 6) {
+                                            res.data.siteLoanInfo.data[i].repayState = "M5"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 7) {
+                                            res.data.siteLoanInfo.data[i].repayState = "M6"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 8) {
+                                            res.data.siteLoanInfo.data[i].repayState = "M6+"
+                                        } else if (res.data.siteLoanInfo.data[i].repayState == 9) {
+                                            res.data.siteLoanInfo.data[i].repayState = "已还清"
+                                        } else {
+                                            res.data.siteLoanInfo.data[i].repayState = "未知"
                                         }
-
-                                        res.data.siteLoanInfo.data[i].borrowAmount=parseInt(res.data.siteLoanInfo.data[i].borrowAmount);
-                                        if(res.data.siteLoanInfo.data[i].borrowAmount==-7){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="0~1000";
-                                        }else if(res.data.siteLoanInfo.data[i].borrowAmount==-6){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="1000~2000";
-                                        }else if(res.data.siteLoanInfo.data[i].borrowAmount==-5){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="2000~3000";
-                                        }else if(res.data.siteLoanInfo.data[i].borrowAmount==-4){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="3000~4000";
-                                        }else if(res.data.siteLoanInfo.data[i].borrowAmount==-3){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="4000~6000";
-                                        }else if(res.data.siteLoanInfo.data[i].borrowAmount==-2){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="6000~8000";
-                                        }else if(res.data.siteLoanInfo.data[i].borrowAmount==-1){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="8000~10000";
-                                        }else if(res.data.siteLoanInfo.data[i].borrowAmount==0){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="未知";
-                                        }else if(res.data.siteLoanInfo.data[i].borrowAmount==1){
-                                            res.data.siteLoanInfo.data[i].borrowAmount="1~2万";
-                                        }else{
-                                            res.data.siteLoanInfo.data[i].borrowAmount=res.data.siteLoanInfo.data[i].borrowAmount*2-2+"~"+res.data.siteLoanInfo.data[i].borrowAmount*2+"万";
+                                        
+                                        res.data.siteLoanInfo.data[i].borrowAmount = parseInt(res.data.siteLoanInfo.data[i].borrowAmount);
+                                        if (res.data.siteLoanInfo.data[i].borrowAmount == -7) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "0~1000";
+                                        } else if (res.data.siteLoanInfo.data[i].borrowAmount == -6) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "1000~2000";
+                                        } else if (res.data.siteLoanInfo.data[i].borrowAmount == -5) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "2000~3000";
+                                        } else if (res.data.siteLoanInfo.data[i].borrowAmount == -4) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "3000~4000";
+                                        } else if (res.data.siteLoanInfo.data[i].borrowAmount == -3) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "4000~6000";
+                                        } else if (res.data.siteLoanInfo.data[i].borrowAmount == -2) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "6000~8000";
+                                        } else if (res.data.siteLoanInfo.data[i].borrowAmount == -1) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "8000~10000";
+                                        } else if (res.data.siteLoanInfo.data[i].borrowAmount == 0) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "未知";
+                                        } else if (res.data.siteLoanInfo.data[i].borrowAmount == 1) {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = "1~2万";
+                                        } else {
+                                            res.data.siteLoanInfo.data[i].borrowAmount = res.data.siteLoanInfo.data[i].borrowAmount * 2 - 2 + "~" + res.data.siteLoanInfo.data[i].borrowAmount * 2 + "万";
                                         }
-
-                                        html+='<tr>'+
-                                            '<td class="bg-color-lGreen text-center" colspan="4"><span class="icon icon-number">'+(parseInt(i)+1)+'</span></td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">借贷类型</td>'+
-                                            '<td>'+res.data.siteLoanInfo.data[i].borrowType+'</td>'+
-                                            '<td class="title">借款日期</td>'+
-                                            '<td>'+formatDate(res.data.siteLoanInfo.data[i].contractDate)+'</td>'+
+                                        
+                                        html += '<tr>' +
+                                            '<td class="bg-color-lGreen text-center" colspan="4"><span class="icon icon-number">' + (parseInt(i) + 1) + '</span></td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">借贷类型</td>' +
+                                            '<td>' + res.data.siteLoanInfo.data[i].borrowType + '</td>' +
+                                            '<td class="title">借款日期</td>' +
+                                            '<td>' + formatDate(res.data.siteLoanInfo.data[i].contractDate) + '</td>' +
                                             '</tr>';
-
-                                            html+='<tr>'+
-                                            '<td class="title">借款状态</td>'+
-                                            '<td>'+res.data.siteLoanInfo.data[i].borrowState+'</td>'+
-                                            '<td class="title">借款金额</td>'+
-                                            '<td>'+res.data.siteLoanInfo.data[i].borrowAmount+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">借款期数</td>'+
-                                            '<td>'+res.data.siteLoanInfo.data[i].loanPeriod+'</td>'+
-                                            '<td class="title">当前还款状态</td>'+
-                                            '<td>'+res.data.siteLoanInfo.data[i].repayState+'</td>'+
+                                        
+                                        html += '<tr>' +
+                                            '<td class="title">借款状态</td>' +
+                                            '<td>' + res.data.siteLoanInfo.data[i].borrowState + '</td>' +
+                                            '<td class="title">借款金额</td>' +
+                                            '<td>' + res.data.siteLoanInfo.data[i].borrowAmount + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">借款期数</td>' +
+                                            '<td>' + res.data.siteLoanInfo.data[i].loanPeriod + '</td>' +
+                                            '<td class="title">当前还款状态</td>' +
+                                            '<td>' + res.data.siteLoanInfo.data[i].repayState + '</td>' +
                                             '</tr>';
-
-                                            html+='<tr>'+
-                                            '<td class="title">欠款金额</td>'+
-                                            '<td>'+(res.data.siteLoanInfo.data[i].arrearsAmount/100000)+'</td>'+
-                                            '<td class="title">数据反馈商</td>'+
-                                            '<td>'+res.data.siteLoanInfo.data[i].companyCode+'</td>'+
+                                        
+                                        html += '<tr>' +
+                                            '<td class="title">欠款金额</td>' +
+                                            '<td>' + (res.data.siteLoanInfo.data[i].arrearsAmount / 100000) + '</td>' +
+                                            '<td class="title">数据反馈商</td>' +
+                                            '<td>' + res.data.siteLoanInfo.data[i].companyCode + '</td>' +
                                             '</tr>';
-
+                                        
                                     }
-                                }else{
-                                    html+='<tr>'+
-                                        '<td colspan="4" class="text-center">暂无信息</td>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td colspan="4" class="text-center">暂无信息</td>' +
                                         '</tr>';
                                 }
-                                html +='</table></div></div>';
+                                html += '</table></div></div>';
                             }
                             //犯罪在逃信息查询
-                            if(res.data.message){
+                            if (res.data.message) {
                                 html += '<p class="sky-title text-center m-t-2">犯罪在逃信息</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">' +
                                     '<table class="table m-t-2">';
-                                html +='<tr>'+
-                                    '<td class="title">姓名</td>'+
-                                    '<td>'+res.realName+'</td>'+
-                                    '<td class="title">身份证号</td>'+
-                                    '<td>'+res.idCard+'</td>'+
-                                    '</tr>'+
-                                    '<tr>'+
-                                    '<td class="bg-color-lGreen color-red text-center" colspan="4">'+res.data.message+'</td>'+
-                                    '</tr>'+
-                                    '</table></div>'+
-                                    '<table class="text-left m-t-2">'+
-                                    '<tr>'+
-                                    '<td class="title">案件时间</td>'+
-                                    '<td class="title">案件类型</td>'+
-                                    '<td class="title">案件类型描述</td>'+
+                                html += '<tr>' +
+                                    '<td class="title">姓名</td>' +
+                                    '<td>' + res.realName + '</td>' +
+                                    '<td class="title">身份证号</td>' +
+                                    '<td>' + res.idCard + '</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                    '<td class="bg-color-lGreen color-red text-center" colspan="4">' + res.data.message + '</td>' +
+                                    '</tr>' +
+                                    '</table></div>' +
+                                    '<table class="text-left m-t-2">' +
+                                    '<tr>' +
+                                    '<td class="title">案件时间</td>' +
+                                    '<td class="title">案件类型</td>' +
+                                    '<td class="title">案件类型描述</td>' +
                                     '</tr>';
-                                if(res.data.length!=0){
-                                    for(var i=0;i<res.data.length;i++){
-                                        html+= '<tr>'+
-                                            '<td>'+res.data[i].caseTime+'</td>'+
-                                            '<td>'+res.data[i].caseType+'</td>'+
-                                            '<td>'+res.data[i].caseSource+'</td>'+
-                                            '</tr>'+
-                                            '</table>'+
+                                if (res.data.length != 0) {
+                                    for (var i = 0; i < res.data.length; i++) {
+                                        html += '<tr>' +
+                                            '<td>' + res.data[i].caseTime + '</td>' +
+                                            '<td>' + res.data[i].caseType + '</td>' +
+                                            '<td>' + res.data[i].caseSource + '</td>' +
+                                            '</tr>' +
+                                            '</table>' +
                                             '</div>';
                                     }
-                                }else{
-                                    html+='<tr>'+
-                                        '<td>暂无数据</td>'+
-                                        '</tr>'+
-                                        '</table>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td>暂无数据</td>' +
+                                        '</tr>' +
+                                        '</table>' +
                                         '</div>';
                                 }
-                                html +='</div>';
+                                html += '</div>';
                             }
                             //地址信息
-                            if(res.data.addressData){
+                            if (res.data.addressData) {
                                 html += '<p class="sky-title text-center m-t-2">地址信息</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">' +
                                     '<table class="table m-t-2">';
-                                if(res.data.addressData.length!=0){
-                                    for(var i in res.data.addressData){
-                                        html+='<tr>'+
-                                            '<td class="title">地址类型</td>'+
-                                            '<td><span class="icon-orange icon">居</span>居住地址</td>'+
-                                            '<td class="title">数据获取年份</td>'+
-                                            '<td></td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">地址位置</td>'+
-                                            '<td colspan="3">'+res.data.addressData[i].homeAddress+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">地址类型</td>'+
-                                            '<td><span class="icon-green icon">工</span>工作地址</td> '+
-                                            '<td class="title">数据获取年份</td>'+
-                                            '<td></td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">地址位置</td>'+
-                                            '<td colspan="3">'+res.data.addressData[i].companyAddress+'</td>'+
+                                if (res.data.addressData.length != 0) {
+                                    for (var i in res.data.addressData) {
+                                        html += '<tr>' +
+                                            '<td class="title">地址类型</td>' +
+                                            '<td><span class="icon-orange icon">居</span>居住地址</td>' +
+                                            '<td class="title">数据获取年份</td>' +
+                                            '<td></td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">地址位置</td>' +
+                                            '<td colspan="3">' + res.data.addressData[i].homeAddress + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">地址类型</td>' +
+                                            '<td><span class="icon-green icon">工</span>工作地址</td> ' +
+                                            '<td class="title">数据获取年份</td>' +
+                                            '<td></td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">地址位置</td>' +
+                                            '<td colspan="3">' + res.data.addressData[i].companyAddress + '</td>' +
                                             '</tr>';
                                     }
-                                }else{
-                                    html+='<tr>'+
-                                        '<td colspan="4" class="text-center">暂无数据</td>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td colspan="4" class="text-center">暂无数据</td>' +
                                         '</tr>';
                                 }
-                                html +='</table></div></div>';
+                                html += '</table></div></div>';
                             }
                             //银行卡画像
-                            if(res.data.unionDataInfo){
+                            if (res.data.unionDataInfo) {
                                 html += '<p class="sky-title text-center m-t-2">银行卡画像</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">';
-                                if(res.data.unionDataInfo.assetIndex!=""||res.data.unionDataInfo.tradingBehaviour!=""||res.data.unionDataInfo.creditTrading!=""||
-                                    res.data.unionDataInfo.consumeCategory!=""||res.data.unionDataInfo.consumeCity!=""||res.data.unionDataInfo.monthConsumption!=""){
-                                    html+='<table class="table m-t-2"><tr>'+
-                                        '<td colspan="4" class="bg-color-lGreen text-center title">基础信息</td>'+
+                                if (res.data.unionDataInfo.assetIndex != "" || res.data.unionDataInfo.tradingBehaviour != "" || res.data.unionDataInfo.creditTrading != "" ||
+                                    res.data.unionDataInfo.consumeCategory != "" || res.data.unionDataInfo.consumeCity != "" || res.data.unionDataInfo.monthConsumption != "") {
+                                    html += '<table class="table m-t-2"><tr>' +
+                                        '<td colspan="4" class="bg-color-lGreen text-center title">基础信息</td>' +
                                         '</tr>';
-                                    if(res.data.unionDataInfo.assetIndex!=""&&res.data.unionDataInfo.assetIndex!=null){
-                                        html+='<tr>'+
-                                            '<td class="title">是否有房</td>'+
-                                            '<td>'+(res.data.unionDataInfo.assetIndex.hasRoom==true?"有":"无")+'</td>'+
-                                            '<td class="title">是否有车</td>'+
-                                            '<td>'+(res.data.unionDataInfo.assetIndex.hasCar==true?"有":"无")+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">房产预估购买时间</td>'+
-                                            '<td>'+res.data.unionDataInfo.assetIndex.roomBuyTime+'</td>'+
-                                            '<td class="title">轿车预估购买时间</td>'+
-                                            '<td>'+res.data.unionDataInfo.assetIndex.carBuyTime+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">房产预估价格</td>'+
-                                            '<td>'+res.data.unionDataInfo.assetIndex.roomValue+'</td>'+
-                                            '<td class="title">轿车预估价格</td>'+
-                                            '<td>'+res.data.unionDataInfo.assetIndex.carValue+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">还款区间</td>'+
-                                            '<td colspan="3">'+res.data.unionDataInfo.assetIndex.repaymentAbility+'</td>'+
+                                    if (res.data.unionDataInfo.assetIndex != "" && res.data.unionDataInfo.assetIndex != null) {
+                                        html += '<tr>' +
+                                            '<td class="title">是否有房</td>' +
+                                            '<td>' + (res.data.unionDataInfo.assetIndex.hasRoom == true ? "有" : "无") + '</td>' +
+                                            '<td class="title">是否有车</td>' +
+                                            '<td>' + (res.data.unionDataInfo.assetIndex.hasCar == true ? "有" : "无") + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">房产预估购买时间</td>' +
+                                            '<td>' + res.data.unionDataInfo.assetIndex.roomBuyTime + '</td>' +
+                                            '<td class="title">轿车预估购买时间</td>' +
+                                            '<td>' + res.data.unionDataInfo.assetIndex.carBuyTime + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">房产预估价格</td>' +
+                                            '<td>' + res.data.unionDataInfo.assetIndex.roomValue + '</td>' +
+                                            '<td class="title">轿车预估价格</td>' +
+                                            '<td>' + res.data.unionDataInfo.assetIndex.carValue + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">还款区间</td>' +
+                                            '<td colspan="3">' + res.data.unionDataInfo.assetIndex.repaymentAbility + '</td>' +
                                             '</tr>';
-                                    }else{
-                                        html+='<tr>'+
-                                            '<td colspan="4" class="text-center">暂无数据</td>'+
-                                            '</tr>';
-                                    }
-                                    if(res.data.unionDataInfo.tradingBehaviour!=""&&res.data.unionDataInfo.tradingBehaviour!=null){
-                                        html+='<tr>'+
-                                            '<td colspan="4" class="bg-color-lGreen text-center title"> 交易行为特征</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">有无出差</td>'+
-                                            '<td>'+(res.data.unionDataInfo.tradingBehaviour.travelConsumption=="true"?"有":"无")+'</td>'+
-                                            '<td class="title">有无婚庆消费</td>'+
-                                            '<td>'+(res.data.unionDataInfo.tradingBehaviour.weddingConsumption=="true"?"有":"无")+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">是否就业状态</td>'+
-                                            '<td>'+(res.data.unionDataInfo.tradingBehaviour.employed=="true"?"是":"否")+'</td>'+
-                                            '<td class="title">常住城市</td>'+
-                                            '<td>'+res.data.unionDataInfo.tradingBehaviour.city+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">有无母婴/教育投资</td>'+
-                                            '<td>'+(res.data.unionDataInfo.tradingBehaviour.childInvest=="true"?"有":"无")+'</td>'+
-                                            '<td class="title">有无夜消费</td>'+
-                                            '<td>'+(res.data.unionDataInfo.tradingBehaviour.nightConsumption=="true"?"有":"无")+'</td>'+
-                                            '</tr>'+
-                                            '<tr>'+
-                                            '<td class="title">工作时间消费区</td>'+
-                                            '<td>'+res.data.unionDataInfo.tradingBehaviour.workingTimeConsumption+'</td>'+
-                                            '<td class="title">非工作时间消费区</td>'+
-                                            '<td>'+res.data.unionDataInfo.tradingBehaviour.noWorkingTimeConsumption+'</td>'+
+                                    } else {
+                                        html += '<tr>' +
+                                            '<td colspan="4" class="text-center">暂无数据</td>' +
                                             '</tr>';
                                     }
-                                    html+='</table>';
-
-                                    html+='<table class="table m-t-2"><tr>'+
-                                        '<td colspan="5" class="bg-color-lGreen text-center title">月消费统计</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">月份</td>'+
-                                        '<td class="title">消费笔数</td>'+
-                                        '<td class="title">消费金额</td>'+
-                                        '<td class="title">笔数本市排名</td>'+
-                                        '<td class="title">金额本市排名</td>'+
-                                        '</tr>';
-                                    if(res.data.unionDataInfo.monthConsumption!=""&&res.data.unionDataInfo.monthConsumption!=null){
-                                        for(var i in res.data.unionDataInfo.monthConsumption){
-                                            html+='<tr>'+
-                                                '<td>'+res.data.unionDataInfo.monthConsumption[i].month+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.monthConsumption[i].totalComsumptionTimes+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.monthConsumption[i].totalAmount+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.monthConsumption[i].consumptionTimesRanking+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.monthConsumption[i].consumptionAmountRanking+'</td>'+
-                                                '</tr>';
-                                        }
-                                    }else{
-                                        html+='<tr>'+
-                                            '<td colspan="5" class="text-center">暂无数据</td>'+
+                                    if (res.data.unionDataInfo.tradingBehaviour != "" && res.data.unionDataInfo.tradingBehaviour != null) {
+                                        html += '<tr>' +
+                                            '<td colspan="4" class="bg-color-lGreen text-center title"> 交易行为特征</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">有无出差</td>' +
+                                            '<td>' + (res.data.unionDataInfo.tradingBehaviour.travelConsumption == "true" ? "有" : "无") + '</td>' +
+                                            '<td class="title">有无婚庆消费</td>' +
+                                            '<td>' + (res.data.unionDataInfo.tradingBehaviour.weddingConsumption == "true" ? "有" : "无") + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">是否就业状态</td>' +
+                                            '<td>' + (res.data.unionDataInfo.tradingBehaviour.employed == "true" ? "是" : "否") + '</td>' +
+                                            '<td class="title">常住城市</td>' +
+                                            '<td>' + res.data.unionDataInfo.tradingBehaviour.city + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">有无母婴/教育投资</td>' +
+                                            '<td>' + (res.data.unionDataInfo.tradingBehaviour.childInvest == "true" ? "有" : "无") + '</td>' +
+                                            '<td class="title">有无夜消费</td>' +
+                                            '<td>' + (res.data.unionDataInfo.tradingBehaviour.nightConsumption == "true" ? "有" : "无") + '</td>' +
+                                            '</tr>' +
+                                            '<tr>' +
+                                            '<td class="title">工作时间消费区</td>' +
+                                            '<td>' + res.data.unionDataInfo.tradingBehaviour.workingTimeConsumption + '</td>' +
+                                            '<td class="title">非工作时间消费区</td>' +
+                                            '<td>' + res.data.unionDataInfo.tradingBehaviour.noWorkingTimeConsumption + '</td>' +
                                             '</tr>';
                                     }
-                                    html+='</table>' +
-                                        '<table class="table td-3 m-t-2"><tr>'+
-                                        '<td colspan="3" class="bg-color-lGreen text-center title">地域消费统计</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">地域</td>'+
-                                        '<td class="title">消费笔数</td>'+
-                                        '<td class="title">消费金额</td>'+
-                                        '</tr>';
-                                    if(res.data.unionDataInfo.consumeCity!=""&&res.data.unionDataInfo.consumeCity!=null){
-                                        for(var i in res.data.unionDataInfo.consumeCity){
-                                            html+='<tr>'+
-                                                '<td>'+res.data.unionDataInfo.consumeCity[i].city+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.consumeCity[i].consumptionTimes+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.consumeCity[i].consumptionAmount+'</td>'+
-                                                '</tr>';
-                                        }
-                                    }else{
-                                        html+='<tr>'+
-                                            '<td colspan="3" class="text-center">暂无数据</td>'+
-                                            '</tr>';
-                                    }
-                                    html+='<tr>'+
-                                        '<td colspan="3" class="bg-color-lGreen text-center title">类别消费统计</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">类别</td>'+
-                                        '<td class="title">消费笔数</td>'+
-                                        '<td class="title">消费金额</td>'+
-                                        '</tr>';
-                                    if(res.data.unionDataInfo.consumeCategory!=""){
-                                        for(var i in res.data.unionDataInfo.consumeCategory){
-                                            html+='<tr>'+
-                                                '<td>'+res.data.unionDataInfo.consumeCategory[i].categoryName+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.consumeCategory[i].consumptionTimes+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.consumeCategory[i].consumptionAmount+'</td>'+
-                                                '</tr>';
-                                        }
-                                    }else{
-                                        html+='<tr>'+
-                                            '<td colspan="3" class="text-center">暂无数据</td>'+
-                                            '</tr>';
-                                    }
-                                    html+='<tr>'+
-                                        '<td colspan="3" class="bg-color-lGreen text-center title">信用消费统计</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="title">类别</td>'+
-                                        '<td class="title">消费笔数</td>'+
-                                        '<td class="title">消费金额</td>'+
-                                        '</tr>';
-                                    if(res.data.unionDataInfo.creditTrading!=""&&res.data.unionDataInfo.creditTrading!=null){
-                                        for(var i in res.data.unionDataInfo.creditTrading){
-                                            html+='<tr>'+
-                                                '<td>'+res.data.unionDataInfo.creditTrading[i].name+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.creditTrading[i].consumptionTimes+'</td>'+
-                                                '<td>'+res.data.unionDataInfo.creditTrading[i].consumptionAmount+'</td>'+
-                                                '</tr>';
-                                        }
-                                    }else{
-                                        html+='<tr>'+
-                                            '<td colspan="3" class="text-center">暂无数据</td>'+
-                                            '</tr>';
-                                    }
-                                    html+='</table>';
-                                }else{
-                                    html+='<table class="table m-t-2"><tr>'+
-                                        '<td class="bg-color-lGreen text-center title"> 基础信息</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="text-center">暂未查到相关数据</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="bg-color-lGreen text-center title">月消费统计</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="text-center">暂未查到相关数据</td>'+
+                                    html += '</table>';
+                                    
+                                    html += '<table class="table m-t-2"><tr>' +
+                                        '<td colspan="5" class="bg-color-lGreen text-center title">月消费统计</td>' +
                                         '</tr>' +
-                                        '<tr>'+
-                                        '<td class="bg-color-lGreen text-center title">地域消费统计</td>'+
-                                        '</tr>'+
-                                        '<tr>'+
-                                        '<td class="text-center">暂无查到相关数据</td>'+
+                                        '<tr>' +
+                                        '<td class="title">月份</td>' +
+                                        '<td class="title">消费笔数</td>' +
+                                        '<td class="title">消费金额</td>' +
+                                        '<td class="title">笔数本市排名</td>' +
+                                        '<td class="title">金额本市排名</td>' +
+                                        '</tr>';
+                                    if (res.data.unionDataInfo.monthConsumption != "" && res.data.unionDataInfo.monthConsumption != null) {
+                                        for (var i in res.data.unionDataInfo.monthConsumption) {
+                                            html += '<tr>' +
+                                                '<td>' + res.data.unionDataInfo.monthConsumption[i].month + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.monthConsumption[i].totalComsumptionTimes + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.monthConsumption[i].totalAmount + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.monthConsumption[i].consumptionTimesRanking + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.monthConsumption[i].consumptionAmountRanking + '</td>' +
+                                                '</tr>';
+                                        }
+                                    } else {
+                                        html += '<tr>' +
+                                            '<td colspan="5" class="text-center">暂无数据</td>' +
+                                            '</tr>';
+                                    }
+                                    html += '</table>' +
+                                        '<table class="table td-3 m-t-2"><tr>' +
+                                        '<td colspan="3" class="bg-color-lGreen text-center title">地域消费统计</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">地域</td>' +
+                                        '<td class="title">消费笔数</td>' +
+                                        '<td class="title">消费金额</td>' +
+                                        '</tr>';
+                                    if (res.data.unionDataInfo.consumeCity != "" && res.data.unionDataInfo.consumeCity != null) {
+                                        for (var i in res.data.unionDataInfo.consumeCity) {
+                                            html += '<tr>' +
+                                                '<td>' + res.data.unionDataInfo.consumeCity[i].city + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.consumeCity[i].consumptionTimes + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.consumeCity[i].consumptionAmount + '</td>' +
+                                                '</tr>';
+                                        }
+                                    } else {
+                                        html += '<tr>' +
+                                            '<td colspan="3" class="text-center">暂无数据</td>' +
+                                            '</tr>';
+                                    }
+                                    html += '<tr>' +
+                                        '<td colspan="3" class="bg-color-lGreen text-center title">类别消费统计</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">类别</td>' +
+                                        '<td class="title">消费笔数</td>' +
+                                        '<td class="title">消费金额</td>' +
+                                        '</tr>';
+                                    if (res.data.unionDataInfo.consumeCategory != "") {
+                                        for (var i in res.data.unionDataInfo.consumeCategory) {
+                                            html += '<tr>' +
+                                                '<td>' + res.data.unionDataInfo.consumeCategory[i].categoryName + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.consumeCategory[i].consumptionTimes + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.consumeCategory[i].consumptionAmount + '</td>' +
+                                                '</tr>';
+                                        }
+                                    } else {
+                                        html += '<tr>' +
+                                            '<td colspan="3" class="text-center">暂无数据</td>' +
+                                            '</tr>';
+                                    }
+                                    html += '<tr>' +
+                                        '<td colspan="3" class="bg-color-lGreen text-center title">信用消费统计</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="title">类别</td>' +
+                                        '<td class="title">消费笔数</td>' +
+                                        '<td class="title">消费金额</td>' +
+                                        '</tr>';
+                                    if (res.data.unionDataInfo.creditTrading != "" && res.data.unionDataInfo.creditTrading != null) {
+                                        for (var i in res.data.unionDataInfo.creditTrading) {
+                                            html += '<tr>' +
+                                                '<td>' + res.data.unionDataInfo.creditTrading[i].name + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.creditTrading[i].consumptionTimes + '</td>' +
+                                                '<td>' + res.data.unionDataInfo.creditTrading[i].consumptionAmount + '</td>' +
+                                                '</tr>';
+                                        }
+                                    } else {
+                                        html += '<tr>' +
+                                            '<td colspan="3" class="text-center">暂无数据</td>' +
+                                            '</tr>';
+                                    }
+                                    html += '</table>';
+                                } else {
+                                    html += '<table class="table m-t-2"><tr>' +
+                                        '<td class="bg-color-lGreen text-center title"> 基础信息</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="text-center">暂未查到相关数据</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="bg-color-lGreen text-center title">月消费统计</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="text-center">暂未查到相关数据</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="bg-color-lGreen text-center title">地域消费统计</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<td class="text-center">暂无查到相关数据</td>' +
                                         '</tr>';
                                 }
-                                html +='</table></div></div>';
+                                html += '</table></div></div>';
                             }
                             //银行卡查询记录
-                            if(res.data.siteOtherBankLog){
+                            if (res.data.siteOtherBankLog) {
                                 html += '<p class="sky-title text-center m-t-2">银行卡查询记录</p>' +
                                     '<div class="stretch-box">' +
                                     '<div class="tabBox">' +
                                     '<table class="table m-t-2">';
-                                html+='<tr>'+
-                                    '<td class="title">银行卡号</td>'+
-                                    '<td colspan="3">'+res.bankCard+'</td>'+
+                                html += '<tr>' +
+                                    '<td class="title">银行卡号</td>' +
+                                    '<td colspan="3">' + res.bankCard + '</td>' +
                                     '</tr>';
-                                html+='<tr class="bg-color-lGreen">'+
-                                    '<th>其他银行卡号</th>'+
-                                    '<th>被查询时间</th>'+
+                                html += '<tr class="bg-color-lGreen">' +
+                                    '<th>其他银行卡号</th>' +
+                                    '<th>被查询时间</th>' +
                                     '</tr>';
-                                if(res.data.siteOtherBankLog.datas!=""){
-                                    for(var i in res.data.siteOtherBankLog.datas){
-                                        html+='<tr>'+
-                                            '<td>'+res.data.siteOtherBankLog.datas[i].bankNo+'</td>'+
-                                            '<td>'+res.data.siteOtherBankLog.datas[i].searchTime+'</td>'+
+                                if (res.data.siteOtherBankLog.datas != "") {
+                                    for (var i in res.data.siteOtherBankLog.datas) {
+                                        html += '<tr>' +
+                                            '<td>' + res.data.siteOtherBankLog.datas[i].bankNo + '</td>' +
+                                            '<td>' + res.data.siteOtherBankLog.datas[i].searchTime + '</td>' +
                                             '</tr>';
                                     }
-                                }else{
-                                    html+='<tr>'+
-                                        '<td class="text-center" colspan="2">暂无信息</td>'+
+                                } else {
+                                    html += '<tr>' +
+                                        '<td class="text-center" colspan="2">暂无信息</td>' +
                                         '</tr>';
                                 }
-                                html +='</table></div></div>';
+                                html += '</table></div></div>';
                             }
-                            html +='</div>';
-                        } else if (res.apiComparedStatusEnum == "DIFFERENT"){
+                            html += '</div>';
+                        } else if (res.apiComparedStatusEnum == "DIFFERENT") {
                             html = '<p class="sky-title text-center">身份证照片查询</p>' +
                                 '<div class="box">' +
                                 '<div class="queryFails text-center m-t-2">' +
                                 '<img src="img/icon_fails.png" class="img-responsive center-block">' +
                                 '<p class="text color-red">验证结果：信息验证结果不一致！</p></div></div>';
-                        }else {
+                        } else {
                             html = '<p class="sky-title text-center">身份证照片查询</p>' +
                                 '<div class="box">' +
                                 '<div class="queryFails text-center m-t-2">' +
                                 '<img src="img/icon_fails.png" class="img-responsive center-block">' +
                                 '<p class="text color-red">验证结果：暂无相关信息</p></div></div>';
                         }
-                    }else {
+                    } else {
                         sky.msg(res.retMsg);
                     }
                     win("报告记录", html);
-                }catch (e){
-                    sky.msg("发生异常："+e);
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
                 }
-
+                
             },
-            error: function(xhr, type){
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
@@ -3803,12 +3816,12 @@ var sky = (function () {
         login: login,//登录
         forgetPwd: forgetPwd,//忘记密码
         phoneRealName: phoneRealName,//手机实名验证
-        promptWin:promptWin,//提示弹窗
-        report:report,//报告弹窗
-        quit:quit,//退出
-        declare:declare,//免责声明
-        rechargeTips:rechargeTips,//充值提示
-        antiFraudA:antiFraudA,//反欺诈A类
-        antiFraudB:antiFraudB//反欺诈B类
+        promptWin: promptWin,//提示弹窗
+        report: report,//报告弹窗
+        quit: quit,//退出
+        declare: declare,//免责声明
+        rechargeTips: rechargeTips,//充值提示
+        antiFraudA: antiFraudA,//反欺诈A类
+        antiFraudB: antiFraudB//反欺诈B类
     };
 })();

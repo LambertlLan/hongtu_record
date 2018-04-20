@@ -32,7 +32,9 @@ urlpatterns = [
     path('', web.views.Index.as_view()),
     path('index/', web.views.Index.as_view()),
     path('login/', web.views.Login.as_view()),
+    path('logout/', web.views.Logout.as_view()),
     path('register/', web.views.Register.as_view()),
     path('getMsgCode/', web.views.GetMsgCode.as_view()),
     path('checkMsgCode/', web.views.CheckMsgCode.as_view()),
+    path('reset_pwd/', web.views.ResetPwd.as_view()),
 ]

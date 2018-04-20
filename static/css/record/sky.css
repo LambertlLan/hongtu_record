@@ -1,95 +1,127 @@
 .sky-win-bg {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  z-index: 9;
-  background-color: rgba(0, 0, 0, 0.5);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f000000,endColorstr=#7f000000); }
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 9;
+    background-color: rgba(0, 0, 0, 0.5);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f000000, endColorstr=#7f000000);
+}
 
 .sky-msg {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  height: 30px;
-  line-height: 30px;
-  margin-top: -20px;
-  padding: 0px 8px;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.5);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f000000,endColorstr=#7f000000);
-  z-index: 11;
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -webkit-animation: sky-msg .3s ease-out;
-  -moz-animation: sky-msg .3s ease-out;
-  animation: sky-msg .3s ease-out; }
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    height: 30px;
+    line-height: 30px;
+    margin-top: -20px;
+    padding: 0px 8px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f000000, endColorstr=#7f000000);
+    z-index: 11;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -webkit-animation: sky-msg .3s ease-out;
+    -moz-animation: sky-msg .3s ease-out;
+    animation: sky-msg .3s ease-out;
+}
 
 @-webkit-keyframes sky-msg {
-  0% {
-    left: 49.5%; }
-  20% {
-    left: 50.5%; }
-  40% {
-    left: 49.5%; }
-  60% {
-    left: 50.5%; }
-  80% {
-    left: 49.5%; }
-  100% {
-    left: 50%; } }
+    0% {
+        left: 49.5%;
+    }
+    20% {
+        left: 50.5%;
+    }
+    40% {
+        left: 49.5%;
+    }
+    60% {
+        left: 50.5%;
+    }
+    80% {
+        left: 49.5%;
+    }
+    100% {
+        left: 50%;
+    }
+}
+
 @-moz-keyframes sky-msg {
-  0% {
-    left: 49.5%; }
-  20% {
-    left: 50.5%; }
-  40% {
-    left: 49.5%; }
-  60% {
-    left: 50.5%; }
-  80% {
-    left: 49.5%; }
-  100% {
-    left: 50%; } }
+    0% {
+        left: 49.5%;
+    }
+    20% {
+        left: 50.5%;
+    }
+    40% {
+        left: 49.5%;
+    }
+    60% {
+        left: 50.5%;
+    }
+    80% {
+        left: 49.5%;
+    }
+    100% {
+        left: 50%;
+    }
+}
+
 @keyframes sky-msg {
-  0% {
-    left: 49.5%; }
-  20% {
-    left: 50.5%; }
-  40% {
-    left: 49.5%; }
-  60% {
-    left: 50.5%; }
-  80% {
-    left: 49.5%; }
-  100% {
-    left: 50%; } }
+    0% {
+        left: 49.5%;
+    }
+    20% {
+        left: 50.5%;
+    }
+    40% {
+        left: 49.5%;
+    }
+    60% {
+        left: 50.5%;
+    }
+    80% {
+        left: 49.5%;
+    }
+    100% {
+        left: 50%;
+    }
+}
+
 .sky-win-main {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  width: 600px;
-  margin-left: -300px;
-  background-color: #fff;
-  z-index: 10;
-  overflow: hidden;
-  border-radius: 8px;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px; }
-  @media (max-width: 768px) {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 600px;
+    margin-left: -300px;
+    background-color: #fff;
+    z-index: 10;
+    overflow: hidden;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+@media (max-width: 768px) {
     .sky-win-main {
-      top: 100%;
-      left: 0px;
-      bottom: 0px;
-      width: 100%;
-      margin-left: 0px;
-      overflow-y: auto;
-      border-radius: 0px;
-      -moz-border-radius: 0px;
-      -webkit-border-radius: 0px; } }
-  .sky-win-main .sky-win-header {
+        top: 100%;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        margin-left: 0px;
+        overflow-y: auto;
+        border-radius: 0px;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+    }
+}
+
+.sky-win-main .sky-win-header {
     position: relative;
     height: 80px;
     line-height: 80px;
@@ -98,336 +130,529 @@
     text-align: center;
     margin-right: -15px;
     margin-left: -15px;
-    border-bottom: 2px solid #f3f3f3; }
-    .sky-win-main .sky-win-header .sky-close {
-      position: absolute;
-      top: 30px;
-      right: 25px;
-      display: block;
-      width: 20px;
-      height: 20px;
-      background: url("./res_01.png") no-repeat 0px -115px; }
-  .sky-win-main .sky-win-content {
+    border-bottom: 2px solid #f3f3f3;
+}
+
+.sky-win-main .sky-win-header .sky-close {
+    position: absolute;
+    top: 30px;
+    right: 25px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url("./res_01.png") no-repeat 0px -115px;
+}
+
+.sky-win-main .sky-win-content {
     padding: 20px;
     margin-right: -15px;
-    margin-left: -15px; }
-    @media (max-width: 768px) {
-      .sky-win-main .sky-win-content {
-        padding: 15px;
-        margin: 0px; } }
-    .sky-win-main .sky-win-content span.icon {
-      display: inline-block;
-      margin: 0px 4px;
-      text-align: center;
-      color: #fff;
-      background-color: #fc6d0d;
-      border-radius: 50%;
-      -moz-border-radius: 50%;
-      -webkit-border-radius: 50%;
-      vertical-align: middle;
-      white-space: nowrap; }
-      .sky-win-main .sky-win-content span.icon.icon-text {
-        padding: 0px 10px;
-        margin: 0px 10px;
-        margin-top: -3px;
-        border-radius: 8px;
-        -moz-border-radius: 8px;
-        -webkit-border-radius: 8px; }
-      .sky-win-main .sky-win-content span.icon.icon-number {
-        width: 18px;
-        height: 18px;
-        line-height: 18px;
-        background-color: #fd5d01; }
-      .sky-win-main .sky-win-content span.icon.icon-orange {
-        width: 25px;
-        height: 25px;
-        line-height: 25px;
-        margin-top: -3px;
-        background-color: #f5af09; }
-      .sky-win-main .sky-win-content span.icon.icon-green {
-        width: 25px;
-        height: 25px;
-        line-height: 25px;
-        margin-top: -3px;
-        background-color: #3e80fa; }
-    .sky-win-main .sky-win-content .sky-title {
-      position: relative;
-      font-size: 16px;
-      color: #263a52;
-      line-height: 55px;
-      border: 2px solid #f3f3f3;
-      margin-bottom: 0px;
-      text-align: center; }
-      .sky-win-main .sky-win-content .sky-title.small {
-        font-size: 14px;
-        line-height: 44px;
-        color: #263a52; }
-        .sky-win-main .sky-win-content .sky-title.small.color-green {
-          color: #18b963; }
-      .sky-win-main .sky-win-content .sky-title .right {
-        position: absolute;
-        right: 5%;
-        font-size: 14px; }
-    .sky-win-main .sky-win-content .box {
-      overflow-y: auto;
-      overflow-x: hidden; }
-      @media (min-width: 768px) {
-        .sky-win-main .sky-win-content .box {
-          max-height: 380px; } }
-      @media (max-width: 768px) {
-        .sky-win-main .sky-win-content .box .tabBox {
-          overflow-x: auto; } }
-      .sky-win-main .sky-win-content .box .tabBox table {
-        margin-bottom: 0px;
-        border: 2px solid #f3f3f3; }
-        .sky-win-main .sky-win-content .box .tabBox table tr.tab-title td {
-          color: #818489; }
-        .sky-win-main .sky-win-content .box .tabBox table tr td.tab-title {
-          color: #818489; }
-        .sky-win-main .sky-win-content .box .tabBox table tr td, .sky-win-main .sky-win-content .box .tabBox table tr th {
-          height: 44px;
-          padding: 0px 5px; }
-        .sky-win-main .sky-win-content .box .tabBox table tr td {
-          border: 2px solid #f3f3f3; }
-          .sky-win-main .sky-win-content .box .tabBox table tr td .textarea {
-            padding: 5px;
-            line-height: 30px; }
-          .sky-win-main .sky-win-content .box .tabBox table tr td .photo {
-            max-width: 85px; }
-        .sky-win-main .sky-win-content .box .tabBox table tr td.title {
-          color: #818489; }
-        .sky-win-main .sky-win-content .box .tabBox table tr th {
-          text-align: center;
-          font-weight: 400;
-          color: #818489;
-          background: #fff7f2; }
-        .sky-win-main .sky-win-content .box .tabBox table .courtTab td:nth-child(3),
-        .sky-win-main .sky-win-content .box .tabBox table .courtTab td:nth-child(4),
-        .sky-win-main .sky-win-content .box .tabBox table .courtTab td:nth-child(6) {
-          width: 83px; }
-        .sky-win-main .sky-win-content .box .tabBox table.record td {
-          border-left: 0px;
-          border-right: 0px; }
-      .sky-win-main .sky-win-content .box .tabBox table.max-tab {
-        min-width: 600px; }
-      .sky-win-main .sky-win-content .box .row {
-        line-height: 40px; }
-        .sky-win-main .sky-win-content .box .row .sky-tab-title {
-          color: #818489; }
-        .sky-win-main .sky-win-content .box .row > div {
-          white-space: nowrap; }
-          .sky-win-main .sky-win-content .box .row > div.wrap {
-            white-space: inherit; }
-      .sky-win-main .sky-win-content .box .searchResult {
-        border: 2px solid #f3f3f3; }
-        .sky-win-main .sky-win-content .box .searchResult .result {
-          line-height: 40px; }
-          .sky-win-main .sky-win-content .box .searchResult .result.color-red {
-            color: #ff3939; }
-          .sky-win-main .sky-win-content .box .searchResult .result.color-green {
-            color: #18b963; }
-          .sky-win-main .sky-win-content .box .searchResult .result .img-responsive {
-            display: inline-block; }
-        .sky-win-main .sky-win-content .box .searchResult li {
-          line-height: 40px; }
-          .sky-win-main .sky-win-content .box .searchResult li .number {
-            padding-right: 10px; }
-      .sky-win-main .sky-win-content .box .queryFails {
-        border: 2px solid #f3f3f3;
-        padding: 40px 0px; }
-        .sky-win-main .sky-win-content .box .queryFails img {
-          display: inline-block; }
-        .sky-win-main .sky-win-content .box .queryFails .text {
-          color: #ff3939; }
-      @media (min-width: 768px) {
-        .sky-win-main .sky-win-content .box.payPrompt {
-          padding-left: 70px;
-          padding-right: 70px;
-          padding-bottom: 10px; } }
-      .sky-win-main .sky-win-content .box.payPrompt .m-btn {
-        width: 185px;
-        margin-top: 40px;
-        font-size: 16px;
-        display: inline-block;
-        line-height: 40px;
-        color: #fff;
-        background: #fd5d01;
-        text-align: center;
-        padding: 0px 10px;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px; }
-        @media (max-width: 768px) {
-          .sky-win-main .sky-win-content .box.payPrompt .m-btn {
-            width: 100%;
-            margin-top: 20px; } }
-        .sky-win-main .sky-win-content .box.payPrompt .m-btn.cancel {
-          background: #cacaca; }
-          @media (max-width: 768px) {
-            .sky-win-main .sky-win-content .box.payPrompt .m-btn.cancel {
-              margin-top: 10px; } }
-      .sky-win-main .sky-win-content .box.payPrompt .payTitle {
-        font-size: 18px;
-        padding-top: 35px;
-        padding-bottom: 35px; }
-      .sky-win-main .sky-win-content .box.payPrompt p {
-        color: #263a52; }
-      .sky-win-main .sky-win-content .box.payPrompt.weChat {
-        text-align: center; }
-        .sky-win-main .sky-win-content .box.payPrompt.weChat .payTitle {
-          padding: 10px 0px; }
-        .sky-win-main .sky-win-content .box.payPrompt.weChat img {
-          width: 200px; }
-  .sky-win-main .sky-win-form {
-    padding: 40px 50px; }
-  .sky-win-main .sky-win-form .sky-form-header{
-    padding: 15px 0px;
-  }
-    @media (max-width: 768px) {
-      .sky-win-main .sky-win-form {
-        padding: 40px 30px; } }
-    @media (max-width: 400px) {
-      .sky-win-main .sky-win-form {
-        padding: 40px 0px; } }
-    .sky-win-main .sky-win-form .sky-form-header span {
-      color: #3c454f;
-      font-size: 16px;
-      line-height: 20px; }
-      .sky-win-main .sky-win-form .sky-form-header span.title {
-        font-size: 20px; }
-      .sky-win-main .sky-win-form .sky-form-header span.prompt {
-        float: right; }
-        @media (max-width: 768px) {
-          .sky-win-main .sky-win-form .sky-form-header span.prompt {
-            float: none;
-            display: block; } }
-      .sky-win-main .sky-win-form .sky-form-header span a {
-        font-size: 16px;
-        color: #fd5d01; }
-      .sky-win-main .sky-win-form .form .icon-left-input {
-        display: inline-block;
-        width: 100%;
-        margin-top: 5px;
-        padding: 10px 0px;
-        border-bottom: 1px solid #dbe5ed; }
-        .sky-win-main .sky-win-form .form .icon-left-input i {
-          display: inline-block;
-          width: 26px;
-          height: 29px;
-          margin-right: 15px;
-          vertical-align: middle;
-          background: url("../../img/res_06.png") no-repeat; }
-        .sky-win-main .sky-win-form .form .icon-left-input input {
-          border: 0px;
-          width: 80%;
-          line-height: 30px;
-          height: 30px;
-          vertical-align: middle; }
-        .sky-win-main .sky-win-form .form .icon-left-input.acc i {
-          background-position: 0px -27px; }
-        .sky-win-main .sky-win-form .form .icon-left-input.phone i {
-          background-position: 0px -27px; }
-        .sky-win-main .sky-win-form .form .icon-left-input.pwd i {
-          background-position: 0px -84px; }
-        .sky-win-main .sky-win-form .form .icon-left-input.cpwd i {
-          background-position: 0px -84px; }
-        .sky-win-main .sky-win-form .form .icon-left-input.userName i {
-          background-position: 0px 3px; }
-        .sky-win-main .sky-win-form .form .icon-left-input.code, .sky-win-main .sky-win-form .form .icon-left-input.imgCode {
-          width: 50%; }
-          @media (max-width: 768px) {
-            .sky-win-main .sky-win-form .form .icon-left-input.code, .sky-win-main .sky-win-form .form .icon-left-input.imgCode {
-              width: 100%; } }
-          .sky-win-main .sky-win-form .form .icon-left-input.code i, .sky-win-main .sky-win-form .form .icon-left-input.imgCode i {
-            background-position: 0px -56px; }
-      .sky-win-main .sky-win-form .form a.code {
-        float: right;
-        display: inline-block;
-        width: 45%;
-        height: 50px;
-        line-height: 48px;
-        margin-top: 5px;
-        border: 1px solid #fd5d01;
-        color: #fd5d01;
-        text-align: center;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px; }
-        @media (max-width: 768px) {
-          .sky-win-main .sky-win-form .form a.code {
-            width: 100%; } }
-        .sky-win-main .sky-win-form .form a.code img {
-          width: 100%;
-          height: 100%; }
-        .sky-win-main .sky-win-form .form a.code.getImgCode {
-          border: 0px; }
-      .sky-win-main .sky-win-form .form .m-btn {
-        display: inline-block;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        font-size: 20px;
-        border: 1px solid #fd5d01;
-        line-height: 50px;
-        color: #fff;
-        background: #fd5d01;
-        text-align: center;
-        padding: 0px 10px;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px; }
-        .sky-win-main .sky-win-form .form .m-btn.min {
-          width: 40%; }
-          .sky-win-main .sky-win-form .form .m-btn.min.sky_close {
-            background: #fff;
-            color: #fd5d01; }
-.sky-win-main .sky-win-form .form .m-btn.min.pull-right{
-  float: right;
+    margin-left: -15px;
 }
-      .sky-win-main .sky-win-form .form .forgetPwd {
-        padding-top: 20px;
-        font-size: 16px;
-        color: #fd5d01; }
-  .sky-win-main .sky-declare {
-    max-height: 400px;
-    overflow-y: auto; }
-    .sky-win-main .sky-declare p, .sky-win-main .sky-declare li {
-      text-indent: 2em; }
-    .sky-win-main .sky-declare li {
-      padding-bottom: 20px;
-      line-height: 2rem; }
-  @media (min-width: 768px) {
-    .sky-win-main.prompt {
-      width: 440px;
-      margin-left: -220px; } }
-  .sky-win-main.prompt .sky-win-content {
+
+@media (max-width: 768px) {
+    .sky-win-main .sky-win-content {
+        padding: 15px;
+        margin: 0px;
+    }
+}
+
+.sky-win-main .sky-win-content span.icon {
+    display: inline-block;
+    margin: 0px 4px;
     text-align: center;
-    padding: 30px 40px; }
-    @media (max-width: 768px) {
-      .sky-win-main.prompt .sky-win-content {
-        padding: 10px; } }
-    .sky-win-main.prompt .sky-win-content p {
-      color: #263a52;
-      text-align: center;
-      font-size: 16px;
-      padding-bottom: 20px; }
-    .sky-win-main.prompt .sky-win-content .login img {
-      margin-bottom: 25px; }
-    .sky-win-main.prompt .sky-win-content .permit .m-btn {
-      width: 185px;
-      font-size: 18px;
-      display: inline-block;
-      line-height: 40px;
-      color: #fff;
-      background: #fd5d01;
-      text-align: center;
-      padding: 0px 10px;
-      border-radius: 3px;
-      -moz-border-radius: 3px;
-      -webkit-border-radius: 3px; }
-  .sky-win-main.prompt .sky-quit p {
+    color: #fff;
+    background-color: #fc6d0d;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.sky-win-main .sky-win-content span.icon.icon-text {
+    padding: 0px 10px;
+    margin: 0px 10px;
+    margin-top: -3px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+.sky-win-main .sky-win-content span.icon.icon-number {
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    background-color: #fd5d01;
+}
+
+.sky-win-main .sky-win-content span.icon.icon-orange {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    margin-top: -3px;
+    background-color: #f5af09;
+}
+
+.sky-win-main .sky-win-content span.icon.icon-green {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    margin-top: -3px;
+    background-color: #3e80fa;
+}
+
+.sky-win-main .sky-win-content .sky-title {
+    position: relative;
     font-size: 16px;
-    padding-bottom: 20px; }
-  .sky-win-main.prompt .sky-quit a {
+    color: #263a52;
+    line-height: 55px;
+    border: 2px solid #f3f3f3;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.sky-win-main .sky-win-content .sky-title.small {
+    font-size: 14px;
+    line-height: 44px;
+    color: #263a52;
+}
+
+.sky-win-main .sky-win-content .sky-title.small.color-green {
+    color: #18b963;
+}
+
+.sky-win-main .sky-win-content .sky-title .right {
+    position: absolute;
+    right: 5%;
+    font-size: 14px;
+}
+
+.sky-win-main .sky-win-content .box {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+    .sky-win-main .sky-win-content .box {
+        max-height: 380px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sky-win-main .sky-win-content .box .tabBox {
+        overflow-x: auto;
+    }
+}
+
+.sky-win-main .sky-win-content .box .tabBox table {
+    margin-bottom: 0px;
+    border: 2px solid #f3f3f3;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table tr.tab-title td {
+    color: #818489;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table tr td.tab-title {
+    color: #818489;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table tr td, .sky-win-main .sky-win-content .box .tabBox table tr th {
+    height: 44px;
+    padding: 0px 5px;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table tr td {
+    border: 2px solid #f3f3f3;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table tr td .textarea {
+    padding: 5px;
+    line-height: 30px;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table tr td .photo {
+    max-width: 85px;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table tr td.title {
+    color: #818489;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table tr th {
+    text-align: center;
+    font-weight: 400;
+    color: #818489;
+    background: #fff7f2;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table .courtTab td:nth-child(3),
+.sky-win-main .sky-win-content .box .tabBox table .courtTab td:nth-child(4),
+.sky-win-main .sky-win-content .box .tabBox table .courtTab td:nth-child(6) {
+    width: 83px;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table.record td {
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.sky-win-main .sky-win-content .box .tabBox table.max-tab {
+    min-width: 600px;
+}
+
+.sky-win-main .sky-win-content .box .row {
+    line-height: 40px;
+}
+
+.sky-win-main .sky-win-content .box .row .sky-tab-title {
+    color: #818489;
+}
+
+.sky-win-main .sky-win-content .box .row > div {
+    white-space: nowrap;
+}
+
+.sky-win-main .sky-win-content .box .row > div.wrap {
+    white-space: inherit;
+}
+
+.sky-win-main .sky-win-content .box .searchResult {
+    border: 2px solid #f3f3f3;
+}
+
+.sky-win-main .sky-win-content .box .searchResult .result {
+    line-height: 40px;
+}
+
+.sky-win-main .sky-win-content .box .searchResult .result.color-red {
+    color: #ff3939;
+}
+
+.sky-win-main .sky-win-content .box .searchResult .result.color-green {
+    color: #18b963;
+}
+
+.sky-win-main .sky-win-content .box .searchResult .result .img-responsive {
+    display: inline-block;
+}
+
+.sky-win-main .sky-win-content .box .searchResult li {
+    line-height: 40px;
+}
+
+.sky-win-main .sky-win-content .box .searchResult li .number {
+    padding-right: 10px;
+}
+
+.sky-win-main .sky-win-content .box .queryFails {
+    border: 2px solid #f3f3f3;
+    padding: 40px 0px;
+}
+
+.sky-win-main .sky-win-content .box .queryFails img {
+    display: inline-block;
+}
+
+.sky-win-main .sky-win-content .box .queryFails .text {
+    color: #ff3939;
+}
+
+@media (min-width: 768px) {
+    .sky-win-main .sky-win-content .box.payPrompt {
+        padding-left: 70px;
+        padding-right: 70px;
+        padding-bottom: 10px;
+    }
+}
+
+.sky-win-main .sky-win-content .box.payPrompt .m-btn {
+    width: 185px;
+    margin-top: 40px;
+    font-size: 16px;
+    display: inline-block;
+    line-height: 40px;
+    color: #fff;
+    background: #fd5d01;
+    text-align: center;
+    padding: 0px 10px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .sky-win-main .sky-win-content .box.payPrompt .m-btn {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+.sky-win-main .sky-win-content .box.payPrompt .m-btn.cancel {
+    background: #cacaca;
+}
+
+@media (max-width: 768px) {
+    .sky-win-main .sky-win-content .box.payPrompt .m-btn.cancel {
+        margin-top: 10px;
+    }
+}
+
+.sky-win-main .sky-win-content .box.payPrompt .payTitle {
+    font-size: 18px;
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.sky-win-main .sky-win-content .box.payPrompt p {
+    color: #263a52;
+}
+
+.sky-win-main .sky-win-content .box.payPrompt.weChat {
+    text-align: center;
+}
+
+.sky-win-main .sky-win-content .box.payPrompt.weChat .payTitle {
+    padding: 10px 0px;
+}
+
+.sky-win-main .sky-win-content .box.payPrompt.weChat img {
+    width: 200px;
+}
+
+.sky-win-main .sky-win-form {
+    padding: 40px 50px;
+}
+
+.sky-win-main .sky-win-form .sky-form-header {
+    padding: 15px 0px;
+}
+
+@media (max-width: 768px) {
+    .sky-win-main .sky-win-form {
+        padding: 40px 30px;
+    }
+}
+
+@media (max-width: 400px) {
+    .sky-win-main .sky-win-form {
+        padding: 40px 0px;
+    }
+}
+
+.sky-win-main .sky-win-form .sky-form-header span {
+    color: #3c454f;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.sky-win-main .sky-win-form .sky-form-header span.title {
+    font-size: 20px;
+}
+
+.sky-win-main .sky-win-form .sky-form-header span.prompt {
+    float: right;
+}
+
+@media (max-width: 768px) {
+    .sky-win-main .sky-win-form .sky-form-header span.prompt {
+        float: none;
+        display: block;
+    }
+}
+
+.sky-win-main .sky-win-form .sky-form-header span a {
+    font-size: 16px;
+    color: #fd5d01;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input {
+    display: inline-block;
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px 0px;
+    border-bottom: 1px solid #dbe5ed;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input i {
+    display: inline-block;
+    width: 26px;
+    height: 29px;
+    margin-right: 15px;
+    vertical-align: middle;
+    background: url("../../img/res_06.png") no-repeat;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input input {
+    border: 0px;
+    width: 80%;
+    line-height: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input.acc i {
+    background-position: 0px -27px;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input.phone i {
+    background-position: 0px -27px;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input.pwd i {
+    background-position: 0px -84px;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input.cpwd i {
+    background-position: 0px -84px;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input.userName i {
+    background-position: 0px 3px;
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input.code, .sky-win-main .sky-win-form .form .icon-left-input.imgCode {
+    width: 50%;
+}
+
+@media (max-width: 768px) {
+    .sky-win-main .sky-win-form .form .icon-left-input.code, .sky-win-main .sky-win-form .form .icon-left-input.imgCode {
+        width: 100%;
+    }
+}
+
+.sky-win-main .sky-win-form .form .icon-left-input.code i, .sky-win-main .sky-win-form .form .icon-left-input.imgCode i {
+    background-position: 0px -56px;
+}
+
+.sky-win-main .sky-win-form .form a.code {
+    float: right;
+    display: inline-block;
+    width: 45%;
+    height: 50px;
+    line-height: 48px;
+    margin-top: 5px;
+    border: 1px solid #fd5d01;
+    color: #fd5d01;
+    text-align: center;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .sky-win-main .sky-win-form .form a.code {
+        width: 100%;
+    }
+}
+
+.sky-win-main .sky-win-form .form a.code img {
+    width: 100%;
+    height: 100%;
+}
+
+.sky-win-main .sky-win-form .form a.code.getImgCode {
+    border: 0px;
+}
+
+.sky-win-main .sky-win-form .form .m-btn {
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    border: 1px solid #fd5d01;
+    line-height: 50px;
+    color: #fff;
+    background: #fd5d01;
+    text-align: center;
+    padding: 0px 10px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.sky-win-main .sky-win-form .form .m-btn.min {
+    width: 40%;
+}
+
+.sky-win-main .sky-win-form .form .m-btn.min.sky_close {
+    background: #fff;
+    color: #fd5d01;
+}
+
+.sky-win-main .sky-win-form .form .m-btn.min.pull-right {
+    float: right;
+}
+
+.sky-win-main .sky-win-form .form .forgetPwd {
+    padding-top: 20px;
+    font-size: 16px;
+    color: #fd5d01;
+}
+
+.sky-win-main .sky-declare {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.sky-win-main .sky-declare p, .sky-win-main .sky-declare li {
+    text-indent: 2em;
+}
+
+.sky-win-main .sky-declare li {
+    padding-bottom: 20px;
+    line-height: 2rem;
+}
+
+@media (min-width: 768px) {
+    .sky-win-main.prompt {
+        width: 440px;
+        margin-left: -220px;
+    }
+}
+
+.sky-win-main.prompt .sky-win-content {
+    text-align: center;
+    padding: 30px 40px;
+}
+
+@media (max-width: 768px) {
+    .sky-win-main.prompt .sky-win-content {
+        padding: 10px;
+    }
+}
+
+.sky-win-main.prompt .sky-win-content p {
+    color: #263a52;
+    text-align: center;
+    font-size: 16px;
+    padding-bottom: 20px;
+}
+
+.sky-win-main.prompt .sky-win-content .login img {
+    margin-bottom: 25px;
+}
+
+.sky-win-main.prompt .sky-win-content .permit .m-btn {
+    width: 185px;
+    font-size: 18px;
+    display: inline-block;
+    line-height: 40px;
+    color: #fff;
+    background: #fd5d01;
+    text-align: center;
+    padding: 0px 10px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.sky-win-main.prompt .sky-quit p {
+    font-size: 16px;
+    padding-bottom: 20px;
+}
+
+.sky-win-main.prompt .sky-quit a {
     display: inline-block;
     width: 150px;
     line-height: 40px;
@@ -435,12 +660,18 @@
     border: 1px solid #fd5d01;
     border-radius: 3px;
     -moz-border-radius: 3px;
-    -webkit-border-radius: 3px; }
-    @media (max-width: 768px) {
-      .sky-win-main.prompt .sky-quit a {
-        width: 45%; } }
-    .sky-win-main.prompt .sky-quit a.ok {
-      background: #fd5d01;
-      color: #fff;
-      border: 1px solid #fd5d01;
-      margin-left: 20px; }
+    -webkit-border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .sky-win-main.prompt .sky-quit a {
+        width: 45%;
+    }
+}
+
+.sky-win-main.prompt .sky-quit a.ok {
+    background: #fd5d01;
+    color: #fff;
+    border: 1px solid #fd5d01;
+    margin-left: 20px;
+}
