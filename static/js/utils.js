@@ -16,6 +16,18 @@ function checkMobile(phoneNum) {
     
 }
 
+//验证邮箱
+function checkEmail(email) {
+    let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+    return (reg.test(email));
+}
+
+//验证中文
+function checkChinese(str) {
+    let reg = /^[\u4E00-\u9FA5]{1,5}$/;
+    return (reg.test(str));
+}
+
 //验证验证码
 function checkMsgCode(msgCode) {
     msgCodeLen = msgCode.length;
@@ -28,7 +40,7 @@ function checkMsgCode(msgCode) {
 // 请求后台获取验证码
 function getMsgCode(dom, phoneNumber) {
     if (!checkMobile(phoneNumber)) return false;
-    $.get(urls.getMsgCode, {csrfmiddlewaretoken: csrfmiddlewaretoken, phone: phoneNumber}, function (data) {
+    $.get(urls.getMsgCode, {phone: phoneNumber}, function (data) {
         console.log(data);
         //获取完成后进行倒计时
         dom.attr("disabled", true);

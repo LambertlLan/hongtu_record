@@ -112,7 +112,11 @@
                                         <a class="theme-color" href="#contact">联系我们</a>
                                     </li>
                                     <li class="smooth-scroll">
-                                        <a class="theme-color" href="/login.html">登录</a>
+                                        {% if request.session.user_data %}
+                                            <span class="theme-color">欢迎您:{{ request.session.user_data.name }}</span>
+                                        {% else %}
+                                            <a class="theme-color" href="/login/">登录</a>
+                                        {% endif %}
                                     </li>
                                 </ul>
                             </div>
@@ -139,7 +143,7 @@
                                     <h1>中立的数据征信
                                         <span class="theme-color">服务平台</span>
                                     </h1>
-                                    <a class="btn theme-color" href="/record/index.html"> 马上使用</a>
+                                    <a class="btn theme-color" href="/record/index"> 马上使用</a>
                                 </div>
                             </div>
 

@@ -3,8 +3,11 @@ from django import views
 from django.http import JsonResponse
 
 import time
+import json
 from utils.createMsgCode import create_msg_code
 import logging
+
+from data_system.models import UserInfo
 
 logger = logging.getLogger('django')
 
@@ -29,7 +32,24 @@ class Register(views.View):
         return render(request, "register.html")
 
     def post(self, request):
-        pass
+        register_dict = request.POST.dict()
+        phone_user = UserInfo.objects.filter(phone=register_dict["phone"])
+
+        if phone_user:
+            res = {"code": 1, "msg": "手机号已注册"}
+            logger.info("该手机号已注册:% s" % register_dict["phone"])
+            return JsonResponse(res)
+        else:
+            try:
+                UserInfo.objects.create(**register_dict)
+            except Exception as e:
+                res = {"code": 1, "msg": "存入数据库出错"}
+                logger.info(e)
+            else:
+                request.session["user_data"] = {"name": register_dict["name"], "phone": register_dict["phone"]}
+                logger.info("用户 %s 注册成功手机号为 %s" % (register_dict["name"], register_dict["phone"]))
+                res = {"code": 0, "msg": "注册成功"}
+        return JsonResponse(res)
 
 
 class GetMsgCode(views.View):

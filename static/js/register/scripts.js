@@ -1,5 +1,4 @@
 jQuery(document).ready(function () {
-    
     /*
         Fullscreen background
     */
@@ -61,20 +60,6 @@ jQuery(document).ready(function () {
         });
     });
     
-    // submit
-    $('.registration-form').on('submit', function (e) {
-        
-        $(this).find('input[type="text"], input[type="password"], textarea').each(function () {
-            if ($(this).val() === "") {
-                e.preventDefault();
-                $(this).addClass('input-error');
-            }
-            else {
-                $(this).removeClass('input-error');
-            }
-        });
-        
-    });
     
     //获取验证码
     $("#getMsgBtn").click(function () {
@@ -88,7 +73,7 @@ jQuery(document).ready(function () {
         let msgCode = $("#msgCode").val();
         if (checkMsgCode(msgCode)) {
             //开始请求后台验证验证码
-            $.post(urls.checkMsgCode, {csrfmiddlewaretoken: csrfmiddlewaretoken, msgCode: msgCode}, function (res) {
+            $.post(urls.checkMsgCode, {msgCode: msgCode}, function (res) {
                 console.log(res);
                 if (res.code === 0) {
                     nextStep(_this);
@@ -100,6 +85,57 @@ jQuery(document).ready(function () {
             alert("输入不正确")
         }
     });
+    
+    //验证两次密码输入
+    $("#checkPwdBtn").click(function () {
+        let pwd = $("#form-password").val();
+        let repeatPwd = $("#form-repeat-password").val();
+        if (!checkEmpty($(this))) {
+            return false;
+        }
+        if (pwd.length < 6) {
+            alert("请输入6-16位之间的字母和数字");
+            return false;
+        }
+        if (pwd === repeatPwd) {
+            nextStep($(this));
+        } else {
+            alert("两次密码输入不一致");
+        }
+    });
+    
+    // 提交注册信息
+    $('#registSubBtn').click(function () {
+        
+        if (!checkEmpty($(this))) return false;
+        let email = $("#form-email").val();
+        if (!checkEmail(email)) {
+            alert("邮箱格式不正确");
+            return false;
+        }
+        let name = $("#form-name").val();
+        if (!checkChinese(name)) {
+            alert("姓名必须是中文");
+            return false
+        }
+        //验证通过,提交后台
+        let data = {
+            phone: $("#phoneNumber").val(),
+            name: name,
+            email: email,
+            password: $("#form-password").val(),
+        };
+        console.log(data);
+        // $.post(urls.register, data, function (res) {
+        //     if (res.code === 0) {
+        //         window.location.href = "/index.html"
+        //     } else {
+        //         alert(res.msg)
+        //     }
+        // })
+        
+        
+    })
     
     
 });

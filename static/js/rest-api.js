@@ -6,7 +6,8 @@
  *
  */
 baseUrl = "";
-urls={
-  getMsgCode: baseUrl + "/getMsgCode",
-  checkMsgCode: baseUrl + "/checkMsgCode"
+urls = {
+    getMsgCode: baseUrl + "/getMsgCode/",
+    checkMsgCode: baseUrl + "/checkMsgCode/",
+    register: baseUrl + "/register/"
 };

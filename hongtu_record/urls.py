@@ -30,9 +30,9 @@ urlpatterns = [
     path('record/', include(data_system.urls)),
     # 门户页面
     path('', web.views.Index.as_view()),
-    path('index.html/', web.views.Index.as_view()),
-    path('login.html/', web.views.Login.as_view()),
-    path('register.html/', web.views.Register.as_view()),
-    path('getMsgCode', web.views.GetMsgCode.as_view()),
-    path('checkMsgCode', web.views.CheckMsgCode.as_view()),
+    path('index/', web.views.Index.as_view()),
+    path('login/', web.views.Login.as_view()),
+    path('register/', web.views.Register.as_view()),
+    path('getMsgCode/', web.views.GetMsgCode.as_view()),
+    path('checkMsgCode/', web.views.CheckMsgCode.as_view()),
 ]
