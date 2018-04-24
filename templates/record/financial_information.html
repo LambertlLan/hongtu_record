@@ -6,12 +6,12 @@
         <div class="fnNav">
             <ul class="list-unstyled">
                 <li>
-                    <a class="recharge active" href="accRechargeV.do">
+                    <a class="recharge active" href="/record/financial_information/recharge/">
                         <span>充值</span>
                     </a>
                 </li>
                 <li>
-                    <a class="rechargeRecord" href="accRechargeRecordV.do">
+                    <a class="rechargeRecord" href="/record/financial_information/recharge_record/">
                         <span>充值记录</span>
                     </a>
                 </li>
@@ -31,7 +31,7 @@
             <p class="title-block">立即充值</p>
             <ul class="list-unstyled explain">
                 <li class="title">充值说明：</li>
-                <li>1、我们提供在线充值服务（支付宝、银联）</li>
+                <li>1、我们提供在线充值服务（支付宝、微信）</li>
                 <li>2、请尽量保障账户余额大于保底额度（100元），避免因余额不足造成业务中断</li>
                 <li>3、1元=2积分</li>
             </ul>
@@ -40,7 +40,8 @@
             <ul class="list-unstyled">
                 <li class="pull-left active"><a><i>1</i><span>输入金额</span></a><img src="{% static 'img/icon_arr.png' %}"
                                                                                   class="img-responsive"></li>
-                <li class="pull-left"><a><i>2</i><span>选择付款方式</span><img src="{% static 'img/icon_arr.png' %}" class="img-responsive"></a>
+                <li class="pull-left"><a><i>2</i><span>选择付款方式</span><img src="{% static 'img/icon_arr.png' %}"
+                                                                         class="img-responsive"></a>
                 </li>
                 <li class="pull-left"><a><i>3</i><span>进行付款</span><img src="{% static 'img/icon_arr.png' %}"
                                                                        class="img-responsive"></a></li>
@@ -48,26 +49,87 @@
             </ul>
         </div>
         <div class="container-fluid content main">
-            <div class="form">
+            <div class="form" id="firstStep">
                 <div class="form-inline">
                     <label>剩余积分：</label>
-                    <span>1.2分</span>
+                    <span>{{ request.session.user_data.score }}分</span>
                 </div>
                 <div class="form-inline">
                     <label>金额充值：</label>
                     <div class="font-input">
-                        <input type="text" class="form-control money" placeholder="请输入充值金额">
+                        <input type="text" id="amountInp" class="form-control money" placeholder="请输入充值金额">
                         <span>元</span>
                     </div>
                 </div>
                 <div class="form-inline">
                     <label>充值积分：</label>
-                    <span class="color-orange integral">0分</span>
+                    <span id="rechargeScore" class="color-orange integral">0分</span>
                 </div>
                 <div class="form-inline">
                     <a class="m-btn" id="sub">充值</a>
                 </div>
             </div>
+            <div class="form" id="secondStep" style="display: none;">
+                <div class="pay-select">
+                    <p class="title">选择支付方式：</p>
+                    <div class="container-fluid">
+                        <div class="row select">
+                            <div class="col-lg-4 col-md-4 col-sm-4 td"><a class="active" id="ali"><img
+                                    src="{% static 'img/AliPay.jpg' %}" class="img-responsive center-block"></a></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 td"><a id="weChat" class=""><img
+                                    src="{% static 'img/WeChatPay.jpg' %}" class="img-responsive center-block"></a>
+                            </div>
+                            <input type="hidden" class="paySelectVal" value="ali">
+                        </div>
+                    </div>
+                </div>
+                <a class="m-btn" id="payment">付款</a>
+            </div>
         </div>
     </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        let amount = 0;
+        $("#amountInp").focusout(function () {
+            let amount = $("#amountInp").val();
+            if (isNaN(amount)) {
+                $("#amountInp").val("");
+                $("#rechargeScore").text("0分");
+                $(".list-unstyled").children("")
+            } else {
+                $("#rechargeScore").text(amount * 2 + "分")
+            }
+        });
+        $("#sub").click(function () {
+            amount = $("#amountInp").val();
+            if (amount > 0 && Utils.Isinteger(amount)) {
+                $("#firstStep").fadeOut();
+                $("#secondStep").fadeIn();
+                $(".pull-left").first().removeClass("active");
+                $(".pull-left:eq(1)").addClass("active");
+
+            } else {
+                alert("只能输入大于0的整数")
+            }
+        });
+        $("#ali").click(function () {
+            $(this).addClass("active");
+            $("#weChat").removeClass("active");
+        });
+        $("#weChat").click(function () {
+            $(this).addClass("active");
+            $("#ali").removeClass("active");
+        });
+        $("#payment").click(function () {
+            $.post(urls.recharge, {amount: amount}, function (res) {
+                if (res.code === 0) {
+                    alert("充值成功");
+                    window.location.href = "/record/financial_information/recharge/"
+                } else {
+                    alert(res.msg)
+                }
+            })
+        })
+    </script>
 {% endblock %}

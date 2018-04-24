@@ -30,12 +30,42 @@ class RechargeRecords(models.Model):
         verbose_name_plural = "充值记录"
 
 
-class TelecomRealName:
-    """三要素查询记录"""
+class TelecomRealName(models.Model):
+    """ 运营商三要素查询记录"""
+    user = models.ForeignKey("UserInfo", None)
+    real_name = models.CharField(max_length=64)
+    id_card = models.CharField(max_length=64)
+    mobile = models.CharField(max_length=64)
+    data = models.TextField()
+    date = models.DateField(auto_now_add=True)
+    msg = models.CharField(max_length=64)
+
+    def __str__(self):
+        return " 查询%s %s" % (self.real_name, self.msg)
+
+
+class AntifraudMiGuan(models.Model):
+    """  蜜罐查询记录"""
+    real_name = models.CharField(max_length=64)
+    id_card = models.CharField(max_length=64)
+    mobile = models.CharField(max_length=64)
     user = models.ForeignKey("UserInfo", None)
     data = models.TextField()
     date = models.DateField(auto_now_add=True)
     msg = models.CharField(max_length=64)
 
     def __str__(self):
-        return "%s %s" % (self.user, self.msg)
+        return "查询%s %s" % (self.real_name, self.msg)
+
+
+class FinanceInvestment(models.Model):
+    """ 个人对外投资查询记录"""
+    real_name = models.CharField(max_length=64)
+    id_card = models.CharField(max_length=64)
+    user = models.ForeignKey("UserInfo", None)
+    data = models.TextField()
+    date = models.DateField(auto_now_add=True)
+    msg = models.CharField(max_length=64)
+
+    def __str__(self):
+        return " 查询%s %s" % (self.real_name, self.msg)

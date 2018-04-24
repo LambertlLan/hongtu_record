@@ -37,4 +37,5 @@ urlpatterns = [
     path('getMsgCode/', web.views.GetMsgCode.as_view()),
     path('checkMsgCode/', web.views.CheckMsgCode.as_view()),
     path('reset_pwd/', web.views.ResetPwd.as_view()),
+    path('modify_pwd/', web.views.ModifyPwd.as_view()),
 ]

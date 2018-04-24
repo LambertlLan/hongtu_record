@@ -37,12 +37,11 @@
             </div>
             <ul class="list-unstyled pull-right max-nav">
                 <li>
-                    <a>您好，{{ request.session.user_data.name }}:</a>
-                    <a href="">{{ request.session.user_data.phone }}</a>
+                    <a>您好，{{ request.session.user_data.name }}</a>
                 </li>
                 <li>
                     <a>可用积分</a>
-                    <a href="">{{ request.session.user_data.score }}</a>
+                    <a id="score" href="">{{ request.session.user_data.score }}</a>
                 </li>
                 <li>
                     <a class="quit" href="javascript:void(0)">退出</a>
@@ -55,7 +54,7 @@
         <div class="mobileMenu" id="mobileMenu">
             <ul class="list-unstyled">
                 <li class="title">
-                    <a href="/record/index">账户首页</a>
+                    <a href="/record/index/">账户首页</a>
                 </li>
             </ul>
             <ul class="list-unstyled">
@@ -116,7 +115,7 @@
         <div class="col-lg-3 col-md-3 col-sm-3 nav-left">
             <ul class="list-unstyled">
                 <li class="title home {% if active == "index" %}active{% endif %}">
-                    <a href="/record/index.html">
+                    <a href="/record/index/">
                         <i class="icon-type home {% if active == "index" %}active{% endif %}"></i>账户首页</a>
                 </li>
             </ul>
@@ -128,7 +127,7 @@
                     </a>
                 </li>
                 <li class="publicData {% if active == "public_data" %}active{% endif %}">
-                    <a href="/record/public_data">公众数据获取</a>
+                    <a href="/record/public_data/telecom_realname/">公众数据获取</a>
                 </li>
                 <!--<li class="netData"><a href="accTaobaoV.do">网络数据获取</a></li>-->
             </ul>
@@ -155,10 +154,10 @@
                     </a>
                 </li>
                 <li class="accInfo {% if active == "account_information" %}active{% endif %}">
-                    <a href="/record/account_information">账户信息</a>
+                    <a href="/record/account/information/">账户信息</a>
                 </li>
                 <li class="financeInfo {% if active == "financial_information" %}active{% endif %} ">
-                    <a href="/record/financial_information">财务信息</a>
+                    <a href="/record/financial_information/recharge/">财务信息</a>
                 </li>
                 <li class="queryRecords {% if active == "select_records" %}active{% endif %} ">
                     <a href="/record/select_records">查询记录</a>
@@ -188,6 +187,7 @@
 </footer>
 <script src="{% static 'js/rest-api.js' %}"></script>
 <script src="{% static 'js/record/base.js' %}"></script>
+<script src="{% static 'lib/laypage/laypage.js' %}"></script>
 {% block javascript %}
 
 {% endblock %}

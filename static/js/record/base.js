@@ -72,6 +72,14 @@ function returnCode(code) {
         case 0:
             return true;
             break;
+        case 11000:
+            sky.promptWin("提示", "<p>session 已过期,请重新登录</p>");
+            return false;
+            break;
+        case 11001:
+            sky.promptWin("提示", "<p>积分不足,请充值</p>");
+            return false;
+            break;
         case "9998":
             if (userType == 3) {
                 sky.promptWin("提示", "<p>您是企业账号请使用U-Key登录系统查询！</p>");
@@ -1641,38 +1649,29 @@ var sky = (function () {
         sky.loding();
         $.ajax({
             type: 'post',
-            url: 'history/result.do',
+            url: urls.getSearchHistoryInfo,
             dataType: 'json',
             data: {
-                id: id
+                id: id,
+                service: "Telecom_realname"
             },
             success: function (res) {
                 try {
                     sky.lodingClose();
-                    if (returnCode(res.retCode)) {
+                    if (returnCode(res.code)) {
                         var status = null;
-                        switch (res.data.status) {
-                            case "SAME":
-                                status = "相同";
-                                break;
-                            case "DIFFERENT":
-                                status = "不相同";
-                                break;
-                            default:
-                                status = "没有数据";
-                                break;
-                        }
+                        status = res.result.msg;
                         var html = '<div class="box">' +
                             '<div class="tabBox"><table class="td-4 table">' +
                             '<tr>' +
                             '<td class="title">姓名</td>' +
-                            '<td>' + res.data.realName + '</td>' +
+                            '<td>' + res.result.real_name + '</td>' +
                             '<td class="title">手机号</td>' +
-                            '<td>' + res.data.mobile + '</td>' +
+                            '<td>' + res.result.mobile + '</td>' +
                             '</tr>' +
                             '<tr>' +
                             '<td class="title">运营商</td>' +
-                            '<td>' + res.data.operator + '</td>' +
+                            '<td>' + res.result.data.isp + '</td>' +
                             '<td class="title">实名检验</td>' +
                             '<td>' + status + '</td>' +
                             '</tr>' +
@@ -1680,7 +1679,7 @@ var sky = (function () {
                             '</div>';
                         win("手机实名认证", html);
                     } else {
-                        sky.msg(res.retMsg);
+                        sky.msg(res.msg);
                         var html = '<div class="box">' +
                             '<div class="tabBox"><table class="table">' +
                             '<tr>' +

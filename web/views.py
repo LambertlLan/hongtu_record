@@ -29,7 +29,8 @@ class Login(views.View):
         get_password = request.POST.get("password")
         user_data = UserInfo.objects.filter(phone=get_phone)[0]
         if user_data and get_password == user_data.password:
-            request.session["user_data"] = {"name": user_data.name, "phone": user_data.phone, "score": user_data.score}
+            request.session["user_data"] = {"name": user_data.name, "phone": user_data.phone, "score": user_data.score,
+                                            "uid": user_data.id}
             return JsonResponse({"code": 0, "msg": "success"})
         else:
             return JsonResponse({"code": 1, "msg": "账号或密码错误"})
@@ -55,8 +56,9 @@ class Register(views.View):
                 res = {"code": 1, "msg": "存入数据库出错"}
                 logger.info(e)
             else:
-                request.session["user_data"] = {"name": register_dict["name"], "phone": register_dict["phone"],
-                                                "amount": 0}
+                uid = UserInfo.objects.filter(phone=register_dict["phone"])[0].id
+                request.session["user_data"] = {"name": register_dict["name"], "phone": register_dict["phone"]
+                    , "score": 0, "uid": uid}
                 logger.info("用户 %s 注册成功手机号为 %s" % (register_dict["name"], register_dict["phone"]))
                 res = {"code": 0, "msg": "注册成功"}
         return JsonResponse(res)
@@ -64,6 +66,10 @@ class Register(views.View):
 
 class Logout(views.View):
     """注销"""
+
+    def get(self, request):
+        request.session.clear()
+        return redirect("/login/")
 
     def post(self, request):
         request.session.clear()
@@ -111,3 +117,19 @@ class ResetPwd(views.View):
             return JsonResponse({"code": 0, "msg": "success"})
         else:
             return JsonResponse({"code": 1, "msg": "验证码不正确"})
+
+
+class ModifyPwd(views.View):
+    """修改密码"""
+
+    def post(self, request):
+        phone = request.POST.get("phone")
+        old_pwd = request.POST.get("oldPwd")
+        new_pwd = request.POST.get("newPwd")
+        print("%s %s" % (phone, old_pwd))
+        obj = UserInfo.objects.filter(phone=phone, password=old_pwd)
+        if obj.count():
+            obj.update(**{"password": new_pwd})
+            return JsonResponse({"code": 0, "msg": "success"})
+        else:
+            return JsonResponse({"code": 1, "msg": "原密码不正确"})

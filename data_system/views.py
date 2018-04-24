@@ -2,6 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django import views
 from django.utils.decorators import method_decorator
+from .models import UserInfo, RechargeRecords
+from .setting import SCORE_DEFINE, URL_DEFINE, MODELS_DEFINE, PAGE_NUM
+from .create_md5 import doMd5
+from .rc4crypt import rc4crypt
+import time, json, logging, base64, requests, math
+
+logger = logging.getLogger('django')
 
 
 # 检查 session 装饰器
@@ -19,21 +26,158 @@ def check_session(func):
     return inner
 
 
+# 检查 score 装饰器
+def check_score(func):
+    def inner(request, *args, **kwargs):
+        score = request.session.get("user_data")["score"]
+        service = request.POST.get("service")
+        if score > SCORE_DEFINE[service]:
+            return func(request, *args, **kwargs)
+        else:
+            return JsonResponse({"code": 11001, "msg": "积分不足"})
+
+    return inner
+
+
+# 扣除积分
+def take_off_score(request, take_score):
+    uid = request.session.get("user_data")["uid"]
+    score = UserInfo.objects.filter(id=uid)[0].score
+    if score > take_score:
+        new_score = score - take_score
+        UserInfo.objects.filter(id=uid).update(score=new_score)
+        user_data = request.session.get("user_data")
+        user_data["score"] = new_score
+        request.session["user_data"] = user_data
+        return new_score
+    else:
+        return False
+
+
 # 账户首页
 @method_decorator(check_session, name="dispatch")
 class Index(views.View):
     def get(self, request):
         return render(request, "record/index.html", {"active": "index"})
 
-    def post(self, request):
-        return render(request, "record/index.html", {"active": "index"})
-
 
 # 公众数据获取
 @method_decorator(check_session, name="dispatch")
 class PublicData(views.View):
+    """运营商三要素页面"""
+
     def get(self, request):
-        return render(request, "record/public_data.html", {"active": "public_data"})
+        return render(request, "record/pulic_data/telecom_realname.html",
+                      {"active": "public_data", "public_active": "telecom_realname"})
+
+
+@method_decorator(check_session, name="dispatch")
+class AntifraudMiGuan(views.View):
+    """蜜罐数据查询页面"""
+
+    def get(self, request):
+        return render(request, "record/pulic_data/miguan.html",
+                      {"active": "public_data", "public_active": "miguan"})
+
+
+@method_decorator(check_session, name="dispatch")
+class FinanceInvestment(views.View):
+    """ 对外投资查询页面"""
+
+    def get(self, request):
+        return render(request, "record/pulic_data/finance_investment.html",
+                      {"active": "public_data", "public_active": "finance_investment"})
+
+
+@method_decorator(check_session, name="dispatch")
+@method_decorator(check_score, name="dispatch")
+class CheckPublicData(views.View):
+    """调用法眼三个接口"""
+
+    def post(self, request):
+        data_json = {
+            "app_id": URL_DEFINE["app_id"],
+            "timestamp": int(time.time()),
+        }
+        sign = str(data_json["timestamp"]) + URL_DEFINE["app_secret"]
+        data_json["sign"] = doMd5(sign)
+        params = {
+            "sn": "HT" + str(data_json["timestamp"]),
+            "id_number": request.POST.get("idCard"),
+            "name": request.POST.get("realName"),
+            "phone": request.POST.get("mobile"),
+            "service": request.POST.get("service")
+        }
+        try:
+            rc4_data = rc4crypt(json.dumps(params), URL_DEFINE["app_secret"])
+        except Exception as e:
+            logger.info(e)
+            return JsonResponse({"code": 1, "msg": "加密发生错误"})
+        # 开始请求,先扣钱
+        new_score = take_off_score(request, SCORE_DEFINE[request.POST.get("service")])
+        if new_score is False or new_score < 0:
+            logger.info("扣费发生错误")
+            return JsonResponse({"code": 1, "msg": "扣费发生错误"})
+
+        base64_rc4 = base64.b64encode(rc4_data.encode("latin1"))
+        data_json["params"] = str(base64_rc4, "latin1")
+        res_msg = requests.post(URL_DEFINE["url"], data_json, json=True)
+        data_text = json.loads(res_msg.text)
+        if data_text["code"] == 200:
+            wait_jie = data_text["data"]["report"]
+            jie = base64.b64decode(wait_jie)
+            try:
+                decrypt = rc4crypt(jie.decode("latin1"), URL_DEFINE["app_secret"])
+            except Exception as e:
+                logger.info(e)
+                return JsonResponse({"code": 1, "msg": "解密过程发生问题"})
+            else:
+                logger.info(data_text)
+                # 存入数据库
+                if request.POST.get("service") in MODELS_DEFINE.keys():
+                    obj = MODELS_DEFINE[params["service"]]
+                    obj.objects.create(real_name=params["name"], id_card=params["id_number"], mobile=params["phone"],
+                                       user_id=request.session.get("user_data")["uid"], data=decrypt,
+                                       msg=data_text["message"])
+
+                return JsonResponse(
+                    {"code": 0, "msg": "success", "new_score": new_score, "data": json.loads(decrypt),
+                     "info": request.POST.dict()})
+        else:
+            logger.info(data_text)
+            return JsonResponse({"code": 1, "msg": "外部服务器出错"})
+
+
+@method_decorator(check_session, name="dispatch")
+class SearchHistory(views.View):
+    """获取查询记录"""
+
+    def post(self, request):
+        uid = request.session.get("user_data")["uid"]
+        service = request.POST.get("service")
+        obj = MODELS_DEFINE[service]
+        total_num = obj.objects.filter(user_id=uid).count()
+        start = (int(request.POST.get("page")) - 1) * PAGE_NUM  # 每页十条
+        end = int(request.POST.get("page")) * PAGE_NUM
+
+        result_list = list(
+            obj.objects.filter(user_id=uid).values("id", "date", "mobile", "id_card", "real_name")[
+            start:end])
+
+        return JsonResponse({"code": 0, "resultList": result_list, "totalPages": math.ceil(total_num / PAGE_NUM)})
+
+
+@method_decorator(check_session, name="dispatch")
+class SearchHistoryInfo(views.View):
+    """获取查询记录详情"""
+
+    def post(self, request):
+        tid = request.POST.get("id")
+        service = request.POST.get("service")
+        obj = MODELS_DEFINE[service]
+        result = list(obj.objects.filter(id=tid).values("date", "mobile", "id_card", "real_name", "data", "msg"))[0]
+        result["data"] = json.loads(result["data"])
+        return JsonResponse({"code": 0, "result": result, "msg": "查询成功"})
 
 
 # 负债搜索报告
@@ -57,11 +201,46 @@ class AccountInformation(views.View):
         return render(request, "record/account_information.html", {"active": "account_information"})
 
 
+# 修改密码
+@method_decorator(check_session, name="dispatch")
+class AccountPWDModify(views.View):
+    def get(self, request):
+        return render(request, "record/account_pwd_modify.html", {"active": "account_information"})
+
+
 # 财务信息
 @method_decorator(check_session, name="dispatch")
 class FinancialInformation(views.View):
     def get(self, request):
-        return render(request, "record/financial_information.html", {"active": "financial_information"})
+        return render(request, "record/financial_information.html",
+                      {"active": "financial_information"})
+
+
+@method_decorator(check_session, name="dispatch")
+class Recharge(views.View):
+    """充值"""
+
+    def post(self, request):
+        uid = request.session.get("user_data")["uid"]
+        amount = int(request.POST.get("amount"))
+        score = UserInfo.objects.filter(id=uid)[0].score
+        new_score = score + int(amount) * 2
+        UserInfo.objects.filter(id=uid).update(score=new_score)
+        RechargeRecords.objects.create(user_id=uid, amount=amount)
+        user_data = request.session.get("user_data")
+        user_data["score"] = new_score
+        request.session["user_data"] = user_data
+        return JsonResponse({"code": 0, "msg": "购买成功"})
+
+
+@method_decorator(check_session, name="dispatch")
+class RechargeRecord(views.View):
+    """充值记录"""
+
+    def get(self, request):
+        uid = request.session.get("user_data")["uid"]
+        records = RechargeRecords.objects.filter(user_id=uid)
+        return render(request, "record/recharge_records.html", {"active": "financial_information", "records": records})
 
 
 # 查询记录

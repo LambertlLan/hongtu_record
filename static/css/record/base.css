@@ -4572,3 +4572,7 @@ span.icon.icon-green {
         transform: rotate(360deg) scale(1);
     }
 }
+
+.account-center .no-top-border {
+    border-top: none;
+}

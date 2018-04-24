@@ -1,0 +1,31 @@
+{% extends 'record/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-lg-9 col-md-9 col-sm-9">
+        <!--公众数据导航-->
+        <div class="fnNav">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="{% if public_active == "telecom_realname" %}active{% endif %}"
+                       href="/record/public_data/telecom_realname/">
+                        <span>运营商三要素</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if public_active == "miguan" %}active{% endif %}" href="/record/public_data/antifraud_miguan/">
+                        <span>蜜罐数据</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="{% if public_active == "finance_investment" %}active{% endif %}"
+                       href="/record/public_data/finance_investment/">
+                        <span>个人对外投资</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        {% block contianer %}
+        {% endblock %}
+    </div>
+{% endblock %}

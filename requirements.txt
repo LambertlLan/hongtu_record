@@ -1,3 +1,4 @@
 PyMySQL
 Django
 rc4
+requests

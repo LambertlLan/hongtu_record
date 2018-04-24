@@ -1,0 +1,419 @@
+{% extends 'record/pulic_data/nav.html' %}
+{% load static %}
+{% block contianer %}
+    <div class="container-fluid form content">
+        <div class="form-title">蜜罐数据查询</div>
+        <div class="form-inline">
+            <input class="form-control name" type="text" placeholder="姓名">
+            <input class="form-control idCard" type="text" placeholder="身份证号码">
+            <input class="form-control phone" type="text" placeholder="手机号码">
+            <a class="m-btn" id="sub">确定（20分/次）</a>
+        </div>
+        <div class="form-inline">
+            <div class="checkbox">
+                <a><i></i>本人已获取该查询用户授权</a>
+            </div>
+            <a class="lookWarrant">《查看授权协议》</a>
+        </div>
+    </div>
+    <div class="container-fluid content">
+        <div class="tabs">
+            <ul class="list-unstyled tabs-nav">
+                <li class="active result"><a>查询结果</a></li>
+                <li class="record"><a>查询历史</a></li>
+            </ul>
+            <div class="tabs-content">
+                <div id="result" class="tabs-main">
+                    <div class="container-fluid-min">
+                        <p class="tab-title">用户基本信息<img class="icon-sample" src="{% static 'img/icon_sample.png' %}">
+                        </p>
+                        <table class="table m-t-2">
+                            <tbody>
+                            <tr>
+                                <td class="title">用户姓名</td>
+                                <td>张*三</td>
+                                <td class="title">手机号</td>
+                                <td>180****5214</td>
+                            </tr>
+                            <tr>
+                                <td class="title">年龄</td>
+                                <td>24</td>
+                                <td class="title">手机号城市</td>
+                                <td>长沙</td>
+                            </tr>
+                            <tr>
+                                <td class="title">城市</td>
+                                <td>衡阳市</td>
+                                <td class="title">身份证</td>
+                                <td>4304811991********</td>
+                            </tr>
+                            <tr>
+                                <td class="title">用户出生地(省份)</td>
+                                <td>湖南省</td>
+                                <td class="title">用户出生地(城市)</td>
+                                <td>长沙市</td>
+                            </tr>
+                            <tr>
+                                <td class="title">性别</td>
+                                <td>女</td>
+                                <td class="title">手机号归属地</td>
+                                <td>湖南</td>
+                            </tr>
+                            <tr>
+                                <td class="title">运营商</td>
+                                <td>中国移动</td>
+                                <td class="title">身份证是否有效</td>
+                                <td>是</td>
+                            </tr>
+                            <tr class="border-x-none">
+                                <td class="title">蜜罐编号</td>
+                                <td colspan="3">306bd17e-8381-11e5-8598-525400dd3e99-6224</td>
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+                        <p class="tab-title no-top-border">灰度分数据</p>
+                        <table class="table m-t-2">
+                            <tbody>
+                            <tr>
+                                <td class="title">一阶联系人总数</td>
+                                <td>30</td>
+                                <td class="title">直接联系人在黑名单的数量</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td class="title">间接联系人在黑名单的数量</td>
+                                <td>123</td>
+                                <td class="title">引起二阶黑名单人数</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="title">引起占比=引起二阶黑名单人数/一阶联系人总数</td>
+                                <td colspan="2">0.167</td>
+
+                            </tr>
+                            <tr>
+                                <td class="title">灰度分</td>
+                                <td>1</td>
+                                <td class="title">更新时间</td>
+                                <td>2018-01-01</td>
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+                        <p class="tab-title no-top-border">被机构查询数量(去重数据)</p>
+                        <table class="table m-t-2">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="title">被机构查询数量(去重数据)</td>
+                                <td colspan="2">6</td>
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+                        <p class="tab-title no-top-border">黑名单信息</p>
+                        <table class="table m-t-2">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="title">更新时间</td>
+                                <td colspan="2">2015-07-31 02:54:11</td>
+                            </tr>
+                            <tr>
+                                <td class="title">详情</td>
+                                <td>北京</td>
+                                <td class="title">详情</td>
+                                <td>地址</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="title">身份证和姓名是否在黑名单</td>
+                                <td colspan="1">否</td>
+                                <td colspan="1">2015-07-31 02:54:11</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="title">手机号和姓名是否在黑名单</td>
+                                <td colspan="2">否</td>
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+                        <p class="tab-title no-top-border">用户注册信息情况</p>
+                        <table class="table m-t-2">
+                            <tbody>
+                            <tr>
+                                <td colspan="2" class="title">计数</td>
+                                <td colspan="2">2</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="title">统计</td>
+                                <td colspan="2">计数\类型\手机号</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="title">注册机构</td>
+                                <td colspan="2">计数\类型\手机号</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                        <p class="tab-title no-top-border">手机号码存疑</p>
+                            <table class="table m-t-2">
+                                <tbody>
+                                <tr>
+                                    <td class="title">用这个手机号码绑定的其他身份证</td>
+                                    <td colspan="3">arr</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="title">电话号码在那些类型的机构中使用过</td>
+                                    <td colspan="3">arr</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">用这个手机号码绑定的其他姓名</td>
+                                    <td colspan="3">arr</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">用户被机构查询的历史</td>
+                                    <td colspan="3">arr</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">主动查询用户信息的机构类型</td>
+                                    <td>arr</td>
+                                    <td class="title">查询时间</td>
+                                    <td>2015-11-05</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">是否是本机构查询</td>
+                                    <td>否</td>
+                                    <td class="title">授权机构</td>
+                                    <td> jcloud</td>
+                                </tr>
+                                <tr>
+                                    <td class="title">流程吗</td>
+                                    <td>20000</td>
+                                    <td class="title">授权机构</td>
+                                    <td> jcloud</td>
+                                </tr>
+                                </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+                <div id="record" class="tabs-main">
+                    <div class="stretch-box">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th>序号</th>
+                                <th>姓名</th>
+                                <th>身份证号</th>
+                                <th>手机号</th>
+                                <th>查询时间</th>
+                                <th>查询状态</th>
+                                <th>操作</th>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="layer-page" id="page"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script>
+        $(".fnNav .accPhoneRecord").addClass("active");
+        $("#sub").click(function () {
+            if (!true) {
+                sky.login();
+                return
+            }
+            let t = $(this);
+            if (t.hasClass("disabled")) {
+                return;
+            }
+            if (!$(".checkbox").hasClass("active")) {
+                sky.msg("请勾选授权协议！");
+                return;
+            }
+            let name_input = $(".name");
+            let idCard_input = $(".idCard");
+            let phone_input = $(".phone");
+
+            let name = name_input.val();
+            let idCard = idCard_input.val();
+            let phone = phone_input.val();
+
+            if (!Utils.IsChineseName(name)) {
+                name_input.addClass("warn");
+                sky.msg("您姓名格式错误！");
+                return
+            }
+            if (!Utils.IsMobile(phone)) {
+                phone_input.addClass("warn");
+                sky.msg("您手机输入错误！");
+                return
+            }
+            if (!Utils.IsIdcard(idCard)) {
+                idCard_input.addClass("warn");
+                sky.msg("您身份证号码输入错误！");
+                return
+            }
+            sky.loding();
+            t.addClass("disabled");
+            $.ajax({
+                type: 'post',
+                url: urls.checkTelRealName,
+                dataType: 'json',
+                data: {
+                    'realName': name,
+                    'idCard': idCard,
+                    'mobile': phone,
+                    'service': 'Antifraud_miguan'
+                },
+                success: function (res) {
+                    t.removeClass("disabled");
+                    sky.lodingClose();
+                    console.log(res);
+                    $("#score").text(res.new_score);
+                    try {
+                        if (returnCode(res.code)) {
+                            sucPrompt();
+                            res.status = res.data.MESSAGE;
+                            let html = '<p class="tab-title">手机实名认证</p>' +
+                                '<table class="table m-t-2">' +
+                                '<tr>' +
+                                '<td class="title">姓名</td>' +
+                                '<td>' + res.info.realName + '</td>' +
+                                '<td class="title">手机号</td>' +
+                                '<td>' + res.info.mobile + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td class="title">运营商</td>' +
+                                '<td>' + res.data.isp + '</td>' +
+                                '<td class="title">实名检验</td>' +
+                                '<td>' + res.status + '</td>' +
+                                '</tr>' +
+                                '</table>';
+                            $("#result > div").html(html);
+                        } else {
+                            let html = '<p class="tab-title">手机实名历史</p>' +
+                                '<table class="table m-t-2">' +
+                                '<tr>' +
+                                '<td colspan="4">查询失败！暂无相关数据</td>' +
+                                '</tr>' +
+                                '</table>';
+                            ;
+                            $("#result > div").html(html);
+                            sky.msg(res.msg);
+                        }
+                    } catch (e) {
+                        sky.msg("系统发生异常！" + e);
+                    }
+                },
+                error: function (xhr, type) {
+                    t.removeClass("disabled");
+                    sky.lodingClose();
+                    sky.msg("服务器连接错误！");
+                }
+            })
+        });
+        $(".tabs .tabs-nav .record").click(function () {
+            pagePost(1)
+
+        });
+        let first = true;
+
+        function pagePost(curr) {
+            sky.loding();
+            $.ajax({
+                type: 'post',
+                url: urls.getSearchHistory,
+                dataType: 'json',
+                data: {
+                    service: "Telecom_realname",
+                    page: curr
+                },
+                success: function (res) {
+                    if (first) {
+                        if (sky.isMobile()) {
+                            laypage({
+                                cont: 'page', //容器。值支持id名、原生dom对象，jquery对象,
+                                pages: res.totalPages, //总页数
+                                groups: 0,
+                                first: true,
+                                last: true,
+                                jump: function (obj, first) {
+                                    console.log(obj, first);
+                                    pagePost(obj.curr);
+                                }
+                            });
+                        } else {
+                            laypage({
+                                cont: 'page',
+                                pages: res.totalPages,
+                                curr: 1,
+                                prev: '<',
+                                next: '>',
+                                jump: function (obj, first) {
+                                    pagePost(obj.curr);
+                                }
+                            });
+                        }
+                        first = false;
+                    }
+
+                    $(".icon-sample").remove();
+                    sky.lodingClose();
+                    try {
+                        if (returnCode(res.code)) {
+                            let html = '<table>' +
+                                '<tr>' +
+                                '<th>序号</th>' +
+                                '<th>姓名</th>' +
+                                '<th>身份证号</th>' +
+                                '<th>手机号</th>' +
+                                '<th>查询时间</th>' +
+                                '<th>查询状态</th>' +
+                                '<th>操作</th>' +
+                                '</tr>';
+                            if (res.resultList != 0) {
+                                for (let i in res.resultList) {
+                                    html += '<tr>' +
+                                        '<td>' + (parseInt(i) + 1) + '</td>' +
+                                        '<td>' + res.resultList[i].real_name + '</td>' +
+                                        '<td>' + res.resultList[i].id_card + '</td>' +
+                                        '<td>' + res.resultList[i].mobile + '</td>' +
+                                        '<td>' + res.resultList[i].date + '</td>' +
+                                        '<td>完成</td>' +
+                                        '<td><a class="info" data="' + res.resultList[i].id + '">详情</a></td>' +
+                                        '</tr>'
+                                }
+                            } else {
+                                html += '<tr>' +
+                                    '<td colspan="7">暂无相关信息</td>' +
+                                    '</tr>';
+                            }
+                            html += '</table>';
+                            $("#record .stretch-box").html(html);
+                            $("#record .info").click(function () {
+                                sky.phoneRealName($(this).attr("data"));
+                            });
+                        }
+                    } catch (e) {
+                        sky.msg("系统发生异常！" + e);
+                    }
+                },
+                error: function (xhr, type) {
+                    sky.msg("服务器连接错误！");
+                }
+            })
+        }
+    </script>
+{% endblock %}

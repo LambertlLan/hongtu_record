@@ -6,40 +6,40 @@
         <div class="fnNav">
             <ul class="list-unstyled">
                 <li>
-                    <a class="accInfo active" href="accInfoV.do">
+                    <a class="accInfo active" href="/record/account/information/">
                         <span>基本信息</span>
                     </a>
                 </li>
                 <li>
-                    <a class="accPwdModify" href="accPwdModifyV.do">
+                    <a class="accPwdModify" href="/record/account/pwd_modify/">
                         <span>密码修改</span>
                     </a>
                 </li>
-                <li>
-                    <a class="accUpgrade" href="accUpgradeV.do">
-                        <span>账户升级</span>
-                    </a>
-                </li>
+                {#                <li>#}
+                {#                    <a class="accUpgrade" href="accUpgradeV.do">#}
+                {#                        <span>账户升级</span>#}
+                {#                    </a>#}
+                {#                </li>#}
             </ul>
         </div>
         <div class="container-fluid content">
             <p class="title-block">账户信息</p>
             <div class="row box">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">用户名</div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">wzbjsk</div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">{{ request.session.user_data.name }}</div>
             </div>
-            <div class="row box">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">用户等级</div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">实名认证用户</div>
-            </div>
+            {#            <div class="row box">#}
+            {#                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">用户等级</div>#}
+            {#                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">实名认证用户</div>#}
+            {#            </div>#}
             <div class="row box">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">手机号码</div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">18773245176</div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">{{ request.session.user_data.phone }}</div>
             </div>
-            <div class="row box binWeChat">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">绑定微信</div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right"><a>点击绑定</a></div>
-            </div>
+            {#            <div class="row box binWeChat">#}
+            {#                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">绑定微信</div>#}
+            {#                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right"><a>点击绑定</a></div>#}
+            {#            </div>#}
         </div>
     </div>
 {% endblock %}
