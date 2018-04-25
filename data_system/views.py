@@ -1,12 +1,19 @@
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
+import base64
+import json
+import logging
+import math
+import time
+
+import requests
 from django import views
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
-from .models import UserInfo, RechargeRecords
-from .setting import SCORE_DEFINE, URL_DEFINE, MODELS_DEFINE, PAGE_NUM
+
 from .create_md5 import doMd5
+from .models import RechargeRecords, UserInfo, RecentSearchRecord
 from .rc4crypt import rc4crypt
-import time, json, logging, base64, requests, math
+from .setting import MODELS_DEFINE, PAGE_NUM, SCORE_DEFINE, URL_DEFINE, CHINESE_DEFINE
 
 logger = logging.getLogger('django')
 
@@ -58,7 +65,9 @@ def take_off_score(request, take_score):
 @method_decorator(check_session, name="dispatch")
 class Index(views.View):
     def get(self, request):
-        return render(request, "record/index.html", {"active": "index"})
+        uid = request.session.get("user_data")["uid"]
+        records_list = RecentSearchRecord.objects.filter(user_id=uid)[:10]
+        return render(request, "record/index.html", {"active": "index", "records_list": records_list})
 
 
 # 公众数据获取
@@ -105,9 +114,15 @@ class CheckPublicData(views.View):
             "sn": "HT" + str(data_json["timestamp"]),
             "id_number": request.POST.get("idCard"),
             "name": request.POST.get("realName"),
-            "phone": request.POST.get("mobile"),
             "service": request.POST.get("service")
         }
+        try:
+            phone = request.POST.get("mobile")
+        except Exception as e:
+            phone = None
+
+        if phone:
+            params["phone"] = phone
         try:
             rc4_data = rc4crypt(json.dumps(params), URL_DEFINE["app_secret"])
         except Exception as e:
@@ -133,13 +148,23 @@ class CheckPublicData(views.View):
                 return JsonResponse({"code": 1, "msg": "解密过程发生问题"})
             else:
                 logger.info(data_text)
-                # 存入数据库
+                database_dict = {
+                    "real_name": params["name"],
+                    "id_card": params["id_number"],
+                    "user_id": request.session.get("user_data")["uid"],
+                    "data": decrypt,
+                    "msg": data_text["message"]
+                }
+                if "phone" in params.keys():
+                    database_dict["mobile"] = params["phone"]
+                # 存入对应的数据库表
                 if request.POST.get("service") in MODELS_DEFINE.keys():
                     obj = MODELS_DEFINE[params["service"]]
-                    obj.objects.create(real_name=params["name"], id_card=params["id_number"], mobile=params["phone"],
-                                       user_id=request.session.get("user_data")["uid"], data=decrypt,
-                                       msg=data_text["message"])
-
+                    obj.objects.create(**database_dict)
+                # 存入近期查询表
+                RecentSearchRecord.objects.create(user_id=database_dict["user_id"], name=database_dict["real_name"],
+                                                  service=params["service"],
+                                                  service_chinese=CHINESE_DEFINE[params["service"]])
                 return JsonResponse(
                     {"code": 0, "msg": "success", "new_score": new_score, "data": json.loads(decrypt),
                      "info": request.POST.dict()})
@@ -159,12 +184,17 @@ class SearchHistory(views.View):
         total_num = obj.objects.filter(user_id=uid).count()
         start = (int(request.POST.get("page")) - 1) * PAGE_NUM  # 每页十条
         end = int(request.POST.get("page")) * PAGE_NUM
+        if service == "Finance_investment":
 
-        result_list = list(
-            obj.objects.filter(user_id=uid).values("id", "date", "mobile", "id_card", "real_name")[
-            start:end])
+            result_list = list(
+                obj.objects.filter(user_id=uid).values("id", "date", "id_card", "real_name")[start:end])
+        else:
+            result_list = list(
+                obj.objects.filter(user_id=uid).values("id", "date", "mobile", "id_card", "real_name")[start:end])
 
-        return JsonResponse({"code": 0, "resultList": result_list, "totalPages": math.ceil(total_num / PAGE_NUM)})
+        return JsonResponse(
+            {"code": 0, "service": service, "service_chinese": CHINESE_DEFINE[service], "resultList": result_list,
+             "totalPages": math.ceil(total_num / PAGE_NUM)})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -175,7 +205,12 @@ class SearchHistoryInfo(views.View):
         tid = request.POST.get("id")
         service = request.POST.get("service")
         obj = MODELS_DEFINE[service]
-        result = list(obj.objects.filter(id=tid).values("date", "mobile", "id_card", "real_name", "data", "msg"))[0]
+        if service == "Finance_investment":
+
+            result = list(obj.objects.filter(id=tid).values("date", "id_card", "real_name", "data", "msg"))[0]
+        else:
+            result = list(obj.objects.filter(id=tid).values("date", "mobile", "id_card", "real_name", "data", "msg"))[0]
+
         result["data"] = json.loads(result["data"])
         return JsonResponse({"code": 0, "result": result, "msg": "查询成功"})
 
@@ -234,13 +269,26 @@ class Recharge(views.View):
 
 
 @method_decorator(check_session, name="dispatch")
+class RechargeRecordView(views.View):
+    """充值记录页面"""
+
+    def get(self, request):
+        return render(request, "record/recharge_records.html", {"active": "financial_information"})
+
+
+@method_decorator(check_session, name="dispatch")
 class RechargeRecord(views.View):
     """充值记录"""
 
     def get(self, request):
         uid = request.session.get("user_data")["uid"]
-        records = RechargeRecords.objects.filter(user_id=uid)
-        return render(request, "record/recharge_records.html", {"active": "financial_information", "records": records})
+        page = int(request.GET.get("page"))
+        total_num = RechargeRecords.objects.filter(user_id=uid).count()
+        start = (page - 1) * PAGE_NUM  # 每页十条
+        end = page * PAGE_NUM
+        records = RechargeRecords.objects.filter(user_id=uid).values("id", "date", "amount")[start:end]
+        return JsonResponse(
+            {"code": 0, "msg": "success", "totalPages": math.ceil(total_num / PAGE_NUM), "resultList": list(records)})
 
 
 # 查询记录

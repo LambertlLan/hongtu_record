@@ -69,3 +69,15 @@ class FinanceInvestment(models.Model):
 
     def __str__(self):
         return " 查询%s %s" % (self.real_name, self.msg)
+
+
+class RecentSearchRecord(models.Model):
+    """近期查询记录"""
+    user = models.ForeignKey("UserInfo", None)
+    name = models.CharField(max_length=64)
+    date = models.DateField(auto_now_add=True)
+    service = models.CharField(max_length=64)
+    service_chinese = models.CharField(max_length=64)
+
+    def __str__(self):
+        return " %s查询 %s" % (self.name, self.service)

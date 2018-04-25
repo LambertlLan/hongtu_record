@@ -1,6 +1,4 @@
-{% extends 'record/pulic_data/nav.html' %}
-{% load static %}
-{% block contianer %}
+{% extends 'record/pulic_data/nav.html' %} {% load static %} {% block contianer %}
     <div class="container-fluid form content">
         <div class="form-title">手机实名认证</div>
         <div class="form-inline">
@@ -68,8 +66,7 @@
         </div>
     </div>
 
-{% endblock %}
-{% block javascript %}
+{% endblock %} {% block javascript %}
     <script>
         $(".fnNav .accPhoneRecord").addClass("active");
         $("#sub").click(function () {

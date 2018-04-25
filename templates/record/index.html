@@ -74,14 +74,24 @@
                         <th>查询类型</th>
                         <th>详情</th>
                     </tr>
-                    <tr>
-                        <td>张家宁</td>
-                        <td>2018-4-10</td>
-                        <td class="type">身份证信息</td>
-                        <td>
-                            <a class="info" data="259766">详情</a>
-                        </td>
-                    </tr>
+                    {% if records_list %}
+                        {% for item in records_list %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.date | date:"Y-m-d" }}</td>
+                                <td class="type">{{ item.service_chinese }}</td>
+                                <td>
+                                    <a class="info" data="{{ item.id }}" data-service="{{ item.service }}">详情</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">暂无相关数据</td>
+
+                        </tr>
+                    {% endif %}
+
 
                     </tbody>
                 </table>
@@ -89,4 +99,27 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        $(".info").click(function () {
+            var service = $(this).data("service");
+            var id = $(this).attr("data");
+            switch (service) {
+                case "Telecom_realname":
+                    sky.phoneRealName(id);
+                    break;
+                case "Antifraud_miguan":
+                    sky.miguan(id);
+                    break;
+                case "Finance_investment":
+                    sky.financeInvestment(id);
+                    break;
+                default:
+                    break
+            }
+
+        })
+    
+    </script>
 {% endblock %}

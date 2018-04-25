@@ -186,8 +186,1778 @@
     </div>
 </footer>
 <script src="{% static 'js/rest-api.js' %}"></script>
+<script src="{% static 'lib/art-template/art-template.js' %}"></script>
+<script src="{% static 'js/record/templateHelper.js' %}"></script>
 <script src="{% static 'js/record/base.js' %}"></script>
 <script src="{% static 'lib/laypage/laypage.js' %}"></script>
+{% verbatim %}
+<script id="miguan-table-template" type="text/html">
+
+    <p class="tab-title">基本信息
+    </p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+
+            <td colspan="2" class="title">姓名</td>
+            <td colspan="2">{{ data.user_basic.user_name }}</td>
+        </tr>
+        <tr>
+
+            <td class="title">手机号</td>
+            <td>{{ data.user_basic.user_phone }}</td>
+            <td class="title">身份证</td>
+            <td>{{ data.user_basic.user_idcard }}</td>
+        </tr>
+        <tr>
+            <td class="title">身份证是否有效</td>
+            <td>{{ data.user_basic.user_idcard_valid }}</td>
+            <td class="title">手机号归属地:省份</td>
+            <td>{{ data.user_basic.user_phone_province }}</td>
+        </tr>
+        <tr>
+            <td class="title">手机号归属地:城市</td>
+            <td>{{ data.user_basic.user_phone_city }}</td>
+            <td class="title">用户出生省份</td>
+            <td>{{ data.user_basic.user_province }}</td>
+        </tr>
+        <tr>
+            <td class="title">用户出生城市</td>
+            <td>{{ data.user_basic.user_city }}</td>
+            <td class="title">用户出生区县</td>
+            <td>{{ data.user_basic.user_region }}</td>
+
+        </tr>
+        <tr>
+            <td class="title">用户出生区县</td>
+            <td>{{ data.user_basic.user_region }}</td>
+            <td class="title">运营商类型</td>
+            <td>{{ data.user_basic.user_phone_operator }}</td>
+        </tr>
+        <tr>
+            <td class="title">年龄</td>
+            <td>{{ data.user_basic.user_age }}</td>
+            <td class="title">性别</td>
+            <td>{{ data.user_basic.user_gender }}</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+
+            <td class="title">手机号</td>
+            <td>{{ data.user_gray.user_phone }}</td>
+            <td class="title">灰度分</td>
+            <td>{{ data.user_gray.phone_gray_score }}</td>
+        </tr>
+        <tr>
+            <td class="title">是否种子号</td>
+            <td>{{ data.user_gray.has_report }}</td>
+            <td class="title">最近活跃时间</td>
+            <td>{{ data.user_gray.recent_active_time | toLocalDate}}</td>
+        </tr>
+        <tr>
+            <td class="title">社交活跃度</td>
+            <td>{{ data.user_gray.social_liveness }}</td>
+            <td class="title">社交影响力</td>
+            <td>{{ data.user_gray.social_influence }}</td>
+        </tr>
+        <tr>
+            <td class="title">更新时间</td>
+            <td>{{ data.update_time | toLocalDate}}</td>
+            <td class="title">被机构查询数量</td>
+            <td>{{ data.user_searched_statistic.searched_org_cnt }}</td>
+        </tr>
+        <tr>
+            <td class="title">蜜罐编号</td>
+            <td colspan="3">{{ data.user_grid_id }}</td>
+        </tr>
+        <tr class="border-x-none">
+
+            <td class="title">授权查询蜜罐数据的机构账户</td>
+            <td colspan="3">{{ data.auth_org }}</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">手机号码存疑</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+
+            <td colspan="4">
+                用这个号码绑定的其他身份证
+            </td>
+
+        </tr>
+        {{each data.user_phone_suspicion.phone_with_other_idcards}}
+        <tr>
+            <td class="title">绑定的身份证</td>
+            <td>
+                {{$value.susp_idcard}}
+            </td>
+            <td class="title">绑定的时间</td>
+            <td>
+                {{$value.susp_updt |toLocalDate}}
+            </td>
+
+        </tr>
+        {{/each}}
+        <tr>
+
+            <td colspan="4">
+                用这个号码绑定的其他姓名
+            </td>
+
+        </tr>
+        {{each data.user_phone_suspicion.phone_with_other_names}}
+        <tr>
+            <td class="title">绑定姓名</td>
+            <td>
+                {{$value.susp_name}}
+            </td>
+            <td class="title">绑定时间</td>
+            <td>
+                {{$value.susp_updt |toLocalDate}}
+            </td>
+
+        </tr>
+        {{/each}}
+        <tr>
+
+            <td colspan="4">
+                用这个身份证绑定的其他手机号
+            </td>
+
+        </tr>
+        {{each data.user_phone_suspicion.idcard_with_other_phones}}
+        <tr>
+            <td class="title">改号码所属省份</td>
+            <td>
+                {{$value.susp_phone_province}}
+            </td>
+            <td class="title">该号码所属运营商</td>
+            <td>
+                {{$value.susp_phone_operator}}
+            </td>
+
+        </tr>
+        <tr>
+            <td class="title">改号码最后一次绑定时间</td>
+            <td>
+                {{$value.updt |toLocalDate}}
+            </td>
+            <td class="title">该号码所在地区</td>
+            <td>
+                {{$value.phone_city}}
+            </td>
+
+        </tr>
+        <tr>
+            <td class="title">存疑手机号</td>
+            <td colspan="3">
+                {{$value.phone}}
+            </td>
+
+        </tr>
+
+        {{/each}}
+        <tr>
+
+            <td colspan="4">
+                电话号码在哪些类型的机构中使用过
+            </td>
+
+        </tr>
+        {{each data.user_phone_suspicion.phone_applied_in_orgs}}
+        <tr>
+            <td class="title">所属类型</td>
+            <td>
+                {{$value.susp_org_type}}
+            </td>
+            <td class="title">查询时间</td>
+            <td>
+                {{$value.susp_updt |toLocalDate}}
+            </td>
+
+        </tr>
+        {{/each}}
+        <tr>
+
+            <td colspan="4">
+                身份证在哪些类型的机构中使用过
+            </td>
+
+        </tr>
+        {{each data.user_phone_suspicion.idcard_applied_in_orgs}}
+        <tr>
+            <td class="title">所属类型</td>
+            <td>
+                {{$value.susp_org_type}}
+            </td>
+            <td class="title">查询时间</td>
+            <td>
+                {{$value.susp_updt |toLocalDate}}
+            </td>
+
+        </tr>
+        {{/each}}
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">用户注册信息情况</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+
+            <td class="title">注册总数量</td>
+            <td>{{ data.user_register_orgs.register_cnt }}</td>
+            <td class="title">查询手机号码</td>
+            <td>{{ data.user_register_orgs.phone_num }}</td>
+        </tr>
+        <tr>
+            <td class="title">每种类型app注册的数量</td>
+            <td>{{ data.user_register_orgs.register_orgs_statistics.count }}</td>
+            <td class="title">注册app的类型</td>
+            <td>{{ data.user_register_orgs.register_orgs_statistics.label }}</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">黑名单信息
+    </p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+
+            <td class="title">姓名和手机是否在黑名单</td>
+            <td>{{ data.user_blacklist.blacklist_name_with_phone }}</td>
+            <td class="title">身份证和姓名是否在黑名单</td>
+            <td>{{ data.user_blacklist.blacklist_name_with_idcard }}</td>
+        </tr>
+        <tr>
+            <td colspan="1" class="title">黑名单分类</td>
+            <td colspan="3">{{ each data.user_blacklist.blacklist_category }} {{$value}} {{/each}}
+            </td>
+
+        </tr>
+        <tr>
+
+            <td class="title">姓名和手机黑名单更新时间</td>
+            <td>{{ data.user_blacklist.blacklist_update_time_name_phone |toLocalDate}}</td>
+            <td class="title">身份证和姓名黑名单信息更新时间</td>
+            <td>{{ data.user_blacklist.blacklist_update_time_name_idcard |toLocalDate}}</td>
+        </tr>
+        </tbody>
+
+    </table>
+    <p class="tab-title">黑名单详情
+    </p>
+    <table class="table m-t-2">
+        <tbody>
+        {{each data.user_blacklist.black_details}}
+        <tr>
+            <td colspan="2" class="title">{{$value.details_key}}</td>
+            <td colspan="2">{{$value.details_value}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+
+    </table>
+    <p class="tab-title">联系人相关字段</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+
+            <td class="title">主动联系人</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_to_all }}</td>
+            <td class="title">被动联系人</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_be_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">一阶联系人总数(前两项合并去重)</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.cnt_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">引起黑名单的一阶联系人总数(一阶联系人中与黑号有联系的人数)</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.cnt_router }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">引起黑名单的一阶联系人占比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.router_ratio }}</td>
+        </tr>
+        <tr>
+            <td class="title">主动轮联系的黑号数</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_to_black }}</td>
+            <td class="title">被动联系的黑号数</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_be_black }}</td>
+        </tr>
+        <tr>
+            <td class="title">一阶联系黑号总数</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_black }}</td>
+            <td class="title">一阶联系黑号总数占比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.black_ratio }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">二阶联系黑号总数(联系人的黑号联系人,并排除一节联系的黑号)</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_black2 }}</td>
+        </tr>
+        <tr>
+            <td class="title">主动联系人中曾为申请人的人数</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_to_aplied }}</td>
+            <td class="title">被动联系人中曾为申请人的人数</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_bt_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">联系人曾为申请人的人数(前两项合并去重)</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.cnt_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">主动联系人数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_all  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系人在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_be_all  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">一阶联系人总数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_all  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">引起黑名单的一阶联系人数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_router  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">引起黑名单的一届联系人占比在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_router_ratio  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">主动联系的黑号数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_black  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系的黑号数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_be_black  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">一阶联系黑号总数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_black  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">一阶联系黑号总数与一阶联系人总数的比例在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_black_ratio  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">二阶联系黑号总数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_black2  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">主动联系人中曾为申请人的人数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_applied  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">联系人中曾为申请人的人数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_applied  | percent }}%</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">联系人中曾为申请人的人数在群体中的百分比</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_applied  | percent }}%</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">联系权重R、F、M</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的最近主动通话时间</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.recent_time_to_all |toLocalDate}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的最近被动通话时间</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.recent_time_be_all |toLocalDate}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与黑号的最近主动通话时间</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.recent_time_to_black |toLocalDate}}</td>
+        </tr>
+
+
+        <tr>
+            <td colspan="2" class="title">与黑号的最近被动通话时间</td>
+            <td>{{ data.user_gray.contacts_rfm.recent_time_be_black |toLocalDate}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的最近主动通话时间</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.recent_time_to_applied |toLocalDate}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的最近被动通话时间</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.recent_time_be_applied |toLocalDate}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的主动总通话次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的被动总通话次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与黑号主动总通话次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_black }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与黑号被动总通话次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_black }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的主动总通话次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的被动总通话次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的主动总通话时长</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的被动总通话时长</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与黑号主动总通话时长</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_black }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与黑号被动动总通话时长</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_black }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的主动总通话时长</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的被动总通话时长</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_applied }}</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">与联系人的最大亲密度(0-100)</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的最大主动联系亲密度</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_to_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的最大被动联系亲密度</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与所有联系人的最大互动联系亲密度</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_all }}</td>
+        </tr>
+
+
+        <tr>
+            <td colspan="2" class="title">与黑号的最大主动联系亲密度</td>
+            <td>{{ data.user_gray.contacts_closest.weight_to_black }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与黑号的最大被动联系亲密度</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_black }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与黑号的最大互动联系亲密度</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_black }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的最大主动联系亲密度</td>
+            <td>{{ data.user_gray.contacts_closest.weight_to_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的最大被动联系亲密度</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">与申请人的最大互动联系亲密度</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_applied }}</td>
+        </tr>
+
+        </tbody>
+    </table>
+    <p class="tab-title">联系人灰度分信息</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td colspan="2" class="title">主动联系人最亲密联系人的灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_to_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系人最亲密联系人的灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_be_all }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">互动联系人最亲密联系人的灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_all }}</td>
+        </tr>
+
+
+        <tr>
+            <td colspan="2" class="title">主动联系人最亲密申请人的灰度分</td>
+            <td>{{ data.user_gray.contacts_gray_score.most_familiar_to_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系人最亲密申请人的灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_be_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">互动联系人最亲密申请人的灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_applied }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">主动联系的联系人的最高灰度分</td>
+            <td>{{ data.user_gray.contacts_gray_score.to_max }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">主动联系的联系人的平均灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.to_mean }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">主动联系的联系人的最低灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.to_min }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系的联系人的最高灰度分</td>
+            <td>{{ data.user_gray.contacts_gray_score.be_max }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系的联系人的平均灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.be_mean }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系的联系人的最低灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.be_min }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">联系的联系人的最高灰度分</td>
+            <td>{{ data.user_gray.contacts_gray_score.max }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">联系的联系人的平均灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.mean }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">联系的联系人的最低灰度分</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.min }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="tab-title">联系人的分布</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td colspan="2" class="title">主动联系的亲密联系人数(w > 67)</td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.to_is_familiar }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">主动联系的中等亲密联系人数(67 >= w >= 33)</td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.to_median_familiar }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">主动联系的非亲密联系人数(w
+                < 33)
+            </td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.to_not_familiar }}</td>
+        </tr>
+
+
+        <tr>
+            <td colspan="2" class="title">被动联系的亲密联系人数(w > 67)</td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.be_is_familiar }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系的中等亲密联系人数(67 >= w >= 33)</td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.be_median_familiar }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">被动联系的非亲密联系人数(w
+                < 33)
+            </td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.be_not_familiar }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">互动联系的亲密联系人数(w > 133)</td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.is_familiar }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">互动联系的中等亲密联系人数(67 >= w >= 33)</td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.median_familiar }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">互动联系的非亲密联系人数(w
+                < 33)
+            </td>
+            <td colspan="2">{{ data.user_gray.contacts_relation_distribution.not_familiar }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="tab-title">联系人的查询历史</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td colspan="2" class="title">前半年内主动联系的人的最近一次查询时间</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_recent_query_time |toLocalDate}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前半年内被动联系的人的最近一次查询时间</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_recent_query_time |toLocalDate}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前半月内主动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_query_cnt_05 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前半月内被动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_query_cnt_05 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前半月内联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.query_cnt_05 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前1月内主动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_query_cnt_1 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前1月内被动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_query_cnt_1 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前1月内联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.query_cnt_1 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前2月内主动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_query_cnt_2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前2月内被动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_query_cnt_2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前2月内联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.query_cnt_2 }}</td>
+        </tr>
+
+
+        <tr>
+            <td colspan="2" class="title">前3月内主动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_query_cnt_3 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前3月内被动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_query_cnt_3 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前3月内联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.query_cnt_3 }}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="title">前6月内主动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_query_cnt_6 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前6月内被动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_query_cnt_6 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前6月内联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.query_cnt_6 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前9月内主动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_query_cnt_9 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前9月内被动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_query_cnt_9 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前9月内联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.query_cnt_9 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前12月内主动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_query_cnt_12 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前12月内被动联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_query_cnt_12 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前12月内联系的人的查询次数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.query_cnt_12 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前半月内主动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_org_cnt_05 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前半月内被动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_org_cnt_05 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前半月内联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.org_cnt_05 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前1月内主动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_org_cnt_1 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前1月内被动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_org_cnt_1 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前1月内联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.org_cnt_1 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前2月内主动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_org_cnt_2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前2月内被动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_org_cnt_2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前2月内联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.org_cnt_2 }}</td>
+        </tr>
+
+
+        <tr>
+            <td colspan="2" class="title">前3月内主动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_org_cnt_3 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前3月内被动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_org_cnt_3 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前3月内联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.org_cnt_3 }}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" class="title">前6月内主动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_org_cnt_6 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前6月内被动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_org_cnt_6 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前6月内联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.org_cnt_6 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前9月内主动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_org_cnt_9 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前9月内被动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_org_cnt_9 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前9月内联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.org_cnt_9 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前12月内主动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.to_org_cnt_12 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前12月内被动联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.be_org_cnt_12 }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">前12月内联系的人的查询机构数</td>
+            <td colspan="2">{{ data.user_gray.contacts_query.org_cnt_12 }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="tab-title">用户被机构查询历史</p>
+    <table class="table m-t-2">
+        <tbody>
+        {{each data.user_searched_history_by_orgs}}
+        <tr>
+
+            <td colspan="2" class="title">主动查询用户信息的机构类型</td>
+            <td colspan="2" >{{ $value.searched_org }}</td>
+
+        </tr>
+        <tr>
+            <td class="title">查询时间</td>
+            <td>{{ $value.searched_date |toLocalDate}}</td>
+            <td class="title">是否是本机构查询</td>
+            <td>{{ $value.org_self }}</td>
+        </tr>
+        {{/each}}
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">7天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_7.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_7.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_7.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_7.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_7.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_7.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_7.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_7.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_7.pct_cnt_all | percent }}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_7.pct_cnt_cash | percent }}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_7.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_7.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_7.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_7.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_7.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_7.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">15天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_15.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_15.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_15.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_15.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_15.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_15.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_15.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_15.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_15.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_15.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_15.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_15.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_15.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_15.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_15.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_15.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">30天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_30.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_30.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_30.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_30.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_30.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_30.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_30.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_30.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_30.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_30.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_30.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_30.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_30.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_30.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_30.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_30.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">60天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_60.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_60.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_60.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_60.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_60.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_60.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_60.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_60.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_60.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_60.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_60.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_60.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_60.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_60.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_60.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_60.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">90天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_90.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_90.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_90.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.d_90.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_90.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_90.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_90.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.d_90.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_90.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_90.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_90.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_90.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_90.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_90.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_90.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.d_90.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">120天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_4.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_4.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_4.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_4.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_4.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_4.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_4.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_4.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_4.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_4.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_4.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_4.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_4.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_4.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_4.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_4.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">150天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_5.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_5.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_5.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_5.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_5.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_5.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_5.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_5.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_5.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_5.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_5.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_5.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_5.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_5.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_5.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_5.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">180天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_6.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_6.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_6.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_6.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_6.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_6.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_6.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_6.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_6.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_6.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_6.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_6.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_6.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_6.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_6.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_6.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">270天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_9.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_9.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_9.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_9.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_9.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_9.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_9.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_9.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_9.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_9.pct_cnt_cash| percent }}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_9.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_9.pct_cnt_cf| percent }}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_9.pct_cnt_org_all| percent }}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_9.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_9.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_9.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">360天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_12.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_12.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_12.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_12.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_12.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_12.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_12.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_12.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_12.pct_cnt_all | percent }}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_12.pct_cnt_cash | percent }}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_12.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_12.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_12.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_12.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_12.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_12.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">540天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_18.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_18.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_18.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_18.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_18.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_18.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_18.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_18.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_18.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_18.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_18.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_18.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_18.pct_cnt_org_all | percent }}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_18.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_18.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_18.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">720天内历史查询记录</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_24.cnt }}</td>
+            <td class="title">现金贷查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_24.cnt_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_24.cnt_cc }}</td>
+            <td class="title">消费分期查询次数</td>
+            <td>{{ data.user_searched_history_by_day.m_24.cnt_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_24.cnt_org }}</td>
+            <td class="title">现金贷查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_24.cnt_org_cash }}</td>
+        </tr>
+        <tr>
+            <td class="title">信用卡代还查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_24.cnt_org_cc }}</td>
+            <td class="title">消费分期查询机构数</td>
+            <td>{{ data.user_searched_history_by_day.m_24.cnt_org_cf }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_24.pct_cnt_all | percent}}%</td>
+            <td class="title">查询次数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_24.pct_cnt_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询次数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_24.pct_cnt_cc | percent}}%</td>
+            <td class="title">查询次数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_24.pct_cnt_cf | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在总体查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_24.pct_cnt_org_all | percent}}%</td>
+            <td class="title">查询机构数在现金贷查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_24.pct_cnt_org_cash | percent}}%</td>
+        </tr>
+        <tr>
+            <td class="title">查询机构数在信用卡代还查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_24.pct_cnt_org_cc | percent}}%</td>
+            <td class="title">查询机构数在消费分期查询分布中的百分位</td>
+            <td>{{ data.user_searched_history_by_day.m_24.pct_cnt_org_cf | percent}}%</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <p class="tab-title">消费标签信息</p>
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">是否有信用卡</td>
+            <td>{{ data.consumer_label.if_own_cc |trueOrFalse}}</td>
+            <td class="title">是否有白金卡</td>
+            <td>{{ data.consumer_label.if_own_wg_cc |trueOrFalse}}</td>
+        </tr>
+        <tr>
+            <td class="title">是否有车</td>
+            <td>{{ data.consumer_label.if_own_car |trueOrFalse}}</td>
+            <td class="title">是否购买保险产品</td>
+            <td>{{ data.consumer_label.if_pay_ins |trueOrFalse}}</td>
+        </tr>
+        <tr>
+            <td class="title">是否购买理财产品</td>
+            <td>{{ data.consumer_label.if_fin_buy_pre6 |trueOrFalse}}</td>
+            <td class="title">消费能力指数</td>
+            <td>{{ data.consumer_label.cst_score_finally }}</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+</script>
+{% endverbatim %}
+{% verbatim %}
+<script id="invest-table-template" type="text/html">
+
+    <p class="tab-title">企业股东信息</p>
+    {{ each data.ryposshaList }}
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td colspan="2" class="title">企业名称</td>
+            <td colspan="2">{{ $value.entName }}</td>
+        </tr>
+        <tr>
+            <td class="title">企业类型</td>
+            <td>{{ $value.entType }}</td>
+            <td class="title">认缴出资额(万元)</td>
+            <td>{{ $value.contribution }}</td>
+        </tr>
+        <tr>
+
+            <td class="title">注册资本(万元)</td>
+            <td>{{ $value.regCapital }}</td>
+            <td class="title">出资比例</td>
+            <td>{{ $value.fundedRatio }}</td>
+        </tr>
+        <tr>
+            <td class="title">出资方式</td>
+            <td>{{ $value.conForm }}</td>
+            <td class="title">查询人姓名</td>
+            <td>{{ $value.name }}</td>
+        </tr>
+        <tr>
+            <td class="title">币种</td>
+            <td>{{ $value.currency }}</td>
+            <td class="title">认缴出资额(币种)</td>
+            <td>{{ $value.contributionCurrency }}</td>
+        </tr>
+        <tr>
+            <td class="title">企业注册号</td>
+            <td>{{ $value.entNo }}</td>
+            <td class="title">企业状态</td>
+            <td>{{ $value.status }}</td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    {{ /each }}
+    <p class="tab-title no-top-border">企业主要管理人员信息</p>
+    {{ each data.ryposperList }}
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td colspan="2" class="title">企业名称</td>
+            <td colspan="2">{{ $value.entName }}</td>
+        </tr>
+        <tr>
+            <td class="title">查询人姓名</td>
+            <td>{{ $value.name }}</td>
+            <td class="title">企业类型</td>
+            <td>{{ $value.entType }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">企业注册号</td>
+            <td colspan="2" >{{ $value.entNo }}</td>
+
+        </tr>
+        <tr>
+            <td class="title">注册资本(万元)</td>
+            <td>{{ $value.regCapital }}</td>
+            <td class="title">币种</td>
+            <td>{{ $value.currency }}</td>
+        </tr>
+        <tr>
+            <td class="title">企业状态</td>
+            <td>{{ $value.status }}</td>
+            <td class="title">职务</td>
+            <td>{{ $value.position }}</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    {{ /each }}
+    <p class="tab-title no-top-border">企业法人代表信息</p>
+    {{ each data.ryposfrList }}
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">查询人姓名</td>
+            <td>{{ $value.name }}</td>
+            <td class="title">企业名称</td>
+            <td>{{ $value.entName }}</td>
+        </tr>
+        <tr>
+            <td class="title">企业注册号</td>
+            <td>{{ $value.entNo }}</td>
+            <td class="title">企业类型</td>
+            <td>{{ $value.entType }}</td>
+        </tr>
+        <tr>
+            <td class="title">注册资本(万元)</td>
+            <td>{{ $value.regCapital }}</td>
+            <td class="title">币种</td>
+            <td>{{ $value.currency }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">企业状态</td>
+            <td colspan="2">{{ $value.status }}</td>
+        </tr>
+        </tbody>
+
+    </table>
+    {{ /each }}
+    <p class="tab-title no-top-border">失信被执行人信息</p>
+    {{ each data.punishbreakList }}
+
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">案号</td>
+            <td>{{ $value.caseNo }}</td>
+            <td class="title">被执行人姓名</td>
+            <td>{{ $value.name }}</td>
+        </tr>
+        <tr>
+            <td class="title">失信类型</td>
+            <td>{{ $value.type }}</td>
+            <td class="title">性别</td>
+            <td>{{ $value.sex }}</td>
+        </tr>
+        <tr>
+            <td class="title">年龄</td>
+            <td>{{ $value.age }}</td>
+            <td class="title">身份证号码/工商注册号</td>
+            <td>{{ $value.cardNumber }}</td>
+        </tr>
+        <tr>
+            <td class="title">身份证原始发地</td>
+            <td>{{ $value.identityDeparture }}</td>
+            <td class="title">法定代表人/负责人姓名</td>
+            <td>{{ $value.head }}</td>
+        </tr>
+        <tr>
+            <td class="title">立案时间</td>
+            <td>{{ $value.filingDate }}</td>
+            <td class="title">公布时间</td>
+            <td>{{ $value.publishDate }}</td>
+        </tr>
+        <tr>
+            <td class="title">执行法院</td>
+            <td>{{ $value.executeCourt }}</td>
+            <td class="title">省份</td>
+            <td>{{ $value.province }}</td>
+        </tr>
+        <tr>
+            <td class="title">执行文号</td>
+            <td>{{ $value.executeDocumentNumber }}</td>
+            <td class="title">做出执行依据单位</td>
+            <td>{{ $value.gistunit }}</td>
+        </tr>
+        <tr>
+            <td class="title">生效法律文书确定的义务</td>
+            <td> {{ $value.duty }}</td>
+            <td class="title">失信被执行人为具体情形</td>
+            <td>{{ $value.disrupttypeName }}</td>
+        </tr>
+        <tr>
+            <td class="title">被指信任的履行情况</td>
+            <td>{{ $value.performance }}</td>
+            <td class="title">已经履行</td>
+            <td>{{ $value.performdpart }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="title">未履行</td>
+            <td colspan="2">{{ $value.unperformdpart }}</td>
+        </tr>
+        </tbody>
+
+    </table>
+    {{ /each }}
+
+
+    <p class="tab-title no-top-border">被执行人信息</p>
+    {{ each data.punishedList }}
+
+    <table class="table m-t-2">
+        <tbody>
+        <tr>
+            <td class="title">案号</td>
+            <td>{{ $value.caseNo }}</td>
+            <td class="title">被执行人姓名</td>
+            <td>{{ $value.name }}</td>
+        </tr>
+        <tr>
+            <td class="title">性别</td>
+            <td>{{ $value.sex }}</td>
+        </tr>
+        <tr>
+            <td class="title">年龄</td>
+            <td>{{ $value.age }}</td>
+
+        </tr>
+        <tr>
+            <td colspan="2" class="title">身份证号码/工商注册号</td>
+            <td colspan="2">{{ $value.cardNumber }}</td>
+        </tr>
+        <tr>
+            <td class="title">身份证原始发地</td>
+            <td>{{ $value.identityDeparture }}</td>
+            <td class="title">立案时间</td>
+            <td>{{ $value.filingDate }}</td>
+
+        </tr>
+        <tr>
+            <td class="title">执行法院</td>
+            <td>{{ $value.executeCourt }}</td>
+            <td class="title">省份</td>
+            <td>{{ $value.province }}</td>
+        </tr>
+        <tr>
+            <td class="title">执行标的</td>
+            <td>{{ $value.executeDarget }}</td>
+            <td class="title">案件状态</td>
+            <td>{{ $value.caseState }}</td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    {{ /each }}
+
+</script>
+{% endverbatim %}
 {% block javascript %}
 
 {% endblock %}

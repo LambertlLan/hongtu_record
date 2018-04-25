@@ -35,22 +35,7 @@
             </div>
             <div class="stretch-box">
                 <table class="table text-center td-4 table-blue-black">
-                    <tbody>
-                    <tr>
-                        <th>序号</th>
-                        <th>充值时间</th>
-                        <th>充值积分</th>
-                        <th>充值金额（元）</th>
-                    </tr>
-
-                    {% for item in records %}
-                        <tr>
-                            <td>{{ item.id }}</td>
-                            <td>{{ item.date|date:"Y-m-d H:i" }}</td>
-                            <td>{{ item.amount| add:item.amount }}</td>
-                            <td>{{ item.amount }}</td>
-                        </tr>
-                    {% endfor %}
+                    <tbody id="record">
                     </tbody>
                 </table>
             </div>
@@ -59,7 +44,89 @@
     </div>
 {% endblock %}
 {% block javascript %}
-    <script type="text/javascript">
+    {% verbatim %}
+    <script id="tableTemplate" type="text/html">
+        <tr>
+            <th>序号</th>
+            <th>充值时间</th>
+            <th>充值积分</th>
+            <th>充值金额（元）</th>
+        </tr>
+        {{ if resultList }}
+        {{ each resultList }}
+        <tr>
+            <td>{{ $value.id }}</td>
+            <td>{{ $value.date |fomateDateTime }}</td>
+            <td>{{ $value.amount| cheng }}</td>
+            <td>{{ $value.amount }}</td>
+        </tr>
+        {{ /each }}
+        {{ else }}
+        <tr>
+            <td colspan="4">暂无数据</td>
+        </tr>
+        {{ /if }}
 
+    </script>
+    {% endverbatim %}
+    <script type="text/javascript">
+        let first = true;
+
+        function pagePost(curr) {
+            sky.loding();
+            $.ajax({
+                type: 'get',
+                url: urls.recharge_record,
+                dataType: 'json',
+                data: {
+                    page: curr
+                },
+                success: function (res) {
+                    if (first) {
+                        if (sky.isMobile()) {
+                            laypage({
+                                cont: 'page', //容器。值支持id名、原生dom对象，jquery对象,
+                                pages: res.totalPages, //总页数
+                                groups: 0,
+                                first: true,
+                                last: true,
+                                jump: function (obj, first) {
+                                    console.log(obj, first);
+                                    pagePost(obj.curr);
+                                }
+                            });
+                        } else {
+                            laypage({
+                                cont: 'page',
+                                pages: res.totalPages,
+                                curr: 1,
+                                prev: '<',
+                                next: '>',
+                                jump: function (obj, first) {
+                                    pagePost(obj.curr);
+                                }
+                            });
+                        }
+                        first = false;
+                    }
+
+                    sky.lodingClose();
+                    try {
+                        if (returnCode(res.code)) {
+                            let html = template("tableTemplate", res);
+
+                            $("#record").html(html);
+                        }
+                    } catch (e) {
+                        sky.msg("系统发生异常！" + e);
+                    }
+                },
+                error: function (xhr, type) {
+                    sky.msg("服务器连接错误！");
+                }
+            })
+        }
+
+        pagePost(1);
     </script>
 {% endblock %}

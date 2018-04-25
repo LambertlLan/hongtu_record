@@ -19,7 +19,8 @@ urlpatterns = [
     path('account/pwd_modify/', views.AccountPWDModify.as_view()),
     path('financial_information/recharge/', views.FinancialInformation.as_view()),
     path('recharge/', views.Recharge.as_view()),
-    path('financial_information/recharge_record/', views.RechargeRecord.as_view()),
+    path('financial_information/recharge_record/', views.RechargeRecordView.as_view()),
+    path('recharge/records/', views.RechargeRecord.as_view()),
     path('select_records/', views.SelectRecords.as_view()),
 
 ]
