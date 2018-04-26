@@ -4,10 +4,12 @@ from django.http import JsonResponse
 
 import time
 import json
+import requests
 from utils.createMsgCode import create_msg_code
 import logging
 
 from data_system.models import UserInfo
+from data_system.setting import MSG_CODE_DEFINE
 
 logger = logging.getLogger('django')
 
@@ -83,8 +85,22 @@ class GetMsgCode(views.View):
         phone_num = request.GET.get("phone")
         msg_code = create_msg_code()
         logger.info("%s 请求获取手机验证码 %s" % (phone_num, msg_code))
-        request.session["phoneVerifyCode"] = {"time": int(time.time()), "code": msg_code}
-        return JsonResponse({"code": 0, "msg": "success", "msgCode": msg_code})
+        data_json = {
+            "mobile": phone_num,
+            # "content": "【宏图数据】验证码为：%s,请在页面中提交验证码完成验证" % msg_code,
+            "content": "【成都创信信息】验证码为：5873,欢迎注册平台！",
+            "appkey": MSG_CODE_DEFINE["app_key"]
+        }
+        res_msg = requests.post(MSG_CODE_DEFINE["url"], data_json, json=True)
+        print(res_msg.text)
+        data_text = json.loads(res_msg.text)
+        if data_text["code"] == "10000":
+            logger.info("手机号%s获取验证码%s成功" % (phone_num, msg_code))
+            request.session["phoneVerifyCode"] = {"time": int(time.time()), "code": msg_code}
+            return JsonResponse({"code": 0, "msg": "success", "msgCode": msg_code})
+        else:
+            logger.info("手机号%s获取验证码%s失败,失败code:%s,msg:%s" % (phone_num, msg_code, data_text["code"], data_text["msg"]))
+            return JsonResponse({"code": 1, "msg": data_text["msg"]})
 
 
 class CheckMsgCode(views.View):
