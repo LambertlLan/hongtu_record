@@ -36,9 +36,11 @@ def check_session(func):
 # 检查 score 装饰器
 def check_score(func):
     def inner(request, *args, **kwargs):
+        uid = request.session.get("user_data")["uid"]
         score = request.session.get("user_data")["score"]
         service = request.POST.get("service")
-        if score > SCORE_DEFINE[service]:
+        service_fee = UserInfo.objects.filter(id=uid).values(SCORE_DEFINE[service])[0]
+        if score > service_fee[SCORE_DEFINE[service]]:
             return func(request, *args, **kwargs)
         else:
             return JsonResponse({"code": 11001, "msg": "积分不足"})
@@ -104,6 +106,12 @@ class CheckPublicData(views.View):
     """调用法眼三个接口"""
 
     def post(self, request):
+        msg_code = request.POST.get("msgCode")
+        if msg_code != request.session.get("phoneVerifyCode")["code"]:
+            return JsonResponse({"code": 1, "msg": "验证码不正确"})
+        else:
+            del request.session["phoneVerifyCode"]
+
         data_json = {
             "app_id": URL_DEFINE["app_id"],
             "timestamp": int(time.time()),
@@ -129,7 +137,10 @@ class CheckPublicData(views.View):
             logger.info(e)
             return JsonResponse({"code": 1, "msg": "加密发生错误"})
         # 开始请求,先扣钱
-        new_score = take_off_score(request, SCORE_DEFINE[request.POST.get("service")])
+        uid = request.session.get("user_data")["uid"]
+        service = request.POST.get("service")
+        service_fee = UserInfo.objects.filter(id=uid).values(SCORE_DEFINE[service])[0]
+        new_score = take_off_score(request, service_fee[SCORE_DEFINE[service]])
         if new_score is False or new_score < 0:
             logger.info("扣费发生错误")
             return JsonResponse({"code": 1, "msg": "扣费发生错误"})
@@ -151,7 +162,7 @@ class CheckPublicData(views.View):
                 database_dict = {
                     "real_name": params["name"],
                     "id_card": params["id_number"],
-                    "user_id": request.session.get("user_data")["uid"],
+                    "user_id": uid,
                     "data": decrypt,
                     "msg": data_text["message"]
                 }

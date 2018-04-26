@@ -100,7 +100,11 @@ class GetMsgCode(views.View):
         if data_text["code"] == "10000":
             logger.info("手机号%s获取验证码%s成功" % (phone_num, msg_code))
             request.session["phoneVerifyCode"] = {"time": int(time.time()), "code": msg_code}
-            return JsonResponse({"code": 0, "msg": "success", "msgCode": msg_code})
+            res_json = {"code": 0, "msg": "success"}
+            is_login = request.session.get("user_data")
+            if is_login:
+                res_json["msgCode"] = msg_code
+            return JsonResponse(res_json)
         else:
             logger.info("手机号%s获取验证码%s失败,失败code:%s,msg:%s" % (phone_num, msg_code, data_text["code"], data_text["msg"]))
             return JsonResponse({"code": 1, "msg": data_text["msg"]})

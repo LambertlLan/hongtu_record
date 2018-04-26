@@ -3,8 +3,11 @@
         <div class="form-title">手机实名认证</div>
         <div class="form-inline">
             <input class="form-control name" type="text" placeholder="姓名">
-            <input class="form-control idCard" type="text" placeholder="身份证号码">
+            <input class="form-control idCard" type="text" placeholder="身份证号码"></br>
             <input class="form-control phone" type="text" placeholder="手机号码">
+            <input class="form-control msgCode" type="text" placeholder="被查询人手机验证码">
+            <button class="btn m-btn" id="getMsgCode">获取验证码</button>
+            </br>
             <a class="m-btn" id="sub">确定（10分/次）</a>
         </div>
         <div class="form-inline">
@@ -67,7 +70,11 @@
     </div>
 
 {% endblock %} {% block javascript %}
-    <script>
+    <script type="text/javascript">
+        //获取手机验证码
+        $("#getMsgCode").click(function () {
+            getMsgCode($(this), $(".phone").val())
+        });
         $(".fnNav .accPhoneRecord").addClass("active");
         $("#sub").click(function () {
             if (!true) {
@@ -85,10 +92,12 @@
             let name_input = $(".name");
             let idCard_input = $(".idCard");
             let phone_input = $(".phone");
+            let msgCode_input = $(".msgCode");
 
             let name = name_input.val();
             let idCard = idCard_input.val();
             let phone = phone_input.val();
+            let msgCode = msgCode_input.val();
 
             if (!Utils.IsChineseName(name)) {
                 name_input.addClass("warn");
@@ -105,6 +114,11 @@
                 sky.msg("您身份证号码输入错误！");
                 return
             }
+            if (!Utils.IsPhoneCode(msgCode)) {
+                msgCode_input.addClass("warn");
+                sky.msg("您短信验证码输入错误！");
+                return
+            }
             sky.loding();
             t.addClass("disabled");
             $.ajax({
@@ -115,6 +129,7 @@
                     'realName': name,
                     'idCard': idCard,
                     'mobile': phone,
+                    'msgCode': msgCode,
                     'service': 'Telecom_realname'
                 },
                 success: function (res) {

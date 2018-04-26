@@ -66,16 +66,16 @@
                 </li>
                 <!--<li class="netData"><a href="accTaobaoV.do">网络数据获取</a></li>-->
             </ul>
-{#            <ul class="list-unstyled">#}
-{#                <li class="title">#}
-{#                    <a>征信报告中心</a>#}
-{#                </li>#}
-{#                <!--<li class="fraud"><a href="accFraudIdV.do">反欺诈报告</a></li>-->#}
-{#                <li class="Liabilities">#}
-{#                    <a href="debt_search/">负债搜索报告</a>#}
-{#                </li>#}
-{#                <!--<li class="accReport"><a href="accBaseReportV.do">定制版报告</a></li>-->#}
-{#            </ul>#}
+            {#            <ul class="list-unstyled">#}
+            {#                <li class="title">#}
+            {#                    <a>征信报告中心</a>#}
+            {#                </li>#}
+            {#                <!--<li class="fraud"><a href="accFraudIdV.do">反欺诈报告</a></li>-->#}
+            {#                <li class="Liabilities">#}
+            {#                    <a href="debt_search/">负债搜索报告</a>#}
+            {#                </li>#}
+            {#                <!--<li class="accReport"><a href="accBaseReportV.do">定制版报告</a></li>-->#}
+            {#            </ul>#}
             <ul class="list-unstyled">
                 <li class="title">
                     <a>用户管理中心</a>
@@ -131,21 +131,21 @@
                 </li>
                 <!--<li class="netData"><a href="accTaobaoV.do">网络数据获取</a></li>-->
             </ul>
-{#            <ul class="list-unstyled">#}
-{#                <li class="title">#}
-{#                    <a>#}
-{#                        <i class="icon-type report"></i>征信报告中心#}
-{#                        <i class="arr"></i>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <!--<li class="fraud"><a href="accFraudIdV.do">反欺诈报告</a></li>-->#}
-{#                <li class="Liabilities {% if active == "debt_search" %}active{% endif %}">#}
-{#                    <a href="/record/debt_search">负债搜索报告</a>#}
-{#                </li>#}
-{#                <li class="accReport {% if active == "customize_report" %}active{% endif %}">#}
-{#                    <a href="/record/customize_report">定制版报告</a>#}
-{#                </li>#}
-{#            </ul>#}
+            {#            <ul class="list-unstyled">#}
+            {#                <li class="title">#}
+            {#                    <a>#}
+            {#                        <i class="icon-type report"></i>征信报告中心#}
+            {#                        <i class="arr"></i>#}
+            {#                    </a>#}
+            {#                </li>#}
+            {#                <!--<li class="fraud"><a href="accFraudIdV.do">反欺诈报告</a></li>-->#}
+            {#                <li class="Liabilities {% if active == "debt_search" %}active{% endif %}">#}
+            {#                    <a href="/record/debt_search">负债搜索报告</a>#}
+            {#                </li>#}
+            {#                <li class="accReport {% if active == "customize_report" %}active{% endif %}">#}
+            {#                    <a href="/record/customize_report">定制版报告</a>#}
+            {#                </li>#}
+            {#            </ul>#}
             <ul class="list-unstyled">
                 <li class="title">
                     <a>
@@ -190,6 +190,7 @@
 <script src="{% static 'js/record/templateHelper.js' %}"></script>
 <script src="{% static 'js/record/base.js' %}"></script>
 <script src="{% static 'lib/laypage/laypage.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
 {% verbatim %}
 <script id="miguan-table-template" type="text/html">
 
@@ -521,55 +522,55 @@
         </tr>
         <tr>
             <td colspan="2" class="title">主动联系人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_all  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_all | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">被动联系人在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_be_all  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_be_all | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">一阶联系人总数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_all  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_all | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">引起黑名单的一阶联系人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_router  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_router | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">引起黑名单的一届联系人占比在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_router_ratio  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_router_ratio | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">主动联系的黑号数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_black  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_black | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">被动联系的黑号数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_be_black  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_be_black | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">一阶联系黑号总数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_black  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_black | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">一阶联系黑号总数与一阶联系人总数的比例在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_black_ratio  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_black_ratio | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">二阶联系黑号总数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_black2  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_black2 | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">主动联系人中曾为申请人的人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_applied  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_applied | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">联系人中曾为申请人的人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_applied  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_applied | percent }}%</td>
         </tr>
         <tr>
             <td colspan="2" class="title">联系人中曾为申请人的人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_applied  | percent }}%</td>
+            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_applied | percent }}%</td>
         </tr>
 
         </tbody>
@@ -1010,7 +1011,7 @@
         <tr>
 
             <td colspan="2" class="title">主动查询用户信息的机构类型</td>
-            <td colspan="2" >{{ $value.searched_org }}</td>
+            <td colspan="2">{{ $value.searched_org }}</td>
 
         </tr>
         <tr>
@@ -1787,7 +1788,7 @@
         </tr>
         <tr>
             <td colspan="2" class="title">企业注册号</td>
-            <td colspan="2" >{{ $value.entNo }}</td>
+            <td colspan="2">{{ $value.entNo }}</td>
 
         </tr>
         <tr>

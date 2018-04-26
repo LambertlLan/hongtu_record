@@ -44,11 +44,11 @@ function getMsgCode(dom, phoneNumber) {
         //获取完成后进行倒计时
         dom.attr("disabled", true);
         let restTime = 60;
-        dom.html(restTime + "s");
+        dom.html("倒计时:" + restTime + "s");
         let timer = setInterval(function () {
             if (restTime > 0) {
                 restTime--;
-                dom.html(restTime + "s");
+                dom.html("倒计时:" + restTime + "s");
             } else {
                 clearInterval(timer);
                 dom.attr("disabled", false);

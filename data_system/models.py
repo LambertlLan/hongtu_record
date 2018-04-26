@@ -9,6 +9,9 @@ class UserInfo(models.Model):
     name = models.CharField(max_length=32)
     date = models.DateTimeField(auto_now_add=True)
     score = models.PositiveIntegerField(default=0)
+    tel_score = models.PositiveIntegerField(default=10)
+    miguan_score = models.PositiveIntegerField(default=20)
+    invest_score = models.PositiveIntegerField(default=30)
 
     def __str__(self):
         return "%s %s" % (self.name, self.phone)
