@@ -10,10 +10,10 @@
                     </i>
                     <div class="text">
                         <p>欢迎，{{ request.session.user_data.name }}</p>
-                        <p>当前为实名认证用户</p>
+                        <p>欢迎来到宏图数据</p>
                     </div>
                     <a class="m-btn" href="http://www.91zhengxin.com/accUpgradeV.do">
-                        <span>用户升级</span>
+{#                        <span>用户升级</span>#}
                     </a>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                             <strong>{{ request.session.user_data.score }}分</strong>
                         </p>
                     </div>
-                    <a class="m-btn" href="/record/financial_information/">立即充值</a>
+                    <a class="m-btn" href="/record/financial_information/recharge/">立即充值</a>
                 </div>
             </div>
         </div>
@@ -37,27 +37,27 @@
                 <span class="title">常用数据报告</span>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <a class="box p2p" href="">
+                <a class="box p2p" href="/record/public_data/telecom_realname/">
                     <i>
                         <img src="{% static 'img/icon_01.png' %}" class="img-responsive">
                     </i>
-                    <p>法院失信及被执行人</p>
+                    <p>运营商三要素</p>
                 </a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <a class="box baseReport" href="">
+                <a class="box baseReport" href="/record/public_data/antifraud_miguan/">
                     <i>
                         <img src="{% static 'img/icon_02.png' %}" class="img-responsive">
                     </i>
-                    <p>银行卡三要素</p>
+                    <p>蜜罐数据</p>
                 </a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
-                <a class="box depthReport" href="">
+                <a class="box depthReport" href="/record/public_data/finance_investment/">
                     <i>
                         <img src="{% static 'img/icon_03.png' %}" class="img-responsive">
                     </i>
-                    <p>小贷记录统计值</p>
+                    <p>个人对外投资</p>
                 </a>
             </div>
         </div>

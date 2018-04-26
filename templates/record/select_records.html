@@ -24,10 +24,13 @@
                     <label>类别：</label>
                     <div class="row selectList">
                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort"
-                                                                            data-service="Telecom_realname">运营商三要素</a></div>
+                                                                            data-service="Telecom_realname">运营商三要素</a>
+                        </div>
                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort"
-                                                                            data-service="Antifraud_miguan">蜜罐数据</a></div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort" data-service="Finance_investment">个人对外投资</a>
+                                                                            data-service="Antifraud_miguan">蜜罐数据</a>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6"><a class="sort"
+                                                                            data-service="Finance_investment">个人对外投资</a>
                         </div>
                     </div>
                 </div>
@@ -61,17 +64,23 @@
             <th>查询时间</th>
             <th>操作</th>
         </tr>
+        {{ if totalPages }}
         {{ each resultList }}
-            <tr>
-                <td>{{ $value.id }}</td>
-                <td class="key" style="text-overflow:ellipsis;overflow: hidden;">
-                    <span class="h">{{ $value.real_name }}{{ $value.id_card }}</span>
-                </td>
-                <td class="type">{{ service_chinese }}</td>
-                <td>{{ $value.date }}</td>
-                <td><a class="info" data-service="{{ service }}" data="{{ $value.id }}">详情</a></td>
-            </tr>
+        <tr>
+            <td>{{ $value.id }}</td>
+            <td class="key" style="text-overflow:ellipsis;overflow: hidden;">
+                <span class="h">{{ $value.real_name }}{{ $value.id_card }}</span>
+            </td>
+            <td class="type">{{ service_chinese }}</td>
+            <td>{{ $value.date }}</td>
+            <td><a class="info" data-service="{{ service }}" data="{{ $value.id }}">详情</a></td>
+        </tr>
         {{ /each }}
+        {{ else }}
+        <tr>
+            <td colspan="5">暂无相关数据</td>
+        </tr>
+        {{ /if }}
     </script>
     {% endverbatim %}
     <script type="text/javascript">
@@ -105,7 +114,7 @@
                                 last: true,
                                 jump: function (obj, first) {
                                     console.log(obj, first);
-                                    pagePost(obj.curr,service);
+                                    pagePost(obj.curr, service);
                                 }
                             });
                         } else {
@@ -116,7 +125,7 @@
                                 prev: '<',
                                 next: '>',
                                 jump: function (obj, first) {
-                                    pagePost(obj.curr,service);
+                                    pagePost(obj.curr, service);
                                 }
                             });
                         }
@@ -126,7 +135,7 @@
                     sky.lodingClose();
                     try {
                         if (returnCode(res.code)) {
-                            let html = template("tableTemplate",res);
+                            let html = template("tableTemplate", res);
 
                             $("#record").html(html);
                             $("#record .info").click(function () {
@@ -157,6 +166,7 @@
                 }
             })
         }
+
         pagePost(1, "Telecom_realname");
     </script>
 {% endblock %}

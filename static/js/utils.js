@@ -31,8 +31,7 @@ function checkChinese(str) {
 //验证验证码
 function checkMsgCode(msgCode) {
     let msgCodeLen = msgCode.length;
-    let msgCodeType = typeof msgCode;
-    if (msgCodeLen === 4 && msgCodeType === "number") {
+    if (msgCodeLen === 4) {
         return true;
     }
 }

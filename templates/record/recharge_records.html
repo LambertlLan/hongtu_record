@@ -52,15 +52,15 @@
             <th>充值积分</th>
             <th>充值金额（元）</th>
         </tr>
-        {{ if resultList }}
-        {{ each resultList }}
-        <tr>
-            <td>{{ $value.id }}</td>
-            <td>{{ $value.date |fomateDateTime }}</td>
-            <td>{{ $value.amount| cheng }}</td>
-            <td>{{ $value.amount }}</td>
-        </tr>
-        {{ /each }}
+        {{ if totalPages }}
+            {{ each resultList }}
+            <tr>
+                <td>{{ $value.id }}</td>
+                <td>{{ $value.date |fomateDateTime }}</td>
+                <td>{{ $value.amount| cheng }}</td>
+                <td>{{ $value.amount }}</td>
+            </tr>
+            {{ /each }}
         {{ else }}
         <tr>
             <td colspan="4">暂无数据</td>

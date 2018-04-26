@@ -29,13 +29,16 @@ class Login(views.View):
     def post(self, request):
         get_phone = request.POST.get("phone")
         get_password = request.POST.get("password")
-        user_data = UserInfo.objects.filter(phone=get_phone)[0]
-        if user_data and get_password == user_data.password:
-            request.session["user_data"] = {"name": user_data.name, "phone": user_data.phone, "score": user_data.score,
-                                            "uid": user_data.id}
-            return JsonResponse({"code": 0, "msg": "success"})
-        else:
-            return JsonResponse({"code": 1, "msg": "账号或密码错误"})
+        count = UserInfo.objects.filter(phone=get_phone).count()
+
+        if count:
+            user_data = UserInfo.objects.filter(phone=get_phone)[0]
+            if get_password == user_data.password:
+                request.session["user_data"] = {"name": user_data.name, "phone": user_data.phone,
+                                                "score": user_data.score,
+                                                "uid": user_data.id}
+                return JsonResponse({"code": 0, "msg": "success"})
+        return JsonResponse({"code": 1, "msg": "账号或密码错误"})
 
 
 class Register(views.View):
