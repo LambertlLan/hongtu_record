@@ -3,7 +3,7 @@ from django.db import models
 
 class UserInfo(models.Model):
     """用户表"""
-    phone = models.CharField(max_length=64)
+    phone = models.CharField(max_length=64, verbose_name="手机号")
     password = models.CharField(max_length=32)
     email = models.EmailField()
     name = models.CharField(max_length=32)
