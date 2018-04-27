@@ -63,6 +63,13 @@ def take_off_score(request, take_score):
         return False
 
 
+# 获取用户查询服务需要支付的积分
+def get_service_fee(uid, service):
+
+    service_fee = UserInfo.objects.filter(id=uid).values(SCORE_DEFINE[service])[0][SCORE_DEFINE[service]]
+    return service_fee
+
+
 # 账户首页
 @method_decorator(check_session, name="dispatch")
 class Index(views.View):
@@ -78,8 +85,10 @@ class PublicData(views.View):
     """运营商三要素页面"""
 
     def get(self, request):
+        uid = request.session.get("user_data")["uid"]
+        service_fee = get_service_fee(uid, "Telecom_realname")
         return render(request, "record/pulic_data/telecom_realname.html",
-                      {"active": "public_data", "public_active": "telecom_realname"})
+                      {"active": "public_data", "public_active": "telecom_realname", "service_fee": service_fee})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -87,8 +96,10 @@ class AntifraudMiGuan(views.View):
     """蜜罐数据查询页面"""
 
     def get(self, request):
+        uid = request.session.get("user_data")["uid"]
+        service_fee = get_service_fee(uid, "Antifraud_miguan")
         return render(request, "record/pulic_data/miguan.html",
-                      {"active": "public_data", "public_active": "miguan"})
+                      {"active": "public_data", "public_active": "miguan", "service_fee": service_fee})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -96,8 +107,10 @@ class FinanceInvestment(views.View):
     """ 对外投资查询页面"""
 
     def get(self, request):
+        uid = request.session.get("user_data")["uid"]
+        service_fee = get_service_fee(uid, "Finance_investment")
         return render(request, "record/pulic_data/finance_investment.html",
-                      {"active": "public_data", "public_active": "finance_investment"})
+                      {"active": "public_data", "public_active": "finance_investment", "service_fee": service_fee})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -139,7 +152,7 @@ class CheckPublicData(views.View):
         # 开始请求,先扣钱
         uid = request.session.get("user_data")["uid"]
         service = request.POST.get("service")
-        service_fee = UserInfo.objects.filter(id=uid).values(SCORE_DEFINE[service])[0]
+        service_fee = get_service_fee(uid, service)
         new_score = take_off_score(request, service_fee[SCORE_DEFINE[service]])
         if new_score is False or new_score < 0:
             logger.info("扣费发生错误")
