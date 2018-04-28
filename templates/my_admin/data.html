@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+    <h1>
+        累计收益:{{ total_amount.amount__sum }} 元
+    </h1>
+    <h1>
+        总计调用接口:次
+    </h1>
+{% endblock %}

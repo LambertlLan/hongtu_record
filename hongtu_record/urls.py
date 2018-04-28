@@ -23,6 +23,7 @@ import web.views
 import data_system.urls
 
 urlpatterns = [
+    path('admin/theme/data/', web.views.Data.as_view()),
     path('admin/', admin.site.urls),
     # favicon.ico
     path('favicon.ico/', RedirectView.as_view(url=r'static/favicon.ico')),

@@ -177,7 +177,8 @@ class CheckPublicData(views.View):
                     "id_card": params["id_number"],
                     "user_id": uid,
                     "data": decrypt,
-                    "msg": data_text["message"]
+                    "msg": data_text["message"],
+                    "order_num":params["sn"]
                 }
                 if "phone" in params.keys():
                     database_dict["mobile"] = params["phone"]

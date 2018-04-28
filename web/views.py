@@ -1,4 +1,6 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect
+from django.db.models import Sum
+
 from django import views
 from django.http import JsonResponse
 
@@ -8,7 +10,7 @@ import requests
 from utils.createMsgCode import create_msg_code
 import logging
 
-from data_system.models import UserInfo
+from data_system.models import UserInfo, RechargeRecords
 from data_system.setting import MSG_CODE_DEFINE
 
 logger = logging.getLogger('django')
@@ -156,3 +158,11 @@ class ModifyPwd(views.View):
             return JsonResponse({"code": 0, "msg": "success"})
         else:
             return JsonResponse({"code": 1, "msg": "原密码不正确"})
+
+
+class Data(views.View):
+    """admin数据统计"""
+
+    def get(self, request):
+        total_amount = RechargeRecords.objects.aggregate(Sum('amount'))
+        return render(request, 'my_admin/data.html', {'total_amount': total_amount})
