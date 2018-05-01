@@ -137,7 +137,7 @@ SUIT_CONFIG = {
             {'url': '/admin/examination/real_name/', 'label': '实名认证审核'},
             {'url': '/admin/examination/enterprise/', 'label': '企业认证审核'},
         )},
-
+        {'app': 'data_system', 'label': '功能管理', 'icon': 'icon-list-alt', 'models': ('ActionSwitch',)},
     )
 
 }

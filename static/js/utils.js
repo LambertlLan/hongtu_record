@@ -39,21 +39,26 @@ function checkMsgCode(msgCode) {
 // 请求后台获取验证码
 function getMsgCode(dom, phoneNumber) {
     if (!checkMobile(phoneNumber)) return false;
+    dom.attr("disabled", true);
     $.get(urls.getMsgCode, {phone: phoneNumber}, function (data) {
-        console.log(data);
-        //获取完成后进行倒计时
-        dom.attr("disabled", true);
-        let restTime = 60;
-        dom.html("倒计时:" + restTime + "s");
-        let timer = setInterval(function () {
-            if (restTime > 0) {
-                restTime--;
-                dom.html("倒计时:" + restTime + "s");
-            } else {
-                clearInterval(timer);
-                dom.attr("disabled", false);
-                dom.html("获取验证码")
-            }
-        }, 1000)
+        if (data.code === 0) {
+            sky.msg("获取验证码成功");
+            //获取完成后进行倒计时
+            let restTime = 60;
+            dom.html("倒计时:" + restTime + "s");
+            let timer = setInterval(function () {
+                if (restTime > 0) {
+                    restTime--;
+                    dom.html("倒计时:" + restTime + "s");
+                } else {
+                    clearInterval(timer);
+                    dom.attr("disabled", false);
+                    dom.html("获取验证码")
+                }
+            }, 1000)
+        } else {
+            sky.msg(data.msg);
+        }
+        
     })
 }

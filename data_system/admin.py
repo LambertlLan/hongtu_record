@@ -1,6 +1,6 @@
 from django.contrib import admin
 from data_system.models import UserInfo, RechargeRecords, TelecomRealName, AntifraudMiGuan, FinanceInvestment, Role, \
-    ServiceInterFace, RealNameExamine
+    ServiceInterFace, RealNameExamine, ActionSwitch
 
 admin.site.site_header = '宏图数据后台管理系统'
 admin.site.site_title = '宏图数据'
@@ -92,3 +92,11 @@ class ServiceInterFaceAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'name')
 
 
+@admin.register(ActionSwitch)
+class ActionSwitchAdmin(admin.ModelAdmin):
+    """运营商三要素查询记录"""
+
+    readonly_fields = ('id',)
+    list_display = ('id', 'name', 'switch')
+    list_display_links = ('id', 'name')
+    list_editable = ['switch', ]

@@ -49,42 +49,52 @@
             </ul>
         </div>
         <div class="container-fluid content main">
-            <div class="form" id="firstStep">
-                <div class="form-inline">
-                    <label>剩余积分：</label>
-                    <span>{{ request.session.user_data.score }}分</span>
-                </div>
-                <div class="form-inline">
-                    <label>金额充值：</label>
-                    <div class="font-input">
-                        <input type="text" id="amountInp" class="form-control money" placeholder="请输入充值金额">
-                        <span>元</span>
+            <form action="/record/recharge/getpaypage/" method="post">
+
+                <div class="form" id="firstStep">
+                    <div class="form-inline">
+                        <label>剩余积分：</label>
+                        <span>{{ request.session.user_data.score }}分</span>
                     </div>
-                </div>
-                <div class="form-inline">
-                    <label>充值积分：</label>
-                    <span id="rechargeScore" class="color-orange integral">0分</span>
-                </div>
-                <div class="form-inline">
-                    <a class="m-btn" id="sub">充值</a>
-                </div>
-            </div>
-            <div class="form" id="secondStep" style="display: none;">
-                <div class="pay-select">
-                    <p class="title">选择支付方式：</p>
-                    <div class="container-fluid">
-                        <div class="row select">
-                            <div class="col-lg-4 col-md-4 col-sm-4 td"><a class="active" id="ali"><img
-                                    src="{% static 'img/AliPay.jpg' %}" class="img-responsive center-block"></a></div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 td"><a id="weChat" class=""><img
-                                    src="{% static 'img/WeChatPay.jpg' %}" class="img-responsive center-block"></a>
-                            </div>
-                            <input type="hidden" class="paySelectVal" value="ali">
+                    <div class="form-inline">
+                        <label>金额充值：</label>
+                        <div class="font-input">
+                            <input name="amount" type="text" id="amountInp" class="form-control money" placeholder="请输入充值金额">
+                            <span>元</span>
                         </div>
                     </div>
+                    <div class="form-inline">
+                        <label>充值积分：</label>
+                        <span id="rechargeScore" class="color-orange integral">0分</span>
+                    </div>
+                    <div class="form-inline">
+                        <a class="m-btn" id="sub">充值</a>
+                    </div>
                 </div>
-                <a class="m-btn" id="payment">付款</a>
-            </div>
+                <div class="form" id="secondStep" style="display: none;">
+                    <div class="pay-select">
+                        <p class="title">选择支付方式：</p>
+                        <div class="container-fluid">
+                            <div class="row select">
+                                <div class="col-lg-4 col-md-4 col-sm-4 td">
+                                    <a class="active" id="ali">
+                                        <img src="{% static 'img/AliPay.jpg' %}" class="img-responsive center-block">
+                                        <input class="hide" id="aliRadio" type="radio" name="payType" value="1" checked="checked">
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 td">
+                                    <a id="weChat" class="">
+                                        <img src="{% static 'img/WeChatPay.jpg' %}" class="img-responsive center-block">
+                                        <input class="hide" id="wxRadio" type="radio" name="payType" value="2">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="m-btn" id="">付款</button>
+                </div>
+            </form>
+
         </div>
     </div>
 {% endblock %}
@@ -116,10 +126,14 @@
         $("#ali").click(function () {
             $(this).addClass("active");
             $("#weChat").removeClass("active");
+            $("#aliRadio").prop("checked", "checked");
+            $("#wxRadio").removeAttr("checked");
         });
         $("#weChat").click(function () {
             $(this).addClass("active");
             $("#ali").removeClass("active");
+            $("#wxRadio").prop("checked", "checked");
+            $("#aliRadio").removeAttr("checked");
         });
         $("#payment").click(function () {
             $.post(urls.recharge, {amount: amount}, function (res) {

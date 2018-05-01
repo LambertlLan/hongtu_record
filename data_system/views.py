@@ -14,9 +14,11 @@ from django.utils.decorators import method_decorator
 from django.core.files.base import ContentFile
 
 from .create_md5 import doMd5
-from .models import RechargeRecords, UserInfo, RecentSearchRecord, RealNameExamine, EnterpriseExamine
+from .models import RechargeRecords, UserInfo, RecentSearchRecord, RealNameExamine, EnterpriseExamine, ActionSwitch, \
+    Order
 from .rc4crypt import rc4crypt
-from .setting import MODELS_DEFINE, SCORE_DEFINE, URL_DEFINE, CHINESE_DEFINE, PAGE_NUM
+from .paysapi import PaysApi
+from .setting import MODELS_DEFINE, SCORE_DEFINE, URL_DEFINE, CHINESE_DEFINE, PAGE_NUM, ACTION_ID_DEFINE, BASE_URL
 
 logger = logging.getLogger('django')
 
@@ -76,7 +78,7 @@ def take_off_score(request, take_score):
         request.session["user_data"] = user_data
         return new_score
     else:
-        return False
+        return -1
 
 
 # 获取用户查询服务需要支付的积分
@@ -122,8 +124,10 @@ class PublicData(views.View):
     def get(self, request):
         uid = request.session.get("user_data")["uid"]
         service_fee = get_service_fee(uid, "Telecom_realname")
+        switch = ActionSwitch.objects.get(id=2).switch
         return render(request, "record/pulic_data/telecom_realname.html",
-                      {"active": "public_data", "public_active": "telecom_realname", "service_fee": service_fee})
+                      {"active": "public_data", "public_active": "telecom_realname", "service_fee": service_fee,
+                       "switch": switch})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -133,8 +137,10 @@ class AntifraudMiGuan(views.View):
     def get(self, request):
         uid = request.session.get("user_data")["uid"]
         service_fee = get_service_fee(uid, "Antifraud_miguan")
+        switch = ActionSwitch.objects.get(id=3).switch
         return render(request, "record/pulic_data/miguan.html",
-                      {"active": "public_data", "public_active": "miguan", "service_fee": service_fee})
+                      {"active": "public_data", "public_active": "miguan", "service_fee": service_fee,
+                       "switch": switch})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -144,8 +150,10 @@ class FinanceInvestment(views.View):
     def get(self, request):
         uid = request.session.get("user_data")["uid"]
         service_fee = get_service_fee(uid, "Finance_investment")
+        switch = ActionSwitch.objects.get(id=3).switch
         return render(request, "record/pulic_data/finance_investment.html",
-                      {"active": "public_data", "public_active": "finance_investment", "service_fee": service_fee})
+                      {"active": "public_data", "public_active": "finance_investment", "service_fee": service_fee,
+                       "switch": switch})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -154,6 +162,11 @@ class CheckPublicData(views.View):
     """调用法眼三个接口"""
 
     def post(self, request):
+        service = request.POST.get("service")
+        switch = ActionSwitch.objects.get(id=ACTION_ID_DEFINE[service]).switch
+        if not switch:
+            del request.session["phoneVerifyCode"]
+            return JsonResponse({"code": 12000, "msg": "该功能暂时关闭"})
         msg_code = request.POST.get("msgCode")
         if msg_code != request.session.get("phoneVerifyCode")["code"]:
             return JsonResponse({"code": 1, "msg": "验证码不正确"})
@@ -186,10 +199,10 @@ class CheckPublicData(views.View):
             return JsonResponse({"code": 1, "msg": "加密发生错误"})
         # 开始请求,先扣钱
         uid = request.session.get("user_data")["uid"]
-        service = request.POST.get("service")
+
         service_fee = get_service_fee(uid, service)
-        new_score = take_off_score(request, service_fee[SCORE_DEFINE[service]])
-        if new_score is False or new_score < 0:
+        new_score = take_off_score(request, service_fee)
+        if new_score < 0:
             logger.info("扣费发生错误")
             return JsonResponse({"code": 1, "msg": "扣费发生错误"})
 
@@ -386,21 +399,58 @@ class FinancialInformation(views.View):
                       {"active": "financial_information"})
 
 
+class PaySuccess(views.View):
+    """充值成功供外部回调"""
+
+    def post(self, request):
+        token = "d865756907088ed994d84136a6a75f7b"
+
+        uid = request.POST.get("orderuid")
+        order_id = request.POST.get("orderid")
+        price = int(request.POST.get("price"))
+        real_price = int(request.POST.get("realprice"))
+        server_key = request.POST.get("key")
+        paysapi_id = request.POST.get("paysapi_id")
+        string_key = order_id + uid + paysapi_id + price + real_price + token
+        key = doMd5(string_key)
+        if server_key == key:
+            # 更新订单状态
+            Order.objects.filter(order_id=order_id).update(is_success=True)
+            # 更新用户积分
+            score = UserInfo.objects.filter(id=uid)[0].score
+            new_score = score + int(price) * 2
+            UserInfo.objects.filter(id=uid).update(score=new_score)
+            # 增加一条充值记录
+            RechargeRecords.objects.create(user_id=uid, amount=price)
+            # 更新session
+            user_data = request.session.get("user_data")
+            user_data["score"] = new_score
+            request.session["user_data"] = user_data
+
+        return JsonResponse({"code": 200, "msg": "购买成功"})
+
+
 @method_decorator(check_session, name="dispatch")
-class Recharge(views.View):
+class PayComplate(views.View):
     """充值"""
 
     def post(self, request):
         uid = request.session.get("user_data")["uid"]
-        amount = int(request.POST.get("amount"))
-        score = UserInfo.objects.filter(id=uid)[0].score
-        new_score = score + int(amount) * 2
-        UserInfo.objects.filter(id=uid).update(score=new_score)
-        RechargeRecords.objects.create(user_id=uid, amount=amount)
-        user_data = request.session.get("user_data")
-        user_data["score"] = new_score
-        request.session["user_data"] = user_data
-        return JsonResponse({"code": 0, "msg": "购买成功"})
+        score = UserInfo.objects.get(id=uid).score
+        return render(request, "record/financial_pay_success.html", {"score": score})
+
+
+@method_decorator(check_session, name="dispatch")
+class GetPayPage(views.View):
+    """跳转到支付页面"""
+
+    def post(self, request):
+        uid = request.session.get("user_data")["uid"]
+        amount = request.POST.get("amount")
+        pay_type = request.POST.get("payType")
+        pays_api = PaysApi(amount, uid, pay_type)
+        pays_api.save_data()
+        return render(request, "record/financial_paysubmit.html", {"order_json": pays_api.get_order_json()})
 
 
 @method_decorator(check_session, name="dispatch")

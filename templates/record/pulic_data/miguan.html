@@ -1,21 +1,28 @@
 {% extends 'record/pulic_data/nav.html' %} {% load static %} {% block contianer %}
     <div class="container-fluid form content">
         <div class="form-title">蜜罐数据查询</div>
-        <div class="form-inline">
-            <input class="form-control name" type="text" placeholder="姓名">
-            <input class="form-control idCard" type="text" placeholder="身份证号码"></br>
-            <input class="form-control phone" type="text" placeholder="手机号码">
-            <input class="form-control msgCode" type="text" placeholder="被查询人手机验证码">
-            <button class="btn m-btn" id="getMsgCode">获取验证码</button></br>
-            <a class="m-btn" id="sub">确定（{{ service_fee }}分/次）</a>
-        </div>
-        <div class="form-inline">
-            <div class="checkbox">
-                <a>
-                    <i></i>本人已获取该查询用户授权</a>
+        {% if switch %}
+            <div class="form-inline">
+                <input class="form-control name" type="text" placeholder="姓名">
+                <input class="form-control idCard" type="text" placeholder="身份证号码"></br>
+                <input class="form-control phone" type="text" placeholder="手机号码">
+                <input class="form-control msgCode" type="text" placeholder="被查询人手机验证码">
+                <button class="btn m-btn" id="getMsgCode">获取验证码</button>
+                </br>
+                <a class="m-btn" id="sub">确定（{{ service_fee }}分/次）</a>
             </div>
-            <a class="lookWarrant">《查看授权协议》</a>
-        </div>
+            <div class="form-inline">
+                <div class="checkbox">
+                    <a>
+                        <i></i>本人已获取该查询用户授权</a>
+                </div>
+                <a class="lookWarrant">《查看授权协议》</a>
+            </div>
+        {% else %}
+            <div class="form-inline">
+                <h4>该功能暂时关闭</h4>
+            </div>
+        {% endif %}
     </div>
     <div class="container-fluid content">
         <div class="tabs">

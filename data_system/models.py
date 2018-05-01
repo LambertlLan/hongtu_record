@@ -172,3 +172,31 @@ class EnterpriseExamine(models.Model):
 
     class Meta:
         verbose_name_plural = "企业认证审核表"
+
+
+class Order(models.Model):
+    """订单表"""
+    goods_name = models.CharField(max_length=64, verbose_name="商品名称")
+    user = models.ForeignKey("UserInfo", None)
+    price = models.PositiveIntegerField(verbose_name="充值金额")
+    pay_type = models.CharField(max_length=32, verbose_name="充值方式")
+    order_id = models.CharField(max_length=64, verbose_name="订单编号")
+    is_success = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "用户%s充值金额%s" % (self.user_id, self.price)
+
+    class Meta:
+        verbose_name_plural = "订单管理"
+
+
+class ActionSwitch(models.Model):
+    name = models.CharField(max_length=64, verbose_name="功能名称")
+    switch = models.BooleanField(default=False, verbose_name="开关")
+
+    def __str__(self):
+        return "%s功能%s" % (self.name, self.switch)
+
+    class Meta:
+        verbose_name_plural = "功能开关"

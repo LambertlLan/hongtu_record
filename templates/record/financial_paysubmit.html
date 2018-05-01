@@ -1,0 +1,62 @@
+{% extends 'record/layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-lg-9 col-md-9 col-sm-9 recharge">
+        <!--财务中心导航-->
+        <div class="fnNav">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="recharge active" href="/record/financial_information/recharge/">
+                        <span>充值</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="rechargeRecord" href="/record/financial_information/recharge_record/">
+                        <span>充值记录</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="container-fluid content">
+            <p class="title-block">立即充值</p>
+            <ul class="list-unstyled explain">
+                <li class="title">充值说明：</li>
+                <li>1、我们提供在线充值服务（支付宝、微信）</li>
+                <li>2、请尽量保障账户余额大于保底额度（100元），避免因余额不足造成业务中断</li>
+                <li>3、1元=2积分</li>
+            </ul>
+        </div>
+        <div class="m-progress clearfix">
+            <ul class="list-unstyled">
+                <li class="pull-left"><a><i>1</i><span>输入金额</span></a><img src="{% static 'img/icon_arr.png' %}"
+                                                                                  class="img-responsive"></li>
+                <li class="pull-left"><a><i>2</i><span>选择付款方式</span><img src="{% static 'img/icon_arr.png' %}"
+                                                                         class="img-responsive"></a>
+                </li>
+                <li class="pull-left active"><a><i>3</i><span>进行付款</span><img src="{% static 'img/icon_arr.png' %}"
+                                                                       class="img-responsive"></a></li>
+                <li class="pull-left"><a><i>4</i><span>完成充值</span></a></li>
+            </ul>
+        </div>
+        <div class="container-fluid content main">
+            <h1>创建支付中 ~~~</h1>
+            <form action="https://pay.paysapi.com/" method="POST" id="postForm">
+                <input type="hidden" name="uid" value="{{ order_json.pay_uid }}">
+                <input type="hidden" name="price" value="{{ order_json.price }}">
+                <input type="hidden" name="istype" value="{{ order_json.is_type }}">
+                <input type="hidden" name="notify_url" value="{{ order_json.notify_url }}">
+                <input type="hidden" name="return_url" value="{{ order_json.return_url }}">
+                <input type="hidden" name="orderid" value="{{ order_json.order_id }}">
+                <input type="hidden" name="orderuid" value="{{ order_json.order_uid }}">
+                <input type="hidden" name="key" value="{{ order_json.api_key }}">
+                <input type="hidden" name="goodsname" value="{{ order_json.goods_name }}">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $("#postForm").submit()
+    </script>
+{% endblock %}

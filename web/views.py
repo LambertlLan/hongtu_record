@@ -10,7 +10,7 @@ import requests
 from utils.createMsgCode import create_msg_code
 import logging
 
-from data_system.models import UserInfo, RechargeRecords, RealNameExamine, EnterpriseExamine
+from data_system.models import UserInfo, RealNameExamine, EnterpriseExamine, ActionSwitch
 from data_system.setting import MSG_CODE_DEFINE
 # 验证自定义admin
 from django.utils.decorators import method_decorator
@@ -31,7 +31,8 @@ class Login(views.View):
     """登录"""
 
     def get(self, request):
-        return render(request, "login.html")
+        is_register = ActionSwitch.objects.get(id=1).switch
+        return render(request, "login.html", {"registerSwitch": is_register})
 
     def post(self, request):
         get_phone = request.POST.get("phone")
@@ -56,6 +57,9 @@ class Register(views.View):
         return render(request, "register.html")
 
     def post(self, request):
+        is_register = ActionSwitch.objects.get(id=1).switch
+        if not is_register:
+            return JsonResponse({"code": 12000, "msg": "注册功能暂时关闭"})
         register_dict = request.POST.dict()
         phone_user = UserInfo.objects.filter(phone=register_dict["phone"]).first()
 
@@ -98,8 +102,8 @@ class GetMsgCode(views.View):
         logger.info("%s 请求获取手机验证码 %s" % (phone_num, msg_code))
         data_json = {
             "mobile": phone_num,
-            # "content": "【宏图数据】验证码为：%s,请在页面中提交验证码完成验证" % msg_code,
-            "content": "【成都创信信息】验证码为：5873,欢迎注册平台！",
+            "content": "【宏图科技】验证码：%s，请在页面上输入您收到的验证码！" % msg_code,
+            # "content": "【成都创信信息】验证码为：5873,欢迎注册平台！",
             "appkey": MSG_CODE_DEFINE["app_key"]
         }
         res_msg = requests.post(MSG_CODE_DEFINE["url"], data_json, json=True)
