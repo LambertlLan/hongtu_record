@@ -15,15 +15,19 @@ class UserInfo(models.Model):
     invest_score = models.PositiveIntegerField(default=30, verbose_name="个人对外投资消耗积分")
     role = models.ForeignKey("Role", verbose_name="角色", on_delete=True, default=1)
     # 实名认证字段
-    real_name = models.CharField(max_length=32, verbose_name="真实姓名", blank=True, default=None)
-    id_card = models.CharField(max_length=64, verbose_name="身份证号", blank=True, default=None)
-    pros_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证正面照", blank=True, default=None)
-    cons_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证反面照", blank=True, default=None)
+    real_name = models.CharField(max_length=32, verbose_name="真实姓名", blank=True, null=True, default=None)
+    id_card = models.CharField(max_length=64, verbose_name="身份证号", blank=True, null=True, default=None)
+    pros_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证正面照", blank=True, null=True, default=None)
+    cons_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证反面照", blank=True, null=True, default=None)
     # 企业认证字段
-    enterprise_name = models.CharField(max_length=32, verbose_name="企业名称", default=None, blank=True)
-    corporation_name = models.CharField(max_length=32, verbose_name="法人姓名", default=None, blank=True)
-    organization_code = models.CharField(max_length=64, verbose_name="组织机构代码", default=None, blank=True)
-    business_license_img = models.ImageField(upload_to='upload', verbose_name="企业营业执照", default=None, blank=True)
+    enterprise_name = models.CharField(max_length=32, verbose_name="企业名称", default=None, blank=True, null=True)
+
+    corporation_name = models.CharField(max_length=32, verbose_name="法人姓名", default=None, blank=True, null=True)
+
+    organization_code = models.CharField(max_length=64, verbose_name="组织机构代码", default=None, blank=True, null=True, )
+
+    business_license_img = models.ImageField(upload_to='upload', verbose_name="企业营业执照", default=None, blank=True,
+                                             null=True, )
 
     def __str__(self):
         return "%s-%s" % (self.nickname, self.phone)
@@ -37,6 +41,7 @@ class Role(models.Model):
 
     name = models.CharField(max_length=32, verbose_name="角色名称")
     service = models.ManyToManyField("ServiceInterFace", verbose_name="对应权限", blank=True)
+    null = True,
 
     def __str__(self):
         return "%s-%s" % (self.name, self.service)
@@ -143,8 +148,8 @@ class RealNameExamine(models.Model):
     user = models.ForeignKey("UserInfo", None)
     real_name = models.CharField(max_length=32, verbose_name="真实姓名")
     id_card = models.CharField(max_length=64, verbose_name="身份证号")
-    pros_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证正面照", blank=True, default=None)
-    cons_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证反面照", blank=True, default=None)
+    pros_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证正面照", blank=True, null=True, default=None)
+    cons_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证反面照", blank=True, null=True, default=None)
     is_adopt = models.BooleanField(default=False, verbose_name="是否通过")
     is_exam = models.BooleanField(default=False, verbose_name="是否审核")
     date = models.DateTimeField(auto_now_add=True)

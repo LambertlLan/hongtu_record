@@ -80,10 +80,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hongtu_record',
-        'HOST': "localhost",
+        'HOST': "192.168.1.6",
         'PORT': "3306",
         'USER': "root",
-        'PASSWORD': "lanyu0409"
+        'PASSWORD': ""
     }
 }
 

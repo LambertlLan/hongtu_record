@@ -42,7 +42,13 @@ function getMsgCode(dom, phoneNumber) {
     dom.attr("disabled", true);
     $.get(urls.getMsgCode, {phone: phoneNumber}, function (data) {
         if (data.code === 0) {
-            sky.msg("获取验证码成功");
+            try {
+                sky.msg("获取验证码成功");
+            } catch (err) {
+                alert("获取验证码成功")
+            }
+            
+            
             //获取完成后进行倒计时
             let restTime = 60;
             dom.html("倒计时:" + restTime + "s");
