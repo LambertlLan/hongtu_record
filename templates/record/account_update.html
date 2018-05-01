@@ -1,0 +1,273 @@
+{% extends 'record/layout.html' %}
+{% load static %}
+{% block css %}
+    <link href="{% static 'lib/bootstrap-fileinput/bootstrap-fileinput.css' %}" rel="stylesheet">
+    <style>
+        .fileinput-new {
+
+            color: #fff;
+        }
+
+        .fileinput-exists {
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="col-lg-9 col-md-9 col-sm-9 pwd-modify">
+        <!--账户信息导航-->
+        <div class="fnNav">
+            <ul class="list-unstyled">
+                <li>
+                    <a class="accInfo" href="/record/account/information/">
+                        <span>基本信息</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="accPwdModify " href="/record/account/pwd_modify/">
+                        <span>密码修改</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="accUpgrade active" href="/record/account/update/">
+                        <span>账户升级</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% if examining %}
+            <div class="container-fluid content">
+                <span class="title-block">审核中....</span>
+            </div>
+        {% else %}
+            {% if request.session.user_data.role == 1 %}
+                <div class="container-fluid content">
+                    <span class="title-block">账户升级成为实名认证用户</span>
+                    <form class="form" id="uploadForm">
+                        {#                <p class="title-small">（商务合作可直接联系010-58263081线下操作）</p>#}
+                        <div class="form-inline">
+                            <div class="h4">真实姓名</div>
+                            <input id="realName" class="form-control companyName" name="real_name" type="text"
+                                   placeholder="请输入真实姓名">
+                        </div>
+                        <div class="form-inline">
+                            <div class="h4">身份证号</div>
+                            <input id="idCard" class="form-control mail" type="text" name="id_card"
+                                   placeholder="请输入身份证号">
+                        </div>
+                        <div class="form-group">
+                            <div class="h4">身份证正面照</div>
+                            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                                <div class="fileinput-new thumbnail"
+                                     style="width: 200px;height: auto;max-height:150px;">
+                                    <img id='picImg' style="width: 100%;height: auto;max-height: 140px;"
+                                         src="{% static 'img/noimage.png' %}" alt=""/>
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                     style="max-width: 200px; max-height: 150px;"></div>
+                                <div>
+                        <span class="btn-file m-btn upload-btn">
+                            <span class="fileinput-new">选择文件</span>
+                            <span class="fileinput-exists">换一张</span>
+                            <input type="file" name="pros_id_card_img" id="prosIdCard"
+                                   accept="image/gif,image/jpeg,image/x-png"/>
+                        </span>
+                                    <a href="javascript:;" class="btn btn-danger fileinput-exists"
+                                       data-dismiss="fileinput">移除</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="h4">身份证反面照</div>
+                            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                                <div class="fileinput-new thumbnail"
+                                     style="width: 200px;height: auto;max-height:150px;">
+                                    <img id='picImg' style="width: 100%;height: auto;max-height: 140px;"
+                                         src="{% static 'img/noimage.png' %}" alt=""/>
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                     style="max-width: 200px; max-height: 150px;"></div>
+                                <div>
+                        <span class="m-btn btn-file">
+                            <span class="fileinput-new">选择文件</span>
+                            <span class="fileinput-exists">换一张</span>
+                            <input type="file" name="cons_id_card_img" id="consIdCard"
+                                   accept="image/gif,image/jpeg,image/x-png"/>
+                        </span>
+                                    <a href="javascript:;" class="btn btn-danger fileinput-exists"
+                                       data-dismiss="fileinput">移除</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-inline">
+                            <a class="m-btn" id="realNameSubmit">提交</a>
+                        </div>
+                    </form>
+                </div>
+            {% elif request.session.user_data.role == 2 %}
+                <div class="container-fluid content">
+                    <span class="title-block">账户升级成为企业用户</span>
+                    <div class="form">
+                        {#                <p class="title-small">（商务合作可直接联系010-58263081线下操作）</p>#}
+                        <div class="form-inline">
+                            <div class="h4">企业名称</div>
+                            <input id="enterpriseName" class="form-control companyName" type="text"
+                                   placeholder="请输入企业名称">
+                        </div>
+                        <div class="form-inline">
+                            <div class="h4">法人姓名</div>
+                            <input id="corporationName" class="form-control mail" type="text" placeholder="请输入法人姓名">
+                        </div>
+                        <div class="form-inline">
+                            <div class="h4">组织机构代码</div>
+                            <input id="organizationCode" class="form-control mail" type="text" placeholder="请输入组织机构代码">
+                        </div>
+                        <div class="form-group">
+                            <div class="h4">营业执照</div>
+                            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload">
+                                <div class="fileinput-new thumbnail"
+                                     style="width: 200px;height: auto;max-height:150px;">
+                                    <img id='picImg' style="width: 100%;height: auto;max-height: 140px;"
+                                         src="{% static 'img/noimage.png' %}" alt=""/>
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                     style="max-width: 200px; max-height: 150px;"></div>
+                                <div>
+                        <span class="btn-file m-btn upload-btn">
+                            <span class="fileinput-new">选择文件</span>
+                            <span class="fileinput-exists">换一张</span>
+                            <input type="file" name="pic1" id="businessLicenseImg"
+                                   accept="image/gif,image/jpeg,image/x-png"/>
+                        </span>
+                                    <a href="javascript:;" class="btn btn-danger fileinput-exists"
+                                       data-dismiss="fileinput">移除</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-inline">
+                            <a class="m-btn" id="enterpriseSubmit">提交</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="container-fluid content">
+                    <span class="title-block">无法继续升级</span>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script src="{% static 'lib/bootstrap-fileinput/bootstrap-fileinput.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            //实名认证
+            $('#realNameSubmit').click(function () {
+                let t = $(this);
+                let name_input = $("#realName");
+                let idCard_input = $("#idCard");
+
+                let name = name_input.val();
+                let idCard = idCard_input.val();
+
+                if (!Utils.IsChineseName(name)) {
+                    name_input.addClass("warn");
+                    sky.msg("您姓名格式错误！");
+                    return
+                }
+
+                if (!Utils.IsIdcard(idCard)) {
+                    idCard_input.addClass("warn");
+                    sky.msg("您身份证号码输入错误！");
+                    return
+                }
+
+                sky.loding();
+                t.addClass("disabled");
+
+                var data = new FormData();
+                data.append("id_card", idCard);
+                data.append("real_name", name);
+                data.append("pros_id_card_img", $("#prosIdCard")[0].files[0]);
+                data.append("cons_id_card_img", $("#consIdCard")[0].files[0]);
+                $.ajax({
+                    url: urls.realNameExamination,
+                    type: 'POST',
+                    data: data,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        sky.lodingClose();
+                        console.log(res);
+                        if (res.code === 0) {
+                            sky.msg("提交审核成功,请等待审核");
+                            window.location.reload();
+                        } else {
+                            sky.msg(res.msg);
+                        }
+                    },
+                    error: function (res) {
+                        sky.lodingClose();
+                        sky.msg(res.msg);
+                    }
+                });
+            });
+            //企业认证
+            $('#enterpriseSubmit').click(function () {
+                let t = $(this);
+                let enterpriseName_input = $("#enterpriseName");
+                let corporationName_input = $("#corporationName");
+                let organizationCode_input = $("#organizationCode");
+
+                let enterpriseName = enterpriseName_input.val();
+                let corporationName = corporationName_input.val();
+                let organizationCode = organizationCode_input.val();
+
+                if (!Utils.IsChineseName(corporationName)) {
+                    corporationName_input.addClass("warn");
+                    sky.msg("您姓名格式错误！");
+                    return
+                }
+
+                sky.loding();
+                t.addClass("disabled");
+
+                var data = new FormData();
+                data.append("enterprise_name", enterpriseName);
+                data.append("corporation_name", corporationName);
+                data.append("organization_code", organizationCode);
+                data.append("business_license_img", $("#businessLicenseImg")[0].files[0]);
+                $.ajax({
+                    url: urls.enterpriseExamination,
+                    type: 'POST',
+                    data: data,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        sky.lodingClose();
+                        console.log(res);
+                        if (res.code === 0) {
+                            sky.msg("提交审核成功,请等待审核");
+                            window.location.reload();
+                        } else {
+                            sky.msg(res.msg);
+                        }
+                    },
+                    error: function (res) {
+                        sky.lodingClose();
+                        sky.msg(res.msg);
+                    }
+                });
+            });
+
+
+        })
+    </script>
+{% endblock %}

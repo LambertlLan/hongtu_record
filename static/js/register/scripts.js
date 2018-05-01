@@ -114,14 +114,14 @@ jQuery(document).ready(function () {
             return false;
         }
         let name = $("#form-name").val();
-        if (!checkChinese(name)) {
+        /*if (!checkChinese(name)) {
             alert("姓名必须是中文");
             return false
-        }
+        }*/
         //验证通过,提交后台
         let data = {
             phone: $("#phoneNumber").val(),
-            name: name,
+            nickname: name,
             email: email,
             password: $("#form-password").val(),
         };

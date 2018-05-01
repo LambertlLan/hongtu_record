@@ -9,11 +9,19 @@
                         <img src="{% static 'img/icon_user_header.png' %}" class="img-responsive">
                     </i>
                     <div class="text">
-                        <p>欢迎，{{ request.session.user_data.name }}</p>
-                        <p>欢迎来到宏图数据</p>
+                        <p>欢迎，{{ request.session.user_data.nickname }}</p>
+                        <p>当前等级:
+                            {% if request.session.user_data.role == 1 %}
+                                普通用户
+                            {% elif request.session.user_data.role == 2 %}
+                                实名认证用户
+                            {% else %}
+                                企业用户
+                            {% endif %}
+                        </p>
                     </div>
-                    <a class="m-btn" href="http://www.91zhengxin.com/accUpgradeV.do">
-{#                        <span>用户升级</span>#}
+                    <a class="m-btn" href="/record/account/update">
+                        <span>用户升级</span>
                     </a>
                 </div>
             </div>

@@ -1,0 +1,129 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+
+    <h2 class="content-title">实名认证审核</h2>
+
+    <div id="content-main">
+
+        <div class="inner-center-column">
+            <div class="module" id="changelist">
+
+
+                <form id="changelist-form" action="" method="post" class="form-inline" novalidate="">
+                    <div class="results">
+                        <table id="result_list"
+                               class="table table-striped table-bordered table-hover table-condensed">
+                            <thead>
+                            <tr>
+
+                                <th scope="col" class="id-column sortable">
+                                    <div class="text">
+                                        <a href="javascript:void(0)">ID</a>
+                                    </div>
+                                </th>
+                                <th scope="col" class="name-column sortable">
+                                    <div class="text">
+                                        <a href="javascript:void(0)">昵称</a>
+                                    </div>
+                                </th>
+                                <th scope="col" class="name-column sortable">
+                                    <div class="text">
+                                        <a href="javascript:void(0)">手机号</a>
+                                    </div>
+                                </th>
+                                <th scope="col" class="name-column sortable">
+                                    <div class="text">
+                                        <a href="javascript:void(0)">真实姓名</a>
+                                    </div>
+                                </th>
+                                <th scope="col" class="name-column sortable">
+                                    <div class="text">
+                                        <a href="javascript:void(0)">身份证号</a>
+                                    </div>
+                                </th>
+                                <th scope="col" class="name-column sortable">
+                                    <div class="text">
+                                        <a href="javascript:void(0)">审核状态</a>
+                                    </div>
+                                </th>
+                                <th scope="col" class="name-column sortable">
+                                    <div class="text">
+                                        <a href="javascript:void(0)">提交时间</a>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in exam_list %}
+                                <tr class="">
+                                    <th class=""><a
+                                            href="/admin/examination/real_name/info/?id={{ item.id }}">{{ item.id }}</a>
+                                    </th>
+                                    <td class=""><a
+                                            href="/admin/examination/real_name/info/?id={{ item.id }}">{{ item.user.nickname }}</a>
+                                    </td>
+                                    <td class="">{{ item.user.phone }}</td>
+                                    <td class="">{{ item.real_name }}</td>
+                                    <td class="">{{ item.id_card }}</td>
+                                    <td class="">
+                                        {% if item.is_exam %}
+                                            {% if item.is_adopt %}
+                                                已通过
+                                            {% else %}
+                                                未通过
+                                            {% endif %}
+                                        {% else %}
+                                            未审核
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ item.date|date:"Y-m-d H:i:s" }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="below-actions">
+
+
+                        <div class="pagination-block">
+
+
+                            <div class="pagination">
+                                <ul>
+                                    {% if exam_list.has_previous %}
+                                        <li>
+                                            <a href="?page={{ exam_list.previous_page_number }}">上一页</a>
+                                        </li>
+                                    {% endif %}
+                                    {% for p in exam_list.paginator.page_range %}
+
+                                        <li class="{% if exam_list.number == p %}active{% endif %}">
+                                            <a href="?page={{ p }}">{{ p }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    {% if exam_list.has_next %}
+                                        <li>
+                                            <a href="?page={{ exam_list.next_page_number }}">下一页</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

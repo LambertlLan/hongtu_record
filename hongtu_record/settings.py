@@ -29,6 +29,7 @@ ALLOWED_HOSTS = "*"
 # Application definition
 
 INSTALLED_APPS = [
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,6 +64,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'  # TEMPLATE 中引用media
+
             ],
         },
     },
@@ -105,15 +108,39 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
+
+DATETIME_FORMAT = 'Y-m-d H:i:s'
+
+DATE_FORMAT = 'Y-m-d'
+
+SUIT_CONFIG = {
+    'ADMIN_NAME': '宏图数据后台管理系统',
+    'LIST_PER_PAGE': 10,
+    'MENU': (
+        'sites',
+        {'app': 'data_system', 'label': '用户管理', 'icon': 'icon-user', 'models': ('UserInfo',)},
+        {'app': 'data_system', 'label': '充值记录', 'icon': 'icon-list-alt', 'models': ('RechargeRecords',)},
+        {'app': 'data_system', 'label': '接口查询记录', 'icon': 'icon-eye-open',
+         'models': ('TelecomRealName', 'AntifraudMiGuan', 'FinanceInvestment')},
+        {'app': 'data_system', 'label': '权限管理', 'icon': 'icon-tags',
+         'models': ('Role', 'ServiceInterFace')},
+        {'label': '审核管理', 'icon': 'icon-bookmark', 'models': (
+            {'url': '/admin/examination/real_name/', 'label': '实名认证审核'},
+            {'url': '/admin/examination/enterprise/', 'label': '企业认证审核'},
+        )},
+
+    )
+
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -122,7 +149,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 APPEND_SLASH = True
+
 # 日志文件
 LOGGING = {
     'version': 1,

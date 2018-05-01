@@ -3,3 +3,4 @@ Django
 rc4
 requests
 django-suit
+Pillow

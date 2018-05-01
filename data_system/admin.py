@@ -1,5 +1,6 @@
 from django.contrib import admin
-from data_system.models import UserInfo, RechargeRecords, TelecomRealName, AntifraudMiGuan, FinanceInvestment
+from data_system.models import UserInfo, RechargeRecords, TelecomRealName, AntifraudMiGuan, FinanceInvestment, Role, \
+    ServiceInterFace, RealNameExamine
 
 admin.site.site_header = '宏图数据后台管理系统'
 admin.site.site_title = '宏图数据'
@@ -11,16 +12,16 @@ class UserInfoAdmin(admin.ModelAdmin):
     # 设置只读字段
     readonly_fields = ('id',)
     # 显示的表名
-    list_display = ('id', 'name', 'phone', 'date', 'score', 'tel_score', 'tel_score', 'invest_score')
+    list_display = ('id', 'nickname', 'phone', 'date', 'score', 'tel_score', 'tel_score', 'invest_score')
     # 右侧过滤器
-    list_filter = ('name', 'date')
+    list_filter = ('nickname', 'date')
     # 搜索关键字
-    search_fields = ('phone', 'name')
+    search_fields = ('phone', 'nickname')
     # list_per_page设置每页显示多少条记录，默认是100条
     # list_editable 设置默认可编辑字段
     list_editable = ['tel_score', 'tel_score', 'invest_score']
     # 设置哪些字段可以点击进入编辑界面
-    list_display_links = ('id', 'name')
+    list_display_links = ('id', 'nickname')
     # 详细时间分层筛选　
     date_hierarchy = 'date'
 
@@ -70,3 +71,24 @@ class FinanceInvestmentAdmin(admin.ModelAdmin):
     search_fields = ('user__name', 'user__phone', 'real_name', 'id_card', 'mobile')
     list_display_links = ('id', 'user')
     date_hierarchy = 'date'
+
+
+@admin.register(ServiceInterFace)
+class ServiceInterFaceAdmin(admin.ModelAdmin):
+    """运营商三要素查询记录"""
+
+    readonly_fields = ('id',)
+    list_display = ('id', 'service', 'url')
+    list_display_links = ('id', 'service')
+
+
+@admin.register(Role)
+class ServiceInterFaceAdmin(admin.ModelAdmin):
+    """运营商三要素查询记录"""
+
+    readonly_fields = ('id',)
+    list_display = ('id', 'name',)
+    filter_horizontal = ('service',)
+    list_display_links = ('id', 'name')
+
+

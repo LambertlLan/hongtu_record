@@ -1,0 +1,145 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+
+    <h2 class="content-title">企业认证审核</h2>
+
+    <div id="content-main" class="inner-two-columns">
+
+        <form enctype="multipart/form-data" action="" method="post" id="telecomrealname_form" class="form-horizontal"
+              novalidate="">
+            <div class="inner-center-column">
+
+                <div class="tab-content tab-content-main">
+
+
+                    <fieldset class="module aligned first ">
+
+
+                        <div class="control-group form-row field-id ">
+
+                            <div>
+                                <div class="control-label"><label>ID:</label></div>
+                                <div class="controls"><span class="readonly">{{ exam_info.id }}</span></div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="control-group form-row field-user ">
+
+                            <div>
+                                <div class="control-label"><label>昵称:</label></div>
+                                <div class="controls"><span class="readonly">{{ exam_info.user.nickname }}</span></div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="control-group form-row field-real_name ">
+
+                            <div>
+                                <div class="control-label"><label>手机号:</label></div>
+                                <div class="controls"><span class="readonly">{{ exam_info.user.phone }}</span></div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="control-group form-row field-mobile ">
+
+                            <div>
+                                <div class="control-label"><label>企业名称:</label></div>
+                                <div class="controls"><span class="readonly">{{ exam_info.enterprise_name }}</span></div>
+                            </div>
+
+                        </div>
+                        <div class="control-group form-row field-id_card ">
+
+                            <div>
+                                <div class="control-label"><label>法人姓名:</label></div>
+                                <div class="controls"><span class="readonly">{{ exam_info.corporation_name }}</span></div>
+                            </div>
+                        </div>
+                        <div class="control-group form-row field-id_card ">
+
+                            <div>
+                                <div class="control-label"><label>组织机构代码:</label></div>
+                                <div class="controls"><span class="readonly">{{ exam_info.organization_code }}</span></div>
+                            </div>
+                        </div>
+                        <div class="control-group form-row field-id_card ">
+
+                            <div>
+                                <div class="control-label"><label>营业执照:</label></div>
+                                <div class="controls"><span class="readonly">
+                                    <img src="{{ MEDIA_URL }}{{ exam_info.business_license_img }}" alt="营业执照"
+                                         class="img-thumbnail">
+                                </span></div>
+                            </div>
+                        </div>
+
+                        <div class="control-group form-row field-date ">
+
+                            <div>
+                                <div class="control-label"><label>提交时间:</label></div>
+                                <div class="controls"><span
+                                        class="readonly">{{ exam_info.date | date:'Y-m-d H:i:s' }}</span></div>
+                            </div>
+
+                        </div>
+                        <div class="box save-box">
+
+                            <div class="submit-row clearfix">
+                                {% if exam_info.is_exam %}
+                                    {% if exam_info.is_adopt %}
+                                        已通过
+                                    {% else %}
+                                        未通过
+                                    {% endif %}
+                                {% else %}
+                                    <button id="adopt" data-id="{{ exam_info.id }}" type="button"
+                                            class="btn btn-high btn-info" name="_save">通过
+                                    </button>
+                                    <button id="unadopt" data-id="{{ exam_info.id }}" type="button"
+                                            class="btn btn-high btn-info" name="_save">不通过
+                                    </button>
+
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </fieldset>
+
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        var examUser = function (isAdopt, id) {
+                            $.post('/admin/examination/enterprise/exam/', {
+                                isAdopt: isAdopt,
+                                id: id
+                            }, function (res) {
+                                if (res.code === 0) {
+                                    alert("操作成功");
+                                    window.location.href = "/admin/examination/enterprise/"
+                                } else {
+                                    alert(res.msg)
+                                }
+                            })
+                        };
+                        $("#adopt").click(function () {
+                            examUser(0, $(this).data("id"))
+                        });
+                        $("#unadopt").click(function () {
+                            examUser(1, $(this).data("id"))
+                        });
+                    })
+                </script>
+
+
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

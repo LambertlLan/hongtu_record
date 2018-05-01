@@ -10,8 +10,13 @@ import requests
 from utils.createMsgCode import create_msg_code
 import logging
 
-from data_system.models import UserInfo, RechargeRecords
+from data_system.models import UserInfo, RechargeRecords, RealNameExamine, EnterpriseExamine
 from data_system.setting import MSG_CODE_DEFINE
+# 验证自定义admin
+from django.utils.decorators import method_decorator
+from django.contrib.admin.views.decorators import staff_member_required
+# 分页
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 logger = logging.getLogger('django')
 
@@ -36,9 +41,10 @@ class Login(views.View):
         if count:
             user_data = UserInfo.objects.filter(phone=get_phone)[0]
             if get_password == user_data.password:
-                request.session["user_data"] = {"name": user_data.name, "phone": user_data.phone,
+                request.session["user_data"] = {"nickname": user_data.nickname, "phone": user_data.phone,
                                                 "score": user_data.score,
-                                                "uid": user_data.id}
+                                                "uid": user_data.id,
+                                                "role": user_data.role_id}
                 return JsonResponse({"code": 0, "msg": "success"})
         return JsonResponse({"code": 1, "msg": "账号或密码错误"})
 
@@ -64,8 +70,8 @@ class Register(views.View):
                 logger.info(e)
             else:
                 uid = UserInfo.objects.filter(phone=register_dict["phone"])[0].id
-                request.session["user_data"] = {"name": register_dict["name"], "phone": register_dict["phone"]
-                    , "score": 0, "uid": uid}
+                request.session["user_data"] = {"nick": register_dict["nick"], "phone": register_dict["phone"]
+                    , "score": 0, "uid": uid, "role": 1}
                 logger.info("用户 %s 注册成功手机号为 %s" % (register_dict["name"], register_dict["phone"]))
                 res = {"code": 0, "msg": "注册成功"}
         return JsonResponse(res)
@@ -160,9 +166,100 @@ class ModifyPwd(views.View):
             return JsonResponse({"code": 1, "msg": "原密码不正确"})
 
 
-class Data(views.View):
-    """admin数据统计"""
+@method_decorator(staff_member_required, name="dispatch")
+class ExaminationRealNameAdmin(views.View):
+    """admin实名认证审核列表"""
 
     def get(self, request):
-        total_amount = RechargeRecords.objects.aggregate(Sum('amount'))
-        return render(request, 'my_admin/data.html', {'total_amount': total_amount})
+        exam_list = RealNameExamine.objects.all()
+        paginator = Paginator(exam_list, 10, 3)
+        page = request.GET.get("page")
+        try:
+            exam_list = paginator.page(page)
+        except PageNotAnInteger:
+            exam_list = paginator.page(1)
+        except EmptyPage:
+            exam_list = paginator.page(paginator.num_pages)
+        return render(request, 'my_admin/exame_real_name.html', {'exam_list': exam_list})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class ExaminationRealNameInfoAdmin(views.View):
+    """admin实名认证审核详情"""
+
+    def get(self, request):
+        info_id = request.GET.get("id")
+        exam_info = RealNameExamine.objects.get(id=info_id)
+        return render(request, 'my_admin/exame_real_name_info.html', {'exam_info': exam_info})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class ExaminationRealNameExamAdmin(views.View):
+    """admin实名认证审核"""
+
+    def post(self, request):
+        is_adopt = request.POST.get("isAdopt")
+        info_id = request.POST.get("id")
+        exam_obj = RealNameExamine.objects.filter(id=info_id)
+        exam_obj.update(is_exam=True, is_adopt=(is_adopt == '0'))
+
+        if is_adopt == "0":
+            uid = request.session.get("user_data")["uid"]
+
+            UserInfo.objects.filter(id=uid).update(real_name=exam_obj[0].real_name, id_card=exam_obj[0].id_card,
+                                                   pros_id_card_img=exam_obj[0].pros_id_card_img,
+                                                   cons_id_card_img=exam_obj[0].cons_id_card_img, role=2)
+            user_data = request.session.get("user_data")
+            user_data["role"] = 2
+            request.session["user_data"] = user_data
+        return JsonResponse({"code": 0, "msg": "success"})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class ExaminationEnterpriseAdmin(views.View):
+    """admin企业认证审核列表"""
+
+    def get(self, request):
+        exam_list = EnterpriseExamine.objects.all()
+        paginator = Paginator(exam_list, 10, 3)
+        page = request.GET.get("page")
+        try:
+            exam_list = paginator.page(page)
+        except PageNotAnInteger:
+            exam_list = paginator.page(1)
+        except EmptyPage:
+            exam_list = paginator.page(paginator.num_pages)
+        return render(request, 'my_admin/exame_enterprise.html', {'exam_list': exam_list})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class ExaminationEnterpriseInfoAdmin(views.View):
+    """admin企业认证审核详情"""
+
+    def get(self, request):
+        info_id = request.GET.get("id")
+        exam_info = EnterpriseExamine.objects.get(id=info_id)
+        return render(request, 'my_admin/exame_enterprise_info.html', {'exam_info': exam_info})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class ExaminationEnterpriseExamAdmin(views.View):
+    """admin企业认证审核"""
+
+    def post(self, request):
+        is_adopt = request.POST.get("isAdopt")
+        info_id = request.POST.get("id")
+        exam_obj = EnterpriseExamine.objects.filter(id=info_id)
+        exam_obj.update(is_exam=True, is_adopt=(is_adopt == '0'))
+
+        if is_adopt == "0":
+            uid = request.session.get("user_data")["uid"]
+
+            UserInfo.objects.filter(id=uid).update(enterprise_name=exam_obj[0].enterprise_name,
+                                                   corporation_name=exam_obj[0].corporation_name,
+                                                   organization_code=exam_obj[0].organization_code,
+                                                   business_license_img=exam_obj[0].business_license_img, role=3)
+            user_data = request.session.get("user_data")
+            user_data["role"] = 3
+            request.session["user_data"] = user_data
+        return JsonResponse({"code": 0, "msg": "success"})

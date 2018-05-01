@@ -86,7 +86,8 @@
                                     <span class="icon-bar"></span>
                                 </button>
                             </div>
-                            <a href="#home"><img src="{% static 'img/logo.png' %}" alt="logo" class="img-responsive"></a>
+                            <a href="#home"><img src="{% static 'img/logo.png' %}" alt="logo"
+                                                 class="img-responsive"></a>
                             <!--== logo ==-->
                         </div>
                     </div>
@@ -114,7 +115,7 @@
                                     <li class="smooth-scroll">
                                         {% if request.session.user_data %}
                                             <a class="theme-color"
-                                               href="javascript:void(0)">欢迎您:{{ request.session.user_data.name }}</a>
+                                               href="javascript:void(0)">欢迎您:{{ request.session.user_data.nickname }}</a>
                                         {% else %}
                                             <a class="theme-color" href="/login/">登录</a>
                                         {% endif %}

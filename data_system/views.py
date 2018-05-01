@@ -3,17 +3,20 @@ import json
 import logging
 import math
 import time
+import os
+import random
 
 import requests
 from django import views
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
+from django.core.files.base import ContentFile
 
 from .create_md5 import doMd5
-from .models import RechargeRecords, UserInfo, RecentSearchRecord
+from .models import RechargeRecords, UserInfo, RecentSearchRecord, RealNameExamine, EnterpriseExamine
 from .rc4crypt import rc4crypt
-from .setting import MODELS_DEFINE, PAGE_NUM, SCORE_DEFINE, URL_DEFINE, CHINESE_DEFINE
+from .setting import MODELS_DEFINE, SCORE_DEFINE, URL_DEFINE, CHINESE_DEFINE, PAGE_NUM
 
 logger = logging.getLogger('django')
 
@@ -29,6 +32,19 @@ def check_session(func):
                 return redirect('/login/')
             else:
                 return JsonResponse({"code": 11000, "msg": "session已过期"})
+
+    return inner
+
+
+# 检查 角色 装饰器
+def check_role(func):
+    def inner(request, *args, **kwargs):
+        uid = request.session.get("user_data")["uid"]
+        role_id = UserInfo.objects.filter(id=uid)[0].role_id
+        if role_id == 1:
+            return redirect('/record/public_data/auth_real_name/')
+        else:
+            return func(request, *args, **kwargs)
 
     return inner
 
@@ -65,7 +81,6 @@ def take_off_score(request, take_score):
 
 # 获取用户查询服务需要支付的积分
 def get_service_fee(uid, service):
-
     service_fee = UserInfo.objects.filter(id=uid).values(SCORE_DEFINE[service])[0][SCORE_DEFINE[service]]
     return service_fee
 
@@ -79,8 +94,28 @@ class Index(views.View):
         return render(request, "record/index.html", {"active": "index", "records_list": records_list})
 
 
+# 实名认证页面
+@method_decorator(check_session, name="dispatch")
+class AuthRealNameView(views.View):
+    def get(self, request):
+        return render(request, "record/pulic_data/auth_real_name.html", {"active": "public_data"})
+
+
+# 实名认证页面
+@method_decorator(check_session, name="dispatch")
+class AuthRealName(views.View):
+    def post(self, request):
+        uid = request.session.get("user_data")["uid"]
+        # 读取上传的文件中的video项为二进制文件
+        file_content = ContentFile(request.FILES['img'].read())
+        # ImageField的save方法，第一个参数是保存的文件名，第二个参数是ContentFile对象，里面的内容是要上传的图片、视频的二进制内容
+        UserInfo.objects.get(id=uid).id_card_img.save(request.FILES['img'].name, file_content)
+        return JsonResponse({"msg": "上传成功"})
+
+
 # 公众数据获取
 @method_decorator(check_session, name="dispatch")
+@method_decorator(check_role, name="dispatch")
 class PublicData(views.View):
     """运营商三要素页面"""
 
@@ -178,7 +213,7 @@ class CheckPublicData(views.View):
                     "user_id": uid,
                     "data": decrypt,
                     "msg": data_text["message"],
-                    "order_num":params["sn"]
+                    "order_num": params["sn"]
                 }
                 if "phone" in params.keys():
                     database_dict["mobile"] = params["phone"]
@@ -266,6 +301,81 @@ class AccountInformation(views.View):
 class AccountPWDModify(views.View):
     def get(self, request):
         return render(request, "record/account_pwd_modify.html", {"active": "account_information"})
+
+
+# 账户升级页面
+@method_decorator(check_session, name="dispatch")
+class AccountUpdate(views.View):
+    def get(self, request):
+        uid = request.session.get("user_data")["uid"]
+        # 查身份认证和企业认证有没有正在审核中的数据
+        real_name_exists = RealNameExamine.objects.filter(user_id=uid, is_exam=False).exists()
+        enterprise_exists = EnterpriseExamine.objects.filter(user_id=uid, is_exam=False).exists()
+        if real_name_exists or enterprise_exists:
+            return render(request, "record/account_update.html", {"active": "account_information", "examining": True})
+        else:
+            return render(request, "record/account_update.html", {"active": "account_information"})
+
+
+# 实名认证
+@method_decorator(check_session, name="dispatch")
+class RealNameExamination(views.View):
+    def post(self, request):
+        uid = request.session.get("user_data")["uid"]
+        # 读取上传的文件中的video项为二进制文件
+        real_name = request.POST.get("real_name")
+        id_card = request.POST.get("id_card")
+        pros_file_content = ContentFile(request.FILES['pros_id_card_img'].read())
+
+        pro_file_source_ext = os.path.splitext(request.FILES['pros_id_card_img'].name)[1]
+        pro_file_source_fn = '%d_%d' % (int(time.time()), random.randint(0, 100))
+        pro_file_name = "pro_%s%s" % (pro_file_source_fn, pro_file_source_ext)
+
+        cons_file_content = ContentFile(request.FILES['cons_id_card_img'].read())
+        cons_file_source_ext = os.path.splitext(request.FILES['cons_id_card_img'].name)[1]
+        cons_file_source_fn = '%d_%d' % (int(time.time()), random.randint(0, 100))
+        cons_file_name = "cons_%s%s" % (cons_file_source_fn, cons_file_source_ext)
+
+        info_id = RealNameExamine.objects.create(user_id=uid, real_name=real_name, id_card=id_card).id
+        try:
+
+            RealNameExamine.objects.get(id=info_id).pros_id_card_img.save(pro_file_name,
+                                                                          pros_file_content)
+            RealNameExamine.objects.get(id=info_id).cons_id_card_img.save(cons_file_name,
+                                                                          cons_file_content)
+        except Exception as e:
+            logger.info(e)
+            return JsonResponse({"code": 1, "msg": "发生未知错误"})
+        else:
+            return JsonResponse({"code": 0, "msg": "success"})
+
+
+@method_decorator(check_session, name="dispatch")
+class EnterpriseExamination(views.View):
+    def post(self, request):
+        uid = request.session.get("user_data")["uid"]
+        # 读取上传的文件中的video项为二进制文件
+        enterprise_name = request.POST.get("enterprise_name")
+        corporation_name = request.POST.get("corporation_name")
+        organization_code = request.POST.get("organization_code")
+        business_license_content = ContentFile(request.FILES['business_license_img'].read())
+
+        business_license_ext = os.path.splitext(request.FILES['business_license_img'].name)[1]
+        business_license_fn = '%d_%d' % (int(time.time()), random.randint(0, 100))
+        business_license_name = "ent_%s%s" % (business_license_fn, business_license_ext)
+
+        info_id = EnterpriseExamine.objects.create(user_id=uid, enterprise_name=enterprise_name,
+                                                   corporation_name=corporation_name,
+                                                   organization_code=organization_code).id
+        try:
+
+            EnterpriseExamine.objects.get(id=info_id).business_license_img.save(business_license_name,
+                                                                                business_license_content)
+        except Exception as e:
+            logger.info(e)
+            return JsonResponse({"code": 1, "msg": "发生未知错误"})
+        else:
+            return JsonResponse({"code": 0, "msg": "success"})
 
 
 # 财务信息

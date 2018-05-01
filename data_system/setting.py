@@ -27,4 +27,4 @@ CHINESE_DEFINE = {
     "Antifraud_miguan": "蜜罐数据",  # 蜜罐数据
     "Finance_investment": "个人对外投资"  # 个人对外投资
 }
-PAGE_NUM = 10  # 分页每页显示的条数
+PAGE_NUM = 10
