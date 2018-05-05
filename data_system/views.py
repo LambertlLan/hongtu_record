@@ -15,10 +15,11 @@ from django.core.files.base import ContentFile
 
 from .create_md5 import doMd5
 from .models import RechargeRecords, UserInfo, RecentSearchRecord, RealNameExamine, EnterpriseExamine, ActionSwitch, \
-    Order
+    Order, Notice, IdCardRealNameModel, IdCardImgModel, Role
 from .rc4crypt import rc4crypt
 from .paysapi import PaysApi
-from .setting import MODELS_DEFINE, SCORE_DEFINE, URL_DEFINE, CHINESE_DEFINE, PAGE_NUM, ACTION_ID_DEFINE, BASE_URL
+from .setting import MODELS_DEFINE, SCORE_DEFINE, URL_DEFINE, CHINESE_DEFINE, PAGE_NUM, ACTION_ID_DEFINE, BASE_URL, \
+    CHECK_NAME_ID, IDCARD_IMG_URL
 
 logger = logging.getLogger('django')
 
@@ -28,7 +29,13 @@ def check_session(func):
     def inner(request, *args, **kwargs):
         is_login = request.session.get("user_data")
         if is_login:
-            return func(request, *args, **kwargs)
+            uid = is_login["uid"]
+            session_key = UserInfo.objects.get(id=uid).session_key
+            if request.session.session_key == session_key:
+
+                return func(request, *args, **kwargs)
+            else:
+                return redirect('/login/')
         else:
             if request.method == "GET":
                 return redirect('/login/')
@@ -42,11 +49,13 @@ def check_session(func):
 def check_role(func):
     def inner(request, *args, **kwargs):
         uid = request.session.get("user_data")["uid"]
-        role_id = UserInfo.objects.filter(id=uid)[0].role_id
-        if role_id == 1:
+        role_id = UserInfo.objects.get(id=uid).role_id
+        interface_list = Role.objects.get(id=role_id).service.order_by("id").values("active_name", "service", "url")
+        if len(interface_list) == 0:
             return redirect('/record/public_data/auth_real_name/')
         else:
-            return func(request, *args, **kwargs)
+
+            return func(request, interface_list, *args, **kwargs)
 
     return inner
 
@@ -87,13 +96,31 @@ def get_service_fee(uid, service):
     return service_fee
 
 
-# 账户首页
+# 获取用户角色
+def get_role(uid):
+    role_id = UserInfo.objects.get(id=uid).role_id
+    return role_id
+
+
+# 调用外部接口验证姓名，身份证两要素
+def check_name_id(name, id_card):
+    res_msg = requests.get(CHECK_NAME_ID["url"],
+                           {"realName": name, "cardNo": id_card, "appkey": CHECK_NAME_ID["app_key"]}, json=True)
+    data_text = json.loads(res_msg.text)
+
+    return data_text
+
+
+# 首页
 @method_decorator(check_session, name="dispatch")
 class Index(views.View):
     def get(self, request):
         uid = request.session.get("user_data")["uid"]
-        records_list = RecentSearchRecord.objects.filter(user_id=uid)[:10]
-        return render(request, "record/index.html", {"active": "index", "records_list": records_list})
+        records_list = RecentSearchRecord.objects.order_by("-date").filter(user_id=uid)[:10]
+        role_id = get_role(uid)
+        notice = Notice.objects.last()
+        return render(request, "record/index.html",
+                      {"active": "index", "records_list": records_list, "notice": notice, "role_id": role_id})
 
 
 # 实名认证页面
@@ -118,42 +145,142 @@ class AuthRealName(views.View):
 # 公众数据获取
 @method_decorator(check_session, name="dispatch")
 @method_decorator(check_role, name="dispatch")
+class IdCardName(views.View):
+    """身份中两要素查询"""
+
+    def get(self, request, interface_list=None):
+        uid = request.session.get("user_data")["uid"]
+        service_fee = get_service_fee(uid, "idcard_name")
+        switch = ActionSwitch.objects.get(id=5).switch
+        return render(request, "record/pulic_data/idcard_name.html",
+                      {"active": "public_data", "public_active": "idcard_name", "service_fee": service_fee,
+                       "switch": switch, "interface_list": interface_list})
+
+    def post(self, request, interface_list=None):
+        uid = request.session.get("user_data")["uid"]
+        name = request.POST.get("realName")
+        id_card = request.POST.get("idCard")
+
+        service_fee = get_service_fee(uid, "idcard_name")
+        new_score = take_off_score(request, service_fee)
+        if new_score < 0:
+            logger.info("扣费发生错误")
+            return JsonResponse({"code": 1, "msg": "扣费发生错误"})
+
+        res_json = check_name_id(name, id_card)
+        res_text = json.dumps(res_json)
+        # 存入查询记录表
+        obj = IdCardRealNameModel(user_id=uid, real_name=name, id_card=id_card, data=res_text,
+                                  msg=res_json["msg"])
+        obj.save()
+        service_id = obj.id
+        # 存入近期查询表
+        RecentSearchRecord.objects.create(user_id=uid, name=name,
+                                          service="idcard_name",
+                                          service_chinese=CHINESE_DEFINE["idcard_name"], service_id=service_id)
+        return JsonResponse({"code": 0, "msg": "success", "data": res_json, "new_score": new_score})
+
+
+@method_decorator(check_session, name="dispatch")
+@method_decorator(check_role, name="dispatch")
+class IdCardImg(views.View):
+    """身份中核验及返照"""
+
+    def get(self, request, interface_list=None):
+        uid = request.session.get("user_data")["uid"]
+        service_fee = get_service_fee(uid, "idcard_img")
+        switch = ActionSwitch.objects.get(id=6).switch
+        return render(request, "record/pulic_data/idcard_img.html",
+                      {"active": "public_data", "public_active": "idcard_img", "service_fee": service_fee,
+                       "switch": switch, "interface_list": interface_list})
+
+    def post(self, request, interface_list=None):
+        uid = request.session.get("user_data")["uid"]
+        name = request.POST.get("realName")
+        id_card = request.POST.get("idCard")
+        # 检查验证码
+        self.check_msg_code(request)
+        # 扣费
+        service_fee = get_service_fee(uid, "idcard_img")
+        new_score = take_off_score(request, service_fee)
+        if new_score < 0:
+            logger.info("扣费发生错误")
+            return JsonResponse({"code": 1, "msg": "扣费发生错误"})
+
+        res_json = self.get_idcard_img(name, id_card)
+        res_text = json.dumps(res_json)
+        # 存入查询记录表
+        obj = IdCardImgModel(user_id=uid, real_name=name, id_card=id_card, data=res_text,
+                             msg=res_json["msg"])
+        obj.save()
+        service_id = obj.id
+        # 存入近期查询表
+        RecentSearchRecord.objects.create(user_id=uid, name=name,
+                                          service="idcard_img",
+                                          service_chinese=CHINESE_DEFINE["idcard_img"],
+                                          service_id=service_id)
+        return JsonResponse({"code": 0, "msg": "success", "data": res_json, "new_score": new_score})
+
+    # 调用外部接口获取身份证照片
+    def get_idcard_img(self, name, id_card):
+        data = 'name=%s&idcard=%s' % (name, id_card,)
+        res_msg = requests.post(IDCARD_IMG_URL["url"], params={"appkey": IDCARD_IMG_URL["app_key"]},
+                                data=data.encode(), json=True)
+        data_text = json.loads(res_msg.text)
+
+        return data_text
+
+    def check_msg_code(self, request):
+        msg_code = request.POST.get("msgCode")
+        try:
+            if msg_code != request.session.get("phoneVerifyCode")["code"]:
+                return JsonResponse({"code": 1, "msg": "验证码不正确"})
+            else:
+                del request.session["phoneVerifyCode"]
+        except Exception as e:
+            return JsonResponse({"code": 1, "msg": "验证码不正确"})
+
+
+@method_decorator(check_session, name="dispatch")
+@method_decorator(check_role, name="dispatch")
 class PublicData(views.View):
     """运营商三要素页面"""
 
-    def get(self, request):
+    def get(self, request, interface_list=None):
         uid = request.session.get("user_data")["uid"]
         service_fee = get_service_fee(uid, "Telecom_realname")
         switch = ActionSwitch.objects.get(id=2).switch
         return render(request, "record/pulic_data/telecom_realname.html",
                       {"active": "public_data", "public_active": "telecom_realname", "service_fee": service_fee,
-                       "switch": switch})
+                       "switch": switch, "interface_list": interface_list})
 
 
 @method_decorator(check_session, name="dispatch")
+@method_decorator(check_role, name="dispatch")
 class AntifraudMiGuan(views.View):
     """蜜罐数据查询页面"""
 
-    def get(self, request):
+    def get(self, request, interface_list=None):
         uid = request.session.get("user_data")["uid"]
         service_fee = get_service_fee(uid, "Antifraud_miguan")
         switch = ActionSwitch.objects.get(id=3).switch
         return render(request, "record/pulic_data/miguan.html",
                       {"active": "public_data", "public_active": "miguan", "service_fee": service_fee,
-                       "switch": switch})
+                       "switch": switch, "interface_list": interface_list})
 
 
 @method_decorator(check_session, name="dispatch")
+@method_decorator(check_role, name="dispatch")
 class FinanceInvestment(views.View):
     """ 对外投资查询页面"""
 
-    def get(self, request):
+    def get(self, request, interface_list=None):
         uid = request.session.get("user_data")["uid"]
         service_fee = get_service_fee(uid, "Finance_investment")
-        switch = ActionSwitch.objects.get(id=3).switch
+        switch = ActionSwitch.objects.get(id=4).switch
         return render(request, "record/pulic_data/finance_investment.html",
                       {"active": "public_data", "public_active": "finance_investment", "service_fee": service_fee,
-                       "switch": switch})
+                       "switch": switch, "interface_list": interface_list})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -161,17 +288,44 @@ class FinanceInvestment(views.View):
 class CheckPublicData(views.View):
     """调用法眼三个接口"""
 
-    def post(self, request):
+    def post(self, request, interface_list=None):
         service = request.POST.get("service")
         switch = ActionSwitch.objects.get(id=ACTION_ID_DEFINE[service]).switch
+
+        # 判断功能是否已经在后台关闭
         if not switch:
             del request.session["phoneVerifyCode"]
             return JsonResponse({"code": 12000, "msg": "该功能暂时关闭"})
-        msg_code = request.POST.get("msgCode")
-        if msg_code != request.session.get("phoneVerifyCode")["code"]:
-            return JsonResponse({"code": 1, "msg": "验证码不正确"})
-        else:
-            del request.session["phoneVerifyCode"]
+
+        # 如果不是查询运营商三要素就验证验证码
+        if service != "Telecom_realname":
+            msg_code = request.POST.get("msgCode")
+            try:
+                if msg_code != request.session.get("phoneVerifyCode")["code"]:
+                    return JsonResponse({"code": 1, "msg": "验证码不正确"})
+                else:
+                    del request.session["phoneVerifyCode"]
+            except Exception as e:
+                return JsonResponse({"code": 1, "msg": "验证码不正确"})
+
+        # 由于需要验证身份证和姓名,所以先扣钱
+        uid = request.session.get("user_data")["uid"]
+        service_fee = get_service_fee(uid, service)
+        new_score = take_off_score(request, service_fee)
+        if new_score < 0:
+            logger.info("扣费发生错误")
+            return JsonResponse({"code": 1, "msg": "扣费发生错误"})
+
+        # 如果查询蜜罐数据先验证身份证姓名两要素
+        if service == "Antifraud_miguan":
+            flag = False
+            name_id_res = check_name_id(request.POST.get("realName"), request.POST.get("idCard"))
+            try:
+                flag = name_id_res["result"]["result"]["isok"]
+            except Exception as e:
+                logger.info("请求两要素验证出错,%s" % name_id_res.text)
+            if not flag:
+                return JsonResponse({"code": 1, "msg": "身份证和姓名不一致", "new_score": new_score})
 
         data_json = {
             "app_id": URL_DEFINE["app_id"],
@@ -185,6 +339,8 @@ class CheckPublicData(views.View):
             "name": request.POST.get("realName"),
             "service": request.POST.get("service")
         }
+
+        # 个人对外投资查询不需要手机号
         try:
             phone = request.POST.get("mobile")
         except Exception as e:
@@ -192,20 +348,15 @@ class CheckPublicData(views.View):
 
         if phone:
             params["phone"] = phone
+
+        # 开始rc4加密
         try:
             rc4_data = rc4crypt(json.dumps(params), URL_DEFINE["app_secret"])
         except Exception as e:
             logger.info(e)
-            return JsonResponse({"code": 1, "msg": "加密发生错误"})
-        # 开始请求,先扣钱
-        uid = request.session.get("user_data")["uid"]
+            return JsonResponse({"code": 1, "msg": "加密发生错误", "new_score": new_score})
 
-        service_fee = get_service_fee(uid, service)
-        new_score = take_off_score(request, service_fee)
-        if new_score < 0:
-            logger.info("扣费发生错误")
-            return JsonResponse({"code": 1, "msg": "扣费发生错误"})
-
+        # base64转码
         base64_rc4 = base64.b64encode(rc4_data.encode("latin1"))
         data_json["params"] = str(base64_rc4, "latin1")
         res_msg = requests.post(URL_DEFINE["url"], data_json, json=True)
@@ -213,11 +364,13 @@ class CheckPublicData(views.View):
         if data_text["code"] == 200:
             wait_jie = data_text["data"]["report"]
             jie = base64.b64decode(wait_jie)
+
+            # 解密
             try:
                 decrypt = rc4crypt(jie.decode("latin1"), URL_DEFINE["app_secret"])
             except Exception as e:
                 logger.info(e)
-                return JsonResponse({"code": 1, "msg": "解密过程发生问题"})
+                return JsonResponse({"code": 1, "msg": "解密过程发生问题", "new_score": new_score})
             else:
                 logger.info(data_text)
                 database_dict = {
@@ -230,20 +383,27 @@ class CheckPublicData(views.View):
                 }
                 if "phone" in params.keys():
                     database_dict["mobile"] = params["phone"]
+
                 # 存入对应的数据库表
                 if request.POST.get("service") in MODELS_DEFINE.keys():
                     obj = MODELS_DEFINE[params["service"]]
-                    obj.objects.create(**database_dict)
-                # 存入近期查询表
-                RecentSearchRecord.objects.create(user_id=database_dict["user_id"], name=database_dict["real_name"],
-                                                  service=params["service"],
-                                                  service_chinese=CHINESE_DEFINE[params["service"]])
-                return JsonResponse(
-                    {"code": 0, "msg": "success", "new_score": new_score, "data": json.loads(decrypt),
-                     "info": request.POST.dict()})
+                    obj = obj(**database_dict)
+                    obj.save()
+                    service_id = obj.id
+                    print(service_id)
+                    # 存入近期查询表
+                    RecentSearchRecord.objects.create(user_id=database_dict["user_id"], name=database_dict["real_name"],
+                                                      service=params["service"],
+                                                      service_chinese=CHINESE_DEFINE[params["service"]],
+                                                      service_id=service_id)
+                    return JsonResponse(
+                        {"code": 0, "msg": "success", "new_score": new_score, "data": json.loads(decrypt),
+                         "info": request.POST.dict()})
+                else:
+                    return JsonResponse({"code": 1, "msg": "存入数据库出错"})
         else:
             logger.info(data_text)
-            return JsonResponse({"code": 1, "msg": "外部服务器出错"})
+            return JsonResponse({"code": 1, "msg": "外部服务器出错", "new_score": new_score})
 
 
 @method_decorator(check_session, name="dispatch")
@@ -257,13 +417,15 @@ class SearchHistory(views.View):
         total_num = obj.objects.filter(user_id=uid).count()
         start = (int(request.POST.get("page")) - 1) * PAGE_NUM  # 每页十条
         end = int(request.POST.get("page")) * PAGE_NUM
-        if service == "Finance_investment":
+        if service == "Finance_investment" or service == "idcard_name" or service == "idcard_img":
 
             result_list = list(
-                obj.objects.filter(user_id=uid).values("id", "date", "id_card", "real_name")[start:end])
+                obj.objects.order_by("-date").filter(user_id=uid).values("id", "date", "id_card", "real_name")[
+                start:end])
         else:
             result_list = list(
-                obj.objects.filter(user_id=uid).values("id", "date", "mobile", "id_card", "real_name")[start:end])
+                obj.objects.order_by("-date").filter(user_id=uid).values("id", "date", "mobile", "id_card",
+                                                                         "real_name")[start:end])
 
         return JsonResponse(
             {"code": 0, "service": service, "service_chinese": CHINESE_DEFINE[service], "resultList": result_list,
@@ -278,7 +440,7 @@ class SearchHistoryInfo(views.View):
         tid = request.POST.get("id")
         service = request.POST.get("service")
         obj = MODELS_DEFINE[service]
-        if service == "Finance_investment":
+        if service == "Finance_investment" or service == "idcard_name" or service == "idcard_img":
 
             result = list(obj.objects.filter(id=tid).values("date", "id_card", "real_name", "data", "msg"))[0]
         else:
@@ -306,7 +468,9 @@ class CustomizeReport(views.View):
 @method_decorator(check_session, name="dispatch")
 class AccountInformation(views.View):
     def get(self, request):
-        return render(request, "record/account_information.html", {"active": "account_information"})
+        uid = request.session.get("user_data")["uid"]
+        role_id = get_role(uid)
+        return render(request, "record/account_information.html", {"active": "account_information", "role_id": role_id})
 
 
 # 修改密码
@@ -324,10 +488,11 @@ class AccountUpdate(views.View):
         # 查身份认证和企业认证有没有正在审核中的数据
         real_name_exists = RealNameExamine.objects.filter(user_id=uid, is_exam=False).exists()
         enterprise_exists = EnterpriseExamine.objects.filter(user_id=uid, is_exam=False).exists()
+        role_id = get_role(uid)
         if real_name_exists or enterprise_exists:
             return render(request, "record/account_update.html", {"active": "account_information", "examining": True})
         else:
-            return render(request, "record/account_update.html", {"active": "account_information"})
+            return render(request, "record/account_update.html", {"active": "account_information", "role_id": role_id})
 
 
 # 实名认证
@@ -407,36 +572,36 @@ class PaySuccess(views.View):
 
         uid = request.POST.get("orderuid")
         order_id = request.POST.get("orderid")
-        price = int(request.POST.get("price"))
-        real_price = int(request.POST.get("realprice"))
+        price = request.POST.get("price")
+        real_price = request.POST.get("realprice")
         server_key = request.POST.get("key")
         paysapi_id = request.POST.get("paysapi_id")
-        string_key = order_id + uid + paysapi_id + price + real_price + token
+        string_key = order_id + uid + paysapi_id + str(price) + str(real_price) + token
         key = doMd5(string_key)
         if server_key == key:
             # 更新订单状态
             Order.objects.filter(order_id=order_id).update(is_success=True)
             # 更新用户积分
             score = UserInfo.objects.filter(id=uid)[0].score
-            new_score = score + int(price) * 2
+            new_score = score + float(price) * 2
             UserInfo.objects.filter(id=uid).update(score=new_score)
             # 增加一条充值记录
-            RechargeRecords.objects.create(user_id=uid, amount=price)
-            # 更新session
-            user_data = request.session.get("user_data")
-            user_data["score"] = new_score
-            request.session["user_data"] = user_data
+            RechargeRecords.objects.create(user_id=uid, amount=float(price))
 
-        return JsonResponse({"code": 200, "msg": "购买成功"})
+        return JsonResponse({"code": 0})
 
 
 @method_decorator(check_session, name="dispatch")
-class PayComplate(views.View):
-    """充值"""
+class PayComplete(views.View):
+    """充值完成"""
 
-    def post(self, request):
+    def get(self, request):
         uid = request.session.get("user_data")["uid"]
         score = UserInfo.objects.get(id=uid).score
+        # 更新session
+        user_data = request.session.get("user_data")
+        user_data["score"] = score
+        request.session["user_data"] = user_data
         return render(request, "record/financial_pay_success.html", {"score": score})
 
 

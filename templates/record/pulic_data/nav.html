@@ -1,26 +1,40 @@
 {% extends 'record/layout.html' %} {% load static %} {% block content %}
-<div class="col-lg-9 col-md-9 col-sm-9">
-    <!--公众数据导航-->
-    <div class="fnNav">
-        <ul class="list-unstyled">
-            <li>
-                <a class="{% if public_active == "telecom_realname" %}active{% endif %}" href="/record/public_data/telecom_realname/">
-                    <span>运营商三要素</span>
-                </a>
-            </li>
-            <li>
-                <a class="{% if public_active == "miguan" %}active{% endif %}" href="/record/public_data/antifraud_miguan/">
-                    <span>蜜罐数据</span>
-                </a>
-            </li>
-            <li>
-                <a class="{% if public_active == "finance_investment" %}active{% endif %}" href="/record/public_data/finance_investment/">
-                    <span>个人对外投资</span>
-                </a>
-            </li>
+    <div class="col-lg-9 col-md-9 col-sm-9">
+        <!--公众数据导航-->
+        <div class="fnNav">
+            <ul class="list-unstyled">
+                {% for item in interface_list %}
+                    <li>
+                        <a class="{% if public_active == item.active_name %}active{% endif %}"
+                           href="/record/{{ item.url }}">
+                            <span>{{ item.service }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+                {#            <li>#}
+                {#                <a class="{% if public_active == "idcard_img" %}active{% endif %}" href="/record/public_data/idcard_img/">#}
+                {#                    <span>身份证实名核验及返照</span>#}
+                {#                </a>#}
+                {#            </li>#}
+                {#            <li>#}
+                {#                <a class="{% if public_active == "idcard_name" %}active{% endif %}" href="/record/public_data/idcard_name/">#}
+                {#                    <span>身份证二要素实名认证</span>#}
+                {#                </a>#}
+                {#            </li>#}
+                {#            <li>#}
+                {#                <a class="{% if public_active == "miguan" %}active{% endif %}" href="/record/public_data/antifraud_miguan/">#}
+                {#                    <span>个人反欺诈报告</span>#}
+                {#                </a>#}
+                {#            </li>#}
+                {#            <li>#}
+                {#                <a class="{% if public_active == "finance_investment" %}active{% endif %}" href="/record/public_data/finance_investment/">#}
+                {#                    <span>个人对外投资</span>#}
+                {#                </a>#}
+                {#            </li>#}
 
-        </ul>
+
+            </ul>
+        </div>
+        {% block contianer %} {% endblock %}
     </div>
-    {% block contianer %} {% endblock %}
-</div>
 {% endblock %}

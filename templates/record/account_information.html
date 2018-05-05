@@ -25,15 +25,15 @@
         <div class="container-fluid content">
             <p class="title-block">账户信息</p>
             <div class="row box">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">用户名</div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">{{ request.session.user_data.nicknamename }}</div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">昵称</div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">{{ request.session.user_data.nickname }}</div>
             </div>
             <div class="row box">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">用户等级</div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">
-                    {% if request.session.user_data.role == 1 %}
+                    {% if role_id == 1 %}
                         普通用户
-                    {% elif request.session.user_data.role == 2 %}
+                    {% elif role_id == 2 %}
                         实名认证用户
                     {% else %}
                         企业用户

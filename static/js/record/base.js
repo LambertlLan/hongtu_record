@@ -1,11 +1,14 @@
 /**
  * Created by ZBF on 2016/9/18.
  */
-$(function() {
-    $(".lookWarrant").click(function() {
+$(function () {
+    $(".declare").click(function () {
+        sky.declare();
+    });
+    $(".lookWarrant").click(function () {
         sky.authorize();
     });
-    $(".checkbox").click(function() {
+    $(".checkbox").click(function () {
         var o = $(this);
         if (o.hasClass("active")) {
             o.removeClass("active");
@@ -14,27 +17,28 @@ $(function() {
         }
     });
     if (!placeholderSupport()) {
-        $('[placeholder]').focus(function() {
+        $('[placeholder]').focus(function () {
             var input = $(this);
             if (input.val() == input.attr('placeholder')) {
                 input.val('');
                 input.removeClass('placeholder');
             }
-        }).blur(function() {
+        }).blur(function () {
             var input = $(this);
             if (input.val() == '' || input.val() == input.attr('placeholder')) {
                 input.addClass('placeholder');
                 input.val(input.attr('placeholder'));
             }
         }).blur();
-    };
+    }
+    ;
 });
 
 function placeholderSupport() {
     return 'placeholder' in document.createElement('input');
 }
 
-$(".header .min-nav").on("click", function() {
+$(".header .min-nav").on("click", function () {
     var e = $(this);
     var mobileMenu = $("#mobileMenu");
     if (mobileMenu.hasClass("open")) {
@@ -42,7 +46,7 @@ $(".header .min-nav").on("click", function() {
         e.removeClass("open");
         mobileMenu.animate({
             "height": "0px",
-        }, 500, function() {
+        }, 500, function () {
             mobileMenu.css("visibility", "hidden");
         });
     } else {
@@ -54,7 +58,7 @@ $(".header .min-nav").on("click", function() {
         mobileMenu.css("visibility", "visible");
     }
 })
-$(".header-acc .min-nav").on("click", function() {
+$(".header-acc .min-nav").on("click", function () {
     var mobileMenu = $("#mobileMenu");
     var e = $(this);
     if (mobileMenu.hasClass("open")) {
@@ -166,9 +170,9 @@ function setCookie(name, value) {
 
 function getCookie(name) {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-
+    
     if (arr = document.cookie.match(reg))
-
+        
         return unescape(arr[2]);
     else
         return null;
@@ -186,274 +190,274 @@ function calculateAge(str) {
     return ("出生日期格式不正确");
 }
 
-var sky = (function() {
+var sky = (function () {
     var body = $("body");
-    var winClose = function() {
+    var winClose = function () {
         $(".sky-win").remove();
         $(document.body).css({
             "overflow-x": "auto",
             "overflow-y": "auto"
         });
     }
-    var isMobile = function() {
+    var isMobile = function () {
         if (document.documentElement.clientWidth <= 768) {
             return true;
         } else {
             return false;
         }
     };
-    var loding = function() {
+    var loding = function () {
         var html = '<div class="loader ball-clip-rotate" id="loader">' +
             '<div></div>' +
             '</div>';
         body.append(html);
     };
-    var lodingClose = function() {
+    var lodingClose = function () {
         $("#loader").remove();
     }
-    var form = function(h) {
-            if ($(".sky-win")) {
-                winClose();
-            }
-            var html = '<div class="sky-win-main sky-win"><div class="container-fluid">' +
-                '<div class="sky-win-form">' + h + '</div>' +
-                '</div></div><div class="sky-win-bg sky-win"></div>';
-            body.append(html);
-            var sky_main = $(".sky-win-main");
-            var sky_container = $(".sky-win-main .container-fluid");
-            var clientHeight = document.documentElement.clientHeight;
-            var sky_top = clientHeight - sky_container.height();
-            $(".sky-win .sky-close").click(function() {
-                winClose();
-            });
-            $(".sky-win-bg").click(function() {
-                winClose();
-            });
-            $(document.body).css({
-                "overflow-x": "hidden",
-                "overflow-y": "hidden"
-            });
-            $(window).resize(function() {
-                if (sky_main) {
-                    if (isMobile()) {
-                        sky_main.css({ "margin-top": '0px', "top": sky_top < 0 ? 0 : sky_top + 'px' });
-                    } else {
-                        sky_main.css({ "margin-top": -(sky_main.height() / 2) + 'px', "top": '50%' });
-                    }
-                }
-            });
-            if (!isMobile()) {
-                sky_main.css("margin-top", -(sky_main.height() / 2) + 'px');
-            } else {
-                sky_main.animate({
-                    top: sky_top < 0 ? 0 : sky_top + 'px'
-                }, 500);
-            }
+    var form = function (h) {
+        if ($(".sky-win")) {
+            winClose();
         }
-        //登录弹窗
-    var login = function() {
-            var html = '<div class="sky-form-header"><span class="title">欢迎回来</span></div>' +
-                '<div class="form">' +
-                '<div class="icon-left-input acc"><i></i><input type="text" placeholder="请输入手机号码或账号"></div>' +
-                '<div class="icon-left-input pwd"><i></i><input type="password" placeholder="请输入登录密码"></div>' +
-                '<a class="m-btn" id="sky_sub" style="display: block;background-color: #2a86ff;border-color: #2a86ff">登录</a><a class="pull-right forgetPwd" style="color:#2a86ff" onclick="sky.forgetPwd()">忘记密码</a>' +
-                '</div>';
-            form(html);
-
-            function sub() {
-                var acc_input = $(".sky-win-form .acc");
-                var pwd_input = $(".sky-win-form .pwd");
-                var acc = acc_input.find("input").val();
-                var pwd = pwd_input.find("input").val();
-                if (!Utils.IsIllegal(acc)) {
-                    acc_input.addClass("warn");
-                    sky.msg("您输入的账号不正确");
-                    return;
+        var html = '<div class="sky-win-main sky-win"><div class="container-fluid">' +
+            '<div class="sky-win-form">' + h + '</div>' +
+            '</div></div><div class="sky-win-bg sky-win"></div>';
+        body.append(html);
+        var sky_main = $(".sky-win-main");
+        var sky_container = $(".sky-win-main .container-fluid");
+        var clientHeight = document.documentElement.clientHeight;
+        var sky_top = clientHeight - sky_container.height();
+        $(".sky-win .sky-close").click(function () {
+            winClose();
+        });
+        $(".sky-win-bg").click(function () {
+            winClose();
+        });
+        $(document.body).css({
+            "overflow-x": "hidden",
+            "overflow-y": "hidden"
+        });
+        $(window).resize(function () {
+            if (sky_main) {
+                if (isMobile()) {
+                    sky_main.css({"margin-top": '0px', "top": sky_top < 0 ? 0 : sky_top + 'px'});
+                } else {
+                    sky_main.css({"margin-top": -(sky_main.height() / 2) + 'px', "top": '50%'});
                 }
-                if (!Utils.IsIllegal(pwd)) {
-                    pwd_input.addClass("warn");
-                    sky.msg("您输入的密码不正确");
-                    return;
-                }
-                sky.loding();
-                $.ajax({
-                    type: 'post',
-                    url: 'sign/in.do',
-                    dataType: 'json',
-                    data: {
-                        account: acc,
-                        password: pwd
-                    },
-                    success: function(res) {
-                        try {
-                            sky.lodingClose();
-                            if (returnCode(res.retCode)) {
-                                location.href = "accIndexV.do";
-                            } else {
-                                sky.msg(res.retMsg);
-                            }
-                        } catch (e) {
-                            sky.msg("发生异常：" + e);
-                        }
-                    },
-                    error: function(xhr, type) {
-                        sky.lodingClose();
-                        sky.msg("服务器连接错误！");
-                    }
-                })
             }
-
-            $("#sky_sub").click(function() {
-                sub()
-            });
-
+        });
+        if (!isMobile()) {
+            sky_main.css("margin-top", -(sky_main.height() / 2) + 'px');
+        } else {
+            sky_main.animate({
+                top: sky_top < 0 ? 0 : sky_top + 'px'
+            }, 500);
         }
-        //注册弹窗
-
-    //忘记密码
-    var forgetPwd = function() {
-            var html = '<div class="sky-form-header"><span class="title">忘记密码</span></div>' +
-                '<div class="form">' +
-                '<div class="icon-left-input phone"><i></i><input type="text" placeholder="请输入手机号码"></div>' +
-                '<div class="icon-left-input imgCode"><i></i><input type="text" placeholder="请输入图片验证码"></div>' +
-                '<a class="getImgCode code"><img src="message/imageCode.do"></a>' +
-                '<div class="icon-left-input code"><i></i><input type="text" placeholder="请输入验证码"></div>' +
-                '<a class="getPhoneCode code" style="color: #2a86ff;border-color: #2a86ff">获取验证码</a>' +
-                '<div class="icon-left-input pwd"><i></i><input type="text" placeholder="请输入密码"></div>' +
-                '<div class="icon-left-input cpwd"><i></i><input type="text" placeholder="重复密码"></div>' +
-                '<a class="m-btn min sky_close" style="color: #2a86ff;border-color: #2a86ff">取消</a><a style="background-color: #2a86ff;border-color: #2a86ff" class="m-btn min pull-right" id="sky_sub">更改密码</a>' +
-                '</div>';
-            form(html);
-            $(".getImgCode").click(function() {
-                $(this).find("img").attr("src", "message/imageCode.do?" + Math.random());
-            });
-            $(".sky_close").click(function() {
-                winClose();
-            });
-            $("#sky_sub").click(function() {
-                var phone_input = $(".sky-win-form .phone");
-                var code_input = $(".sky-win-form .code");
-                var pwd_input = $(".sky-win-form .pwd");
-                var cpwd_input = $(".sky-win-form .cpwd");
-
-                var phone = phone_input.find("input").val();
-                var code = code_input.find("input").val();
-                var pwd = pwd_input.find("input").val();
-                var cpwd = cpwd_input.find("input").val();
-
-                if (!Utils.IsMobile(phone)) {
-                    phone_input.addClass("warn");
-                    sky.msg("您输入的手机号码不正确");
-                    return;
-                }
-                if (!Utils.IsPhoneCode(code)) {
-                    code_input.addClass("warn");
-                    sky.msg("您输入的短信验证码不正确");
-                    return;
-                }
-                if (!Utils.IsIllegal(pwd)) {
-                    pwd_input.addClass("warn");
-                    sky.msg("您输入的密码不正确");
-                    return;
-                }
-                if (pwd != cpwd) {
-                    cpwd_input.addClass("warn");
-                    sky.msg("两次密码输入不一致");
-                    return;
-                }
-                sky.loding();
-                $.ajax({
-                    type: 'post',
-                    url: 'user/forgetPwd.do',
-                    dataType: 'json',
-                    data: {
-                        mobile: phone,
-                        code: code,
-                        password: pwd
-                    },
-                    success: function(res) {
-                        $(".getImgCode").find("img").attr("src", "message/imageCode.do?" + Math.random());
-                        sky.lodingClose();
-                        try {
-                            if (returnCode(res.retCode)) {
-                                location.replace(document.referrer);
-                            } else {
-                                sky.msg(res.retMsg);
-                            }
-                        } catch (e) {
-                            sky.msg("发生异常：" + e);
-                        }
-                    },
-                    error: function(xhr, type) {
-                        $(".getImgCode").find("img").attr("src", "message/imageCode.do?" + Math.random());
-                        sky.lodingClose();
-                        sky.msg("服务器连接错误！");
-                        console.log(xhr, type);
-                    }
-                })
-            });
-            var time = 60;
-            $(".getPhoneCode").click(function() {
-                if (time != 60) {
-                    return;
-                }
-                var t = $(this);
-                var phone = $(".phone input").val();
-                var imgCode = $(".imgCode input").val();
-                if (!Utils.IsMobile(phone)) {
-                    sky.msg("手机号码格式输入错误！");
-                    return;
-                }
-                if (!Utils.IsCode(imgCode)) {
-                    sky.msg("图片验证码输入错误！");
-                    return;
-                }
-                $.ajax({
-                    type: 'post',
-                    url: 'message/send.do',
-                    dataType: 'json',
-                    data: {
-                        mobile: phone,
-                        imageCode: imgCode
-                    },
-                    success: function(res) {
+    }
+    //登录弹窗
+    var login = function () {
+        var html = '<div class="sky-form-header"><span class="title">欢迎回来</span></div>' +
+            '<div class="form">' +
+            '<div class="icon-left-input acc"><i></i><input type="text" placeholder="请输入手机号码或账号"></div>' +
+            '<div class="icon-left-input pwd"><i></i><input type="password" placeholder="请输入登录密码"></div>' +
+            '<a class="m-btn" id="sky_sub" style="display: block;background-color: #2a86ff;border-color: #2a86ff">登录</a><a class="pull-right forgetPwd" style="color:#2a86ff" onclick="sky.forgetPwd()">忘记密码</a>' +
+            '</div>';
+        form(html);
+        
+        function sub() {
+            var acc_input = $(".sky-win-form .acc");
+            var pwd_input = $(".sky-win-form .pwd");
+            var acc = acc_input.find("input").val();
+            var pwd = pwd_input.find("input").val();
+            if (!Utils.IsIllegal(acc)) {
+                acc_input.addClass("warn");
+                sky.msg("您输入的账号不正确");
+                return;
+            }
+            if (!Utils.IsIllegal(pwd)) {
+                pwd_input.addClass("warn");
+                sky.msg("您输入的密码不正确");
+                return;
+            }
+            sky.loding();
+            $.ajax({
+                type: 'post',
+                url: 'sign/in.do',
+                dataType: 'json',
+                data: {
+                    account: acc,
+                    password: pwd
+                },
+                success: function (res) {
+                    try {
                         sky.lodingClose();
                         if (returnCode(res.retCode)) {
-                            var setTime = setInterval(function() {
-                                if (time >= 0) {
-                                    t.html(time + "s后重新发送");
-                                    time--;
-                                } else {
-                                    time = 60;
-                                    clearInterval(setTime);
-                                    t.html("获取验证码");
-                                }
-                            }, 1000);
+                            location.href = "accIndexV.do";
                         } else {
                             sky.msg(res.retMsg);
                         }
-                    },
-                    error: function(xhr, type) {
-                        sky.lodingClose();
-                        sky.msg("服务器连接错误！");
+                    } catch (e) {
+                        sky.msg("发生异常：" + e);
                     }
-                })
-            });
+                },
+                error: function (xhr, type) {
+                    sky.lodingClose();
+                    sky.msg("服务器连接错误！");
+                }
+            })
         }
-        //消息弹窗
-    var msg = function(text) {
+        
+        $("#sky_sub").click(function () {
+            sub()
+        });
+        
+    }
+    //注册弹窗
+    
+    //忘记密码
+    var forgetPwd = function () {
+        var html = '<div class="sky-form-header"><span class="title">忘记密码</span></div>' +
+            '<div class="form">' +
+            '<div class="icon-left-input phone"><i></i><input type="text" placeholder="请输入手机号码"></div>' +
+            '<div class="icon-left-input imgCode"><i></i><input type="text" placeholder="请输入图片验证码"></div>' +
+            '<a class="getImgCode code"><img src="message/imageCode.do"></a>' +
+            '<div class="icon-left-input code"><i></i><input type="text" placeholder="请输入验证码"></div>' +
+            '<a class="getPhoneCode code" style="color: #2a86ff;border-color: #2a86ff">获取验证码</a>' +
+            '<div class="icon-left-input pwd"><i></i><input type="text" placeholder="请输入密码"></div>' +
+            '<div class="icon-left-input cpwd"><i></i><input type="text" placeholder="重复密码"></div>' +
+            '<a class="m-btn min sky_close" style="color: #2a86ff;border-color: #2a86ff">取消</a><a style="background-color: #2a86ff;border-color: #2a86ff" class="m-btn min pull-right" id="sky_sub">更改密码</a>' +
+            '</div>';
+        form(html);
+        $(".getImgCode").click(function () {
+            $(this).find("img").attr("src", "message/imageCode.do?" + Math.random());
+        });
+        $(".sky_close").click(function () {
+            winClose();
+        });
+        $("#sky_sub").click(function () {
+            var phone_input = $(".sky-win-form .phone");
+            var code_input = $(".sky-win-form .code");
+            var pwd_input = $(".sky-win-form .pwd");
+            var cpwd_input = $(".sky-win-form .cpwd");
+            
+            var phone = phone_input.find("input").val();
+            var code = code_input.find("input").val();
+            var pwd = pwd_input.find("input").val();
+            var cpwd = cpwd_input.find("input").val();
+            
+            if (!Utils.IsMobile(phone)) {
+                phone_input.addClass("warn");
+                sky.msg("您输入的手机号码不正确");
+                return;
+            }
+            if (!Utils.IsPhoneCode(code)) {
+                code_input.addClass("warn");
+                sky.msg("您输入的短信验证码不正确");
+                return;
+            }
+            if (!Utils.IsIllegal(pwd)) {
+                pwd_input.addClass("warn");
+                sky.msg("您输入的密码不正确");
+                return;
+            }
+            if (pwd != cpwd) {
+                cpwd_input.addClass("warn");
+                sky.msg("两次密码输入不一致");
+                return;
+            }
+            sky.loding();
+            $.ajax({
+                type: 'post',
+                url: 'user/forgetPwd.do',
+                dataType: 'json',
+                data: {
+                    mobile: phone,
+                    code: code,
+                    password: pwd
+                },
+                success: function (res) {
+                    $(".getImgCode").find("img").attr("src", "message/imageCode.do?" + Math.random());
+                    sky.lodingClose();
+                    try {
+                        if (returnCode(res.retCode)) {
+                            location.replace(document.referrer);
+                        } else {
+                            sky.msg(res.retMsg);
+                        }
+                    } catch (e) {
+                        sky.msg("发生异常：" + e);
+                    }
+                },
+                error: function (xhr, type) {
+                    $(".getImgCode").find("img").attr("src", "message/imageCode.do?" + Math.random());
+                    sky.lodingClose();
+                    sky.msg("服务器连接错误！");
+                    console.log(xhr, type);
+                }
+            })
+        });
+        var time = 60;
+        $(".getPhoneCode").click(function () {
+            if (time != 60) {
+                return;
+            }
+            var t = $(this);
+            var phone = $(".phone input").val();
+            var imgCode = $(".imgCode input").val();
+            if (!Utils.IsMobile(phone)) {
+                sky.msg("手机号码格式输入错误！");
+                return;
+            }
+            if (!Utils.IsCode(imgCode)) {
+                sky.msg("图片验证码输入错误！");
+                return;
+            }
+            $.ajax({
+                type: 'post',
+                url: 'message/send.do',
+                dataType: 'json',
+                data: {
+                    mobile: phone,
+                    imageCode: imgCode
+                },
+                success: function (res) {
+                    sky.lodingClose();
+                    if (returnCode(res.retCode)) {
+                        var setTime = setInterval(function () {
+                            if (time >= 0) {
+                                t.html(time + "s后重新发送");
+                                time--;
+                            } else {
+                                time = 60;
+                                clearInterval(setTime);
+                                t.html("获取验证码");
+                            }
+                        }, 1000);
+                    } else {
+                        sky.msg(res.retMsg);
+                    }
+                },
+                error: function (xhr, type) {
+                    sky.lodingClose();
+                    sky.msg("服务器连接错误！");
+                }
+            })
+        });
+    }
+    //消息弹窗
+    var msg = function (text) {
         if ($(".sky-msg").length != 0) {
             return;
         }
         var html = '<div class="sky-msg">' + text + '</div>';
         body.append(html);
         $(".sky-msg").css("margin-left", -($(".sky-msg").width() / 2) + "px");
-        setTimeout(function() {
+        setTimeout(function () {
             $(".sky-msg").remove();
         }, 1000);
     };
     //弹窗
-    var win = function(title, h) {
+    var win = function (title, h) {
         if ($(".sky-win")) {
             winClose();
         }
@@ -466,22 +470,22 @@ var sky = (function() {
         var sky_container = $(".sky-win-main .container-fluid");
         var clientHeight = document.documentElement.clientHeight;
         var sky_top = clientHeight - sky_container.height();
-        $(".sky-win .sky-close").click(function() {
+        $(".sky-win .sky-close").click(function () {
             winClose();
         });
-        $(".sky-win-bg").click(function() {
+        $(".sky-win-bg").click(function () {
             winClose();
         });
         $(document.body).css({
             "overflow-x": "hidden",
             "overflow-y": "hidden"
         });
-        $(window).resize(function() {
+        $(window).resize(function () {
             if (sky_main) {
                 if (isMobile()) {
-                    sky_main.css({ "margin-top": '0px', "top": sky_top < 0 ? 0 : sky_top + 'px' });
+                    sky_main.css({"margin-top": '0px', "top": sky_top < 0 ? 0 : sky_top + 'px'});
                 } else {
-                    sky_main.css({ "margin-top": -(sky_main.height() / 2) + 'px', "top": '50%' });
+                    sky_main.css({"margin-top": -(sky_main.height() / 2) + 'px', "top": '50%'});
                 }
             }
         });
@@ -494,7 +498,7 @@ var sky = (function() {
         }
     };
     //提示小弹窗
-    var promptWin = function(title, h) {
+    var promptWin = function (title, h) {
         if ($(".sky-win")) {
             winClose();
         }
@@ -507,22 +511,22 @@ var sky = (function() {
         var sky_container = $(".sky-win-main .container-fluid");
         var clientHeight = document.documentElement.clientHeight;
         var sky_top = clientHeight - sky_container.height();
-        $(".sky-win .sky-close").click(function() {
+        $(".sky-win .sky-close").click(function () {
             winClose();
         });
-        $(".sky-win-bg").click(function() {
+        $(".sky-win-bg").click(function () {
             winClose();
         });
         /*$(document.body).css({
             "overflow-x": "hidden",
             "overflow-y": "hidden"
         });*/
-        $(window).resize(function() {
+        $(window).resize(function () {
             if (sky_main) {
                 if (isMobile()) {
-                    sky_main.css({ "margin-top": '0px', "top": sky_top < 0 ? 0 : sky_top + 'px' });
+                    sky_main.css({"margin-top": '0px', "top": sky_top < 0 ? 0 : sky_top + 'px'});
                 } else {
-                    sky_main.css({ "margin-top": -(sky_main.height() / 2) + 'px', "top": '50%' });
+                    sky_main.css({"margin-top": -(sky_main.height() / 2) + 'px', "top": '50%'});
                 }
             }
         });
@@ -535,101 +539,165 @@ var sky = (function() {
         }
     };
     //退出
-    var quit = function() {
-            var h = '<div class="sky-quit"><p>您确定退出吗?</p><a class="cancel">取消</a><a class="ok">退出</a></div>';
-            promptWin("提示", h);
-            $(".sky-quit .ok").click(function() {
-                $.ajax({
-                    type: 'post',
-                    url: urls.logout,
-                    success: function(res) {
-                        if (returnCode(res.code)) {
-                            location.href = "/login/";
-                        } else {
-                            sky.msg(res.msg);
-                        }
-                    },
-                    error: function(xhr, type) {
-                        sky.lodingClose();
-                        sky.msg("服务器连接错误！");
+    var quit = function () {
+        var h = '<div class="sky-quit"><p>您确定退出吗?</p><a class="cancel">取消</a><a class="ok">退出</a></div>';
+        promptWin("提示", h);
+        $(".sky-quit .ok").click(function () {
+            $.ajax({
+                type: 'post',
+                url: urls.logout,
+                success: function (res) {
+                    if (returnCode(res.code)) {
+                        location.href = "/login/";
+                    } else {
+                        sky.msg(res.msg);
                     }
-                })
-            });
-            $(".sky-quit .cancel").click(function() {
-                winClose();
-            });
-        }
-        //免责声明
-    var declare = function() {
-            var h = '<div class="text-left sky-declare">' +
-                '<p>91征信提醒您：在使用www.91zhengxin.com（以下简称91征信）前，请您务必仔细阅读并透彻理解本声明。您可以选择不使用91征信，但如果您使用，您的使用行为将被视为对本声明全部内容的认可</p>' +
-                '<ul class="list-unstyled">' +
-                '<li>1.鉴于91征信以非人工检索方式、根据您提供的内容自动生成由第三方服务商提供的数据内容报告，除91征信注明之服务条款外，其他一切因使用91征信而可能遭致的意外、疏忽、侵权及其造成的损失，91征信对其概不负责，亦不承担任何法律责任。</li>' +
-                '<li>2.任何通过使用91征信而获得的数据信息均由第三方服务商制作或提供，91征信对其数据来源的真实性、准确性概不负责，亦不承担任何法律责任。</li>' +
-                '<li>3.您应该对使用91征信产品产生的结果自行承担风险。91征信不做任何形式的保证：不保证产品结果满足您的要求，不保证服务不中断。因网络状况、通讯线路、第三方网站等任何原因而导致您不能正常使用91征信，91征信不承担任何法律责任。</li>' +
-                '<li>4.91征信尊重并保护所有使用91征信的个人隐私权，您注册的用户名、电子邮件地址等个人资料，非经您亲自许可或根据相关法律、法规的强制性规定，91征信不会主动地泄露给第三方。91征信提醒您：您在使用本产品时所键入的查询信息将不被认为是您的个人隐私资料。</li>' +
-                '<li>5.任何单位或个人认为通过91征信所获得的内容可能涉嫌侵犯其相关权利的，应该及时向91征信提出书面权利通知，并提供身份证明、权属证明及详细侵权情况证明。91征信在收到上述法律文件后，将会依法保护您的权利不受侵犯。</li>' +
-                '</ul>' +
-                '</div>';
-            promptWin("免责声明", h);
-        }
-        //企业用户UKey登录提示
-    var loginPrompt = function() {
-            var html = '<div class="login"><img src="img/login.png" class="img-responsive center-block">' +
-                '<p>您当前为企业账号登录，</p>' +
-                '<p>没有该项目查询权限，请插入UKey登录后查询。</p></div>';
-            promptWin("提示", html);
-        }
-        //用户权限升级提示
-    var permitPrompt = function(id) {
-            var user = "";
-            switch (parseInt(id)) {
-                case 0:
-                    user = "普通用户";
-                    break;
-                case 1:
-                    user = "实名用户";
-                    break;
-                case 2:
-                    user = "U-Key用户";
-                    break;
-                case 3:
-                    user = "企业用户";
-                    break;
-                default:
-                    user = "未知用户";
-                    break;
-            }
-            var html = '<div class="permit"><p class="text-left">您当前为' + user + '，没有该项目查询权限，账户升级后即可查询。</p>' +
-                '<a class="m-btn">立刻升级</a></div>';
-            promptWin("提示", html);
-            $(".m-btn").click(function() {
-                if (parseInt(id) == 1) {
-                    location.href = "accUpgradeV.do";
-                } else if (parseInt(id) == 0) {
-                    location.href = "accVerifiedV.do";
+                },
+                error: function (xhr, type) {
+                    sky.lodingClose();
+                    sky.msg("服务器连接错误！");
                 }
-            });
+            })
+        });
+        $(".sky-quit .cancel").click(function () {
+            winClose();
+        });
+    }
+    //免责声明
+    var declare = function () {
+        var h = '<div class="text-left sky-declare">' +
+            '<p>宏图数据提醒您：在使用www.hongtushuju.com前，请您务必仔细阅读并透彻理解本声明。您可以选择不使用宏图数据，但如果您使用，您的使用行为将被视为对本声明全部内容的认可</p>' +
+            '<ul class="list-unstyled">' +
+            '<li>1.鉴于宏图数据以非人工检索方式、根据您提供的内容自动生成由第三方服务商提供的数据内容报告，除宏图数据注明之服务条款外，其他一切因使用宏图数据而可能遭致的意外、疏忽、侵权及其造成的损失，宏图数据对其概不负责，亦不承担任何法律责任。</li>' +
+            '<li>2.任何通过使用宏图数据而获得的数据信息均由第三方服务商制作或提供，宏图数据对其数据来源的真实性、准确性概不负责，亦不承担任何法律责任。</li>' +
+            '<li>3.您应该对使用宏图数据产品产生的结果自行承担风险。宏图数据不做任何形式的保证：不保证产品结果满足您的要求，不保证服务不中断。因网络状况、通讯线路、第三方网站等任何原因而导致您不能正常使用宏图数据，宏图数据不承担任何法律责任。</li>' +
+            '<li>4. 宏图数据尊重并保护所有使用宏图数据的个人隐私权，您注册的用户名、电子邮件地址等个人资料，非经您亲自许可或根据相关法律、法规的强制性规定，宏图数据不会主动地泄露给第三方。宏图数据提醒您：您在使用本产品时所键入的查询信息将不被认为是您的个人隐私资料。\n</li>' +
+            '<li>5.任何单位或个人认为通过宏图数据所获得的内容可能涉嫌侵犯其相关权利的，应该及时向宏图数据提出书面权利通知，并提供身份证明、权属证明及详细侵权情况证明。宏图数据在收到上述法律文件后，将会依法保护您的权利不受侵犯。</li>' +
+            '</ul>' +
+            '</div>';
+        promptWin("免责声明", h);
+    }
+    //企业用户UKey登录提示
+    var loginPrompt = function () {
+        var html = '<div class="login"><img src="img/login.png" class="img-responsive center-block">' +
+            '<p>您当前为企业账号登录，</p>' +
+            '<p>没有该项目查询权限，请插入UKey登录后查询。</p></div>';
+        promptWin("提示", html);
+    }
+    //用户权限升级提示
+    var permitPrompt = function (id) {
+        var user = "";
+        switch (parseInt(id)) {
+            case 0:
+                user = "普通用户";
+                break;
+            case 1:
+                user = "实名用户";
+                break;
+            case 2:
+                user = "U-Key用户";
+                break;
+            case 3:
+                user = "企业用户";
+                break;
+            default:
+                user = "未知用户";
+                break;
         }
-        //充值提示
-    var rechargeTips = function() {
-            var html = '<div class="permit"><p class="text-left">您的积分不足请充值！</p>' +
-                '<a class="m-btn">立刻充值</a></div>';
-            promptWin("提示", html);
-            $(".m-btn").click(function() {
-                location.href = "accRechargeV.do";
-            });
-        }
-        //授权说明
-    var authorize = function() {
+        var html = '<div class="permit"><p class="text-left">您当前为' + user + '，没有该项目查询权限，账户升级后即可查询。</p>' +
+            '<a class="m-btn">立刻升级</a></div>';
+        promptWin("提示", html);
+        $(".m-btn").click(function () {
+            if (parseInt(id) == 1) {
+                location.href = "accUpgradeV.do";
+            } else if (parseInt(id) == 0) {
+                location.href = "accVerifiedV.do";
+            }
+        });
+    }
+    //充值提示
+    var rechargeTips = function () {
+        var html = '<div class="permit"><p class="text-left">您的积分不足请充值！</p>' +
+            '<a class="m-btn">立刻充值</a></div>';
+        promptWin("提示", html);
+        $(".m-btn").click(function () {
+            location.href = "accRechargeV.do";
+        });
+    }
+    //授权说明
+    var authorize = function () {
         var html = '<div class="box"><div class="tabBox">' +
-            '<p style="text-indent: 2rem;line-height: 2rem">根据《征信业管理条例》第十八条规定，向征信机构查询个人信息的，应当取得信息主体本人的书面同意并约定用途，但是，法律规定可以不经同意查询的除外，征信机构不得违反前款规定提供个人信息。</p>' +
-            '<p style="text-indent: 2rem;line-height: 2rem">勾选以获取该查询用户授权即默认您已获取该查询用户授权，如若发生法律纠纷，我方不承担任何责任。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">本协议是您和【深圳市毅展宏图信息科技有限公司】（以下简称“本公司”）为明确服务内容及双方权利义务等而签订。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">当您在点击确认“同意本协议”或实际使用本公司提供的服务即视为您授权（或获得有效的授权且可将该等授权转授权）本公司，您确认授权（或获得有效的转授权）本公司查看您拟查询的包括但不限于附件中所列您或第三人的所有信息，并将视为已阅读并理解本协议的全部内容。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">请您仔细阅读粗体字的标记，并确保您（及被查询的第三人）已明确知悉本协议的某些条款可能对您（及被查询的第三人）权益具有或可能具有重大关系的条款。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">如果您在任何时候对任何内容存在疑虑或异议，或者不同意本协议的任意内容，或者无法准确理解本公司对条款的解释或者未获得第三人的有效授权请不要进行后续操作，一旦您点击同意本协议或进行后续操作或使用本公司的服务，均视为您同意本协议。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">根据《征信业管理条例》第十八条规定，向征信机构查询个人信息的，应当取得信息主体本人的书面同意并约定用途，但是，法律规定可以不经同意查询的除外，征信机构不得违反前款规定提供个人信息。\n' +
+            '勾选以获取该查询用户授权即默认您已获取该查询用户授权，如若发生法律纠纷，我方不承担任何责任。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">一、授权条款 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">1.1您确认在您授权/转授权我们验证并获取您或第三人的包括但不限于本协议附件中所列的信息之前，已仔细阅读、充分理解并自愿接受本协议的全部内容，一旦您使用本公司的服务，即表示您同意并遵守本协议的所有约定。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">1.2您同意，在您授权/转授权我们验证并获取您或第三人本协议附件所列的包括但不限于您或第三人的收入、存款、有价证券、商业保险、不动产的信息和纳税数额信息等信息后，本公司有权按照附件中所列的授权内容进行数据查询、获取、使用、暂时保存。本人已被明确告知提供上述信息可能会给本人带来财产或信用损失、以及其他可能的不利后果，包括但不限于：采集这些信息对本人的信用评级（评分）、信用报告等结果可能产生的不利影响，以及该等信息被信息使用者依法提供给第三方后被他人不当利用的风险，但本人仍然同意授权本单位采集或向依法成立的征信机构采集这些信息。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">1.3您理解并同意，您使用本公司服务时，即授权本公司根据您所提供或授权或查询所得的各项信息及本公司独立获得的信息进行数据收集，并可依法整理、保存、加工、使用、提供并出具数据报告。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">1.4您理解并同意，本公司在为您提供数据服务过程中，对于所知悉的您或第三人的不良信息，可依法向您的信息接入路径所对应的第三方公司提供，并不再另行告知您。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">1.5您授权/转授权本公司将数据或报告转交至您的信息接入路径所对应的第三方公司，用于您在第三方公司的业务分析、审核贷款信用、给予信贷评分、审核贷款申请条件、贷后关系及风险控制等用途。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">1.6您理解并同意，您不可撤销的授权/转授权本公司向第三方公司查询或核实您的相关信息（但法律、法规、监管政策禁止查询的除外）；您同意本公司、本公司关联公司/合作公司有权对您的相关交易信息进行收集并在与业务相关的其他第三方之间共享；同时同意本公司将查询获取的信息进行暂时保存、整理、加工。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">1.7本公司所生成的数据报告只是利用现有的技术手段对信息做如实的收集，而不对该等信息作任何的修改；但基于互联网信息更新的速度，及第三方存储的信息可能存在的滞后等原因，故本公司不对信息的有效性、准确性、正确性、可靠性、质量、稳定性、完整性和及时性做出任何承诺和保证。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">二、服务限制及终止</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">2.1您在使用本公司服务之前，如涉及第三人的，应当取得该第三人的合法有效授权，并且该等授权可转委托，否则您不得使用本公司的服务。 若您未能提供该等授权或该等授权有瑕疵的，本公司有权终止向您提供服务，由此产生的责任，由您自行承担，若因此给本公司造成损失或不良影响的，本公司有权追偿。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">2.2若您利用本公司提供的服务，违反相关法律、行政法规、地方性法规、部门规章、违反公序良俗、诚实信用、违背社会公共利益或侵犯第三人合法权益的，本公司有权终止服务并要求您立即停止使用本公司服务，由此给本公司带来损失的，本公司有权追偿。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">三、保密及隐私</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.1您保证获悉的属于本公司的且无法自公开渠道获得的文件及资料（包括但不限于商业秘密、公司计划、运营活动、财务信息、技术信息、经营信息及其他商业秘密）予以保密。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.2对于以下信息，双方均免除相应的保密责任：由公众通过合法途径获知的信息；有明确证据证明从第三方获知的；</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.3本条规定的保密义务具有永久法律效力，不因本协议的变更、解除或终止而终止。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.4任何一方违反本保密条款约定的，应当赔偿由此给对方造成的一切损失。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5本公司重视对客户隐私的保护，因收集信息是出于遵守国家法律法规的规定以及向您提供服务及提升服务质量的目的，本公司不会因商业目的而向他人提供您/第三人的任何信息，我们会在下列情况下才会将您的查询信息与第三方分享：</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5.1获得信息主体的同意/授权/转授权；</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5.2为了向您提供或推荐服务、产品或为了向您提供更完善的服务，我们会在必要时向合作机构共享您的相关信息；</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5.3本公司的各项服务及客户服务，并维护、改进这些服务。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5.4在某些情况下只有共享您的信息才能向您提供您需要的服务或者产品，或处理您与他人的交易或者纠纷、争议；</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5.5比较信息的准确性，并与第三方进行验证。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5.6本公司为维护本公司及关联公司权益或国家、集体、第三人的权益而预防或禁止的非法活动。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5.7经您或第三人许可的其他用途。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">3.5.8根据法律法规的规定或有关机关的要求。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">四、不可抗力 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">4.1因不可抗力或者其他意外事件，使得本协议的履行不可能、不必要或者无意义的，双方均不承担责任。本合同所称之不可抗力指不能预见、不能避免并不能克服的客观情况，包括但不限于战争、台风、水灾、火灾、雷击或地震、罢工、暴动、疾病、黑客攻击、网络故障、计算机故障、木马、电信部门技术管制、政府行为或任何其它自然或人为造成的灾难等客观情况。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">4.2如任意一方发生不可抗力事件，该方应立即用可能的快捷方式通知另一方。双方应在协商一致的基础上决定是否延期履行本协议、终止本协议。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">五、用户义务及免责声明</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">5.1您承诺，您所提供的信息均为您合法享有或第三人有效授权您享有、获取、保存的第三人的真实信息，不得为虚假或非法获取的信息；若涉嫌虚假信息或盗用他人信息，本公司有权拒绝为您提供服务，由此而产生的全部法律责任将由您自行承担，本公司不对此承担任何法律责任，若因此对本公司带来损失的，本公司有权追究您的法律责任。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">5.2本公司仅对本协议中所列明的义务承担责任。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">5.3您明确因交易所产生的任何风险应由交易双方自行承担。 </p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">六、法律争议及适用</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">6.1本协议的生效、解释、履行及争议的解决均适用中华人民共和国法律（为免歧义，不包括香港、台湾、澳门地区）。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">6.2在协议履行期间，凡由本协议引起的或与本协议有关的一切争议、纠纷，您应与本公司首先协商解决。协商不成，向上海市浦东新区人民法院提起诉讼。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">七、其他</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">7.1本协议为电子版本，一经您点击确认，立即生效。本授权一经做出，便不可撤销。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">7.2本协议的某一条款被确认无效，均不影响本协议其他条款的效力。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">7.3您在此不可撤销的同意，为了向您提供更优质、高效的服务，本公司有权将本协议项下您的部分或全部授权转授权（或将本协议项下本公司的部分或全部权利义务转移）给具有合法资质的第三方数据查询公司；该第三方公司可按附件中所列的您的授权类别进行数据查询并将查询结果反馈给本公司。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">7.4本协议未尽事宜，由双方另行签订补充协议，补充协议效力与本协议效力相同。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">7.5本协议附件为协议不可分割的组成部分并且与本协议正文条款具有同等效力。</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">特别提示：</p>' +
+            '<p style="text-indent: 2rem;line-height: 2rem">为了保障您的合法权益，您应当阅读并遵守本授权书，请您务必审慎阅读，并充分理解本授权书的全部内容，特别是以加粗形式特别提示您注意的，若您不接受本授权书的任何条款，请您立即停止授权。</p>' +
+            '<table class="table m-t-2">' +
+            '<thead><tr><td class="title">授权类别</td><td class="title">授权内容</td></tr></thead>' +
+            '<tbody>' +
+            '<tr>' +
+            '<td class="title">运营商信息</td>' +
+            '<td>查看但不限于被查询人运营商基本信息（姓名、身份证号、手机号）等信息在内的各类信息</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td>个人对外投资信息</td>' +
+            '<td>查看包括但不限于被查询人对外投资基本信息（姓名、身份证号、组织机构代码、公司名称、法人姓名、成立时间、股东姓名、投资比例、投资金额）等信息在内的各类信息</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td>反欺诈报告</td>' +
+            '<td>查看包括但不限于被查询人多维度欺诈识别基本信息（用户出生地:省份、手机号城市、用户姓名、用户出生地:城市、年龄、手机号、身份证、性别、手机号归属地、用户注册信息情况、身份证在那些类型的机构中使用过、用这个身份证绑定的其他手机号码、用这个身份证号码绑定的其他姓名、用这个手机号码绑定的其他身份证、电话号码在那些类型的机构中使用过、用这个手机号码绑定的其他姓名）等信息在内的各类信息</td>' +
+            '</tr>' +
+            '</tbody>' +
+            '</table>' +
             '</div></div>';
         win("授权说明", html);
     };
     //P2P记录
-    var urgeMoneyRecord = function(id) {
+    var urgeMoneyRecord = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -638,7 +706,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -682,14 +750,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //P2P借款记录
-    var loanRecord = function(id) {
+    var loanRecord = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -698,7 +766,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -735,7 +803,7 @@ var sky = (function() {
                                 } else {
                                     data[i].borrowType = "未知"
                                 }
-
+                                
                                 if (data[i].borrowState == 0) {
                                     data[i].borrowState = "未知"
                                 } else if (data[i].borrowState == 1) {
@@ -751,7 +819,7 @@ var sky = (function() {
                                 } else {
                                     data[i].borrowState = "未知"
                                 }
-
+                                
                                 if (data[i].repayState == 0) {
                                     data[i].repayState = "未知"
                                 } else if (data[i].repayState == 1) {
@@ -848,15 +916,15 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //地址信息
-    var addressInfo = function(id) {
-
+    var addressInfo = function (id) {
+        
         sky.loding();
         $.ajax({
             type: 'post',
@@ -865,7 +933,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -920,14 +988,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //法院信息
-    var courtInfo = function(id) {
+    var courtInfo = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -936,7 +1004,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -1007,14 +1075,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //犯罪在逃信息
-    var criminalInfo = function(id, realName, idCard) {
+    var criminalInfo = function (id, realName, idCard) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1023,7 +1091,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     var data = res.data;
@@ -1089,14 +1157,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //工商信息
-    var companyInfo = function(id) {
+    var companyInfo = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1105,7 +1173,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -1233,14 +1301,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //小贷记录统计
-    var folkLoanRecord = function(id) {
+    var folkLoanRecord = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1249,7 +1317,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -1301,14 +1369,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //身份查询记录
-    var identityRecord = function(id) {
+    var identityRecord = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1317,7 +1385,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -1426,58 +1494,57 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //身份证相关-查询记录
-    var idCardQueryRecord = function(id) {
+    var idCardQueryRecord = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
-            url: 'history/result.do',
+            url: urls.getSearchHistoryInfo,
             dataType: 'json',
             data: {
-                id: id
+                id: id,
+                service: "idcard_img"
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     var html = null;
-                    if (res.retCode == "0000") {
-                        var data = res.data;
-                        if (data.status == "SAME") {
-                            if (data.photo != null) {
+                    if (res.code == 0) {
+                        var data = res.result.data.result;
+                        if (data.result.description == "一致") {
+                            if (data.result.photo != null) {
                                 html = '<div class="box">' +
                                     '<div class="tabBox"><table class="table">' +
-                                    '<tr><td>姓名：' + data.realName + '</td><td>年龄：' + calculateAge(data.data.birthday) + '</td><td rowspan="3" class="text-center"><img class="photo" src="data:img/jpeg;base64,' + data.photo + '"></td></tr>' +
-                                    '<tr><td>性别：' + data.data.sex + '</td><td>出生日期：' + data.data.birthday + '</td></tr>' +
-                                    '<tr><td colspan="2">证件号码：' + data.idCard + '</td></tr>' +
+                                    '<tr><td>姓名：' + data.result.name + '</td><td rowspan="2" class="text-center"><img class="photo" src="data:img/jpeg;base64,' + data.result.photo + '"></td></tr>' +
+                                    '<tr><td>证件号码：' + data.result.idcard + '</td></tr>' +
                                     '</table></div>' +
                                     '</div>';
                             } else {
                                 html = '<div class="box">' +
                                     '<p class="sky-title small text-center color-green">姓名身份证号一致，系统无照片返回</p>' +
                                     '<div class="tabBox"><table class="table m-t-2">' +
-                                    '<tr><td>姓名：' + data.realName + '</td><td>年龄：' + calculateAge(data.data.birthday) + '</td><td rowspan="3" class="text-center"><img src="img/icon_portrait_01.png"></td></tr>' +
-                                    '<tr><td>性别：' + data.data.sex + '</td><td>出生日期：' + data.data.birthday + '</td></tr>' +
-                                    '<tr><td colspan="2">证件号码：' + data.idCard + '</td></tr>' +
+                                    '<tr><td>姓名：' + data.result.name + '</td><td rowspan="3" class="text-center"><img src="/static/img/icon_portrait_01.png"></td></tr>' +
+                                    '<tr><td>证件号码：' + data.result.idcard + '</td></tr>' +
                                     '</table></div>' +
                                     '</div>';
                             }
                         } else {
                             html = '<div class="box">' +
                                 '<div class="queryFails text-center">' +
-                                '<img src="img/icon_fails.png" class="img-responsive center-block">' +
+                                '<img src="/static/img/icon_fails.png" class="img-responsive center-block">' +
                                 '<p class="text color-red">姓名身份证号不一致！</p></div>' +
                                 '</div>';
                         }
                     } else {
                         html = '<div class="box">' +
                             '<div class="queryFails text-center">' +
-                            '<img src="img/icon_fails.png" class="img-responsive">' +
+                            '<img src="/static/img/icon_fails.png" class="img-responsive">' +
                             '<p class="text">查询失败！</p>' +
                             '</div>' +
                             '</div>';
@@ -1487,14 +1554,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //同住址成员信息
-    var memberInfo = function(id) {
+    var memberInfo = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1503,7 +1570,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -1579,14 +1646,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //手机实名查询记录
-    var phoneSearchRecord = function() {
+    var phoneSearchRecord = function () {
         var html = '<div class="box">' +
             '<div class="tabBox"><table class="table text-center min-width-500 m-t-2 record">' +
             '<tr><th>序号</th><th>被查手机号</th><th>查询用户</th><th>查询时间</th></tr>' +
@@ -1600,7 +1667,7 @@ var sky = (function() {
         win("手机实名历史", html);
     };
     //手机使用时间查询
-    var phoneDate = function(id) {
+    var phoneDate = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1609,7 +1676,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 if (returnCode(res.retCode)) {
                     var status = null;
@@ -1638,13 +1705,13 @@ var sky = (function() {
                     win("手机在网时长", html);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.msg("服务器连接错误！");
             }
         })
     };
     //手机实名
-    var phoneRealName = function(id) {
+    var phoneRealName = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1654,7 +1721,7 @@ var sky = (function() {
                 id: id,
                 service: "Telecom_realname"
             },
-            success: function(res) {
+            success: function (res) {
                 try {
                     sky.lodingClose();
                     if (returnCode(res.code)) {
@@ -1692,14 +1759,72 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
+                sky.lodingClose();
+                sky.msg("服务器连接错误！");
+            }
+        })
+    };
+    //身份证两要素
+    var idCardRealName = function (id) {
+        sky.loding();
+        $.ajax({
+            type: 'post',
+            url: urls.getSearchHistoryInfo,
+            dataType: 'json',
+            data: {
+                id: id,
+                service: "idcard_name"
+            },
+            success: function (res) {
+                console.log(res)
+                try {
+                    sky.lodingClose();
+                    if (returnCode(res.code)) {
+                        var status;
+                        if (res.result.data.result.result.isok) {
+                            status = "匹配"
+                        } else {
+                            status = "不匹配"
+                        }
+                        let html = '<div class="box">' +
+                            '<div class="tabBox"><table class="td-4 table">' +
+                            '<tr>' +
+                            '<td class="title">姓名</td>' +
+                            '<td>' + res.result.data.result.result.realname + '</td>' +
+                            '<td class="title">身份证号</td>' +
+                            '<td>' + res.result.data.result.result.idcard + '</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<td class="title">实名检验</td>' +
+                            '<td colspan="3">' + status + '</td>' +
+                            '</tr>' +
+                            '</table>' +
+                            '</div></div>';
+                        win("身份证二要素认证", html);
+                    } else {
+                        sky.msg(res.msg);
+                        var html = '<div class="box">' +
+                            '<div class="tabBox"><table class="table">' +
+                            '<tr>' +
+                            '<td>查询失败</td>' +
+                            '</tr>' +
+                            '</table></div>' +
+                            '</div>';
+                        win("身份证二要素认证", html);
+                    }
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
+                }
+            },
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         })
     };
     //个人对外投资
-    var financeInvestment = function(id) {
+    var financeInvestment = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1709,7 +1834,7 @@ var sky = (function() {
                 id: id,
                 service: "Finance_investment"
             },
-            success: function(res) {
+            success: function (res) {
                 console.log(res)
                 try {
                     sky.lodingClose();
@@ -1721,7 +1846,7 @@ var sky = (function() {
                                 '<div class="tabBox">' + dataHtml + '</div>' +
                                 '</div>';
                             win("个人对外投资", html);
-
+                            
                         } else {
                             let html = '<div class="box">' +
                                 '<div class="tabBox"><table class="table">' +
@@ -1732,8 +1857,8 @@ var sky = (function() {
                                 '</div>';
                             win("个人对外投资", html);
                         }
-
-
+                        
+                        
                     } else {
                         sky.msg(res.msg);
                         var html = '<div class="box">' +
@@ -1749,14 +1874,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         })
     };
     //蜜罐数据
-    var miguan = function(id) {
+    var miguan = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1766,7 +1891,7 @@ var sky = (function() {
                 id: id,
                 service: "Antifraud_miguan"
             },
-            success: function(res) {
+            success: function (res) {
                 try {
                     sky.lodingClose();
                     if (returnCode(res.code)) {
@@ -1776,8 +1901,8 @@ var sky = (function() {
                         let html = '<div class="box">' +
                             '<div class="tabBox">' + dataHtml + '</div>' +
                             '</div>';
-                        win("蜜罐数据", html);
-
+                        win("个人反欺诈报告", html);
+                        
                     } else {
                         sky.msg(res.msg);
                         var html = '<div class="box">' +
@@ -1787,20 +1912,28 @@ var sky = (function() {
                             '</tr>' +
                             '</table></div>' +
                             '</div>';
-                        win("蜜罐数据", html);
+                        win("个人反欺诈报告", html);
                     }
                 } catch (e) {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         })
     };
+    var notice = function (title, content) {
+        var html = '<div class="box">' +
+            '<div class="tabBox">' +
+            '<p>' + content + '</p>' +
+            '</div>' +
+            '</div>';
+        win(title, html);
+    };
     //逾期详细信息记录
-    var overdueInfoRecord = function() {
+    var overdueInfoRecord = function () {
         var html = '<div class="box">' +
             '<div class="tabBox"><table class="table text-left td-4 m-t-2">' +
             '<tr><td class="sky-tab-title">序号</td><td>15312211122</td><td class="sky-tab-title">查询用户</td><td><span class="icon icon-orange">中</span></td></tr>' +
@@ -1819,7 +1952,7 @@ var sky = (function() {
         win("逾期逾期记录查询", html);
     };
     //逾期记录
-    var overdueRecord = function() {
+    var overdueRecord = function () {
         var html = '<div class="box">' +
             '<p class="sky-title text-center">逾期逾期记录查询<a class="right color-green">查看详情</a></p>' +
             '<div class="tabBox max-tab">' +
@@ -1835,7 +1968,7 @@ var sky = (function() {
         win("详情", html);
     };
     //银行卡查询记录
-    var bankCardQuery = function(id) {
+    var bankCardQuery = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1844,7 +1977,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     var data = res.data;
@@ -1884,7 +2017,7 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
@@ -1895,7 +2028,7 @@ var sky = (function() {
      type = 3:三要素
      type = 4:四要素
      */
-    var bankDataCompared = function(type, id) {
+    var bankDataCompared = function (type, id) {
         type = type == 3 ? "银行卡三要素" : "银行卡四要素";
         sky.loding();
         $.ajax({
@@ -1905,7 +2038,7 @@ var sky = (function() {
             data: {
                 id: id,
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -1925,7 +2058,7 @@ var sky = (function() {
                                     '<p class="color-red">未查到相关数据</p>'
                                 break;
                         }
-
+                        
                         html += '</div>' +
                             '</div>' +
                             '</div>';
@@ -1946,14 +2079,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
         })
     };
     //银行画像分析
-    var bankAnalysis = function(id) {
+    var bankAnalysis = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -1962,7 +2095,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -2082,7 +2215,7 @@ var sky = (function() {
                                 '<td>消费笔数</td>' +
                                 '<td>消费金额</td>' +
                                 '</tr>';
-
+                            
                             if (data.consumeCategory.length != 0) {
                                 html += '<tr>' +
                                     '<td>' + data.consumeCategory[i].categoryName + '</td>' +
@@ -2140,13 +2273,13 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.msg("服务器连接错误！");
             }
         });
     };
     //新银行画像分析
-    var newBankAnalysis = function(id) {
+    var newBankAnalysis = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -2155,7 +2288,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -2300,7 +2433,7 @@ var sky = (function() {
                                     '	<td colspan="2">暂无数据</td>' +
                                     '</tr>';
                             }
-
+                            
                             html += '</table>';
                         } else {
                             html += '<table class="table text-left td-4 area">' +
@@ -2420,7 +2553,7 @@ var sky = (function() {
                                         '	<td>' + consumptionAmountDistribution[i].percentage + '</td>' +
                                         '</tr>';
                                 }
-
+                                
                             } else {
                                 html += '<tr>' +
                                     '	<td colspan="2">暂无数据</td>' +
@@ -2471,14 +2604,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.msg("服务器连接错误！");
             }
         });
     };
-
+    
     //反欺诈A类
-    var antiFraudA = function(id) {
+    var antiFraudA = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -2487,7 +2620,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -2639,7 +2772,7 @@ var sky = (function() {
                                 '</tr>';
                         }
                         html += '</table></div></div></div>';
-
+                        
                         win("手机号反欺诈", html);
                     } else {
                         sky.msg(res.retMsg);
@@ -2648,14 +2781,14 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function() {
+            error: function () {
                 sky.msg("服务器连接错误！");
             }
         });
     };
-
+    
     //反欺诈B类
-    var antiFraudB = function(id) {
+    var antiFraudB = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -2664,7 +2797,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     if (returnCode(res.retCode)) {
@@ -2897,64 +3030,31 @@ var sky = (function() {
                     sky.msg("发生异常：" + e);
                 }
             },
-            error: function() {
+            error: function () {
                 sky.msg("服务器连接错误！");
             }
         });
     };
-
+    
     //支付提示
-    var payPrompt = function(orderNum) {
-            var html = '<div class="box payPrompt">' +
-                '<p class="payTitle">请您在新打开的页面上完成支付</p>' +
-                '<p>付款完成前先不要关闭此窗口，如若不小心关闭，系统会在付款成功后半小时自动更新</p>' +
-                '<a class="m-btn complete">完成付款</a><a class="m-btn cancel pull-right">支付遇到问题</a>' +
-                '</div>';
-            win("支付提示", html);
-            $(".payPrompt .complete").click(function() {
-                $.ajax({
-                    type: 'post',
-                    url: "pay/status.do",
-                    data: {
-                        orderNum: orderNum
-                    },
-                    success: function(res) {
-                        try {
-                            if (returnCode(res.retCode)) {
-                                location.href = "accRecharge2V.do";
-                            } else {
-                                sky.msg(res.retMsg);
-                            }
-                        } catch (e) {
-                            sky.msg("发生异常：" + e);
-                        }
-                    },
-                    error: function(xhr, type) {
-                        sky.lodingClose();
-                        sky.msg("服务器连接错误！");
-                    }
-                });
-            });
-            $(".payPrompt .cancel").click(function() {
-                $(".sky-win").remove();
-                var clearfix = $(".clearfix");
-            });
-        }
-        //微信支付
-    var payWeChat = function(money) {
+    var payPrompt = function (orderNum) {
+        var html = '<div class="box payPrompt">' +
+            '<p class="payTitle">请您在新打开的页面上完成支付</p>' +
+            '<p>付款完成前先不要关闭此窗口，如若不小心关闭，系统会在付款成功后半小时自动更新</p>' +
+            '<a class="m-btn complete">完成付款</a><a class="m-btn cancel pull-right">支付遇到问题</a>' +
+            '</div>';
+        win("支付提示", html);
+        $(".payPrompt .complete").click(function () {
             $.ajax({
                 type: 'post',
-                url: "wx/pay.do",
-                data: { amount: money },
-                success: function(res) {
+                url: "pay/status.do",
+                data: {
+                    orderNum: orderNum
+                },
+                success: function (res) {
                     try {
                         if (returnCode(res.retCode)) {
-                            var html = '<div class="box payPrompt weChat">' +
-                                '<p class="payTitle">请扫码已完成微信支付</p>' +
-                                '<img src="data:image/png;base64,' + res.payStr + '">' +
-                                '</div>';
-                            win("支付提示", html);
-                            isPay(res.orderNum);
+                            location.href = "accRecharge2V.do";
                         } else {
                             sky.msg(res.retMsg);
                         }
@@ -2962,45 +3062,78 @@ var sky = (function() {
                         sky.msg("发生异常：" + e);
                     }
                 },
-                error: function(xhr, type) {
+                error: function (xhr, type) {
                     sky.lodingClose();
                     sky.msg("服务器连接错误！");
                 }
             });
-
-            function isPay(num) {
-                setTimeout(function() {
-                    $.ajax({
-                        type: 'post',
-                        url: "pay/status.do",
-                        data: {
-                            orderNum: num
-                        },
-                        success: function(res) {
-                            try {
-                                if (returnCode(res.retCode)) {
-                                    location.href = "accRecharge2V.do";
-                                } else {
-                                    if (res.retCode == "9973") {
-                                        isPay(num);
-                                    } else {
-                                        sky.msg(res.retMsg);
-                                    }
-                                }
-                            } catch (e) {
-                                sky.msg("发生异常：" + e);
-                            }
-                        },
-                        error: function(xhr, type) {
-                            sky.lodingClose();
-                            sky.msg("服务器连接错误！");
-                        }
-                    });
-                }, 5000);
+        });
+        $(".payPrompt .cancel").click(function () {
+            $(".sky-win").remove();
+            var clearfix = $(".clearfix");
+        });
+    }
+    //微信支付
+    var payWeChat = function (money) {
+        $.ajax({
+            type: 'post',
+            url: "wx/pay.do",
+            data: {amount: money},
+            success: function (res) {
+                try {
+                    if (returnCode(res.retCode)) {
+                        var html = '<div class="box payPrompt weChat">' +
+                            '<p class="payTitle">请扫码已完成微信支付</p>' +
+                            '<img src="data:image/png;base64,' + res.payStr + '">' +
+                            '</div>';
+                        win("支付提示", html);
+                        isPay(res.orderNum);
+                    } else {
+                        sky.msg(res.retMsg);
+                    }
+                } catch (e) {
+                    sky.msg("发生异常：" + e);
+                }
+            },
+            error: function (xhr, type) {
+                sky.lodingClose();
+                sky.msg("服务器连接错误！");
             }
+        });
+        
+        function isPay(num) {
+            setTimeout(function () {
+                $.ajax({
+                    type: 'post',
+                    url: "pay/status.do",
+                    data: {
+                        orderNum: num
+                    },
+                    success: function (res) {
+                        try {
+                            if (returnCode(res.retCode)) {
+                                location.href = "accRecharge2V.do";
+                            } else {
+                                if (res.retCode == "9973") {
+                                    isPay(num);
+                                } else {
+                                    sky.msg(res.retMsg);
+                                }
+                            }
+                        } catch (e) {
+                            sky.msg("发生异常：" + e);
+                        }
+                    },
+                    error: function (xhr, type) {
+                        sky.lodingClose();
+                        sky.msg("服务器连接错误！");
+                    }
+                });
+            }, 5000);
         }
-        //报告弹窗
-    var report = function(id) {
+    }
+    //报告弹窗
+    var report = function (id) {
         sky.loding();
         $.ajax({
             type: 'post',
@@ -3009,7 +3142,7 @@ var sky = (function() {
             data: {
                 id: id
             },
-            success: function(res) {
+            success: function (res) {
                 sky.lodingClose();
                 try {
                     var html = "";
@@ -3506,7 +3639,7 @@ var sky = (function() {
                                         } else {
                                             res.data.siteLoanInfo.data[i].repayState = "未知"
                                         }
-
+                                        
                                         res.data.siteLoanInfo.data[i].borrowAmount = parseInt(res.data.siteLoanInfo.data[i].borrowAmount);
                                         if (res.data.siteLoanInfo.data[i].borrowAmount == -7) {
                                             res.data.siteLoanInfo.data[i].borrowAmount = "0~1000";
@@ -3529,7 +3662,7 @@ var sky = (function() {
                                         } else {
                                             res.data.siteLoanInfo.data[i].borrowAmount = res.data.siteLoanInfo.data[i].borrowAmount * 2 - 2 + "~" + res.data.siteLoanInfo.data[i].borrowAmount * 2 + "万";
                                         }
-
+                                        
                                         html += '<tr>' +
                                             '<td class="bg-color-lGreen text-center" colspan="4"><span class="icon icon-number">' + (parseInt(i) + 1) + '</span></td>' +
                                             '</tr>' +
@@ -3539,7 +3672,7 @@ var sky = (function() {
                                             '<td class="title">借款日期</td>' +
                                             '<td>' + formatDate(res.data.siteLoanInfo.data[i].contractDate) + '</td>' +
                                             '</tr>';
-
+                                        
                                         html += '<tr>' +
                                             '<td class="title">借款状态</td>' +
                                             '<td>' + res.data.siteLoanInfo.data[i].borrowState + '</td>' +
@@ -3552,14 +3685,14 @@ var sky = (function() {
                                             '<td class="title">当前还款状态</td>' +
                                             '<td>' + res.data.siteLoanInfo.data[i].repayState + '</td>' +
                                             '</tr>';
-
+                                        
                                         html += '<tr>' +
                                             '<td class="title">欠款金额</td>' +
                                             '<td>' + (res.data.siteLoanInfo.data[i].arrearsAmount / 100000) + '</td>' +
                                             '<td class="title">数据反馈商</td>' +
                                             '<td>' + res.data.siteLoanInfo.data[i].companyCode + '</td>' +
                                             '</tr>';
-
+                                        
                                     }
                                 } else {
                                     html += '<tr>' +
@@ -3713,7 +3846,7 @@ var sky = (function() {
                                             '</tr>';
                                     }
                                     html += '</table>';
-
+                                    
                                     html += '<table class="table m-t-2"><tr>' +
                                         '<td colspan="5" class="bg-color-lGreen text-center title">月消费统计</td>' +
                                         '</tr>' +
@@ -3875,9 +4008,9 @@ var sky = (function() {
                 } catch (e) {
                     sky.msg("发生异常：" + e);
                 }
-
+                
             },
-            error: function(xhr, type) {
+            error: function (xhr, type) {
                 sky.lodingClose();
                 sky.msg("服务器连接错误！");
             }
@@ -3897,7 +4030,7 @@ var sky = (function() {
         companyInfo: companyInfo, //工商信息
         folkLoanRecord: folkLoanRecord, //小贷记录统计
         identityRecord: identityRecord, //身份查询记录
-        idCardQueryRecord: idCardQueryRecord, //身份证相关-查询记录
+        idCardQueryRecord: idCardQueryRecord, //身份证照片
         memberInfo: memberInfo, //同住址成员信息
         phoneSearchRecord: phoneSearchRecord, //手机实名查询记录
         phoneDate: phoneDate, //手机使用时间查询
@@ -3922,6 +4055,8 @@ var sky = (function() {
         antiFraudA: antiFraudA, //反欺诈A类
         antiFraudB: antiFraudB, //反欺诈B类
         financeInvestment: financeInvestment, //个人对外投资
-        miguan: miguan //蜜罐数据
+        miguan: miguan, //蜜罐数据,
+        idCardRealName: idCardRealName, //身份证两要素,
+        notice: notice
     };
 })();

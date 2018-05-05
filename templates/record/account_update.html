@@ -37,10 +37,11 @@
         </div>
         {% if examining %}
             <div class="container-fluid content">
-                <span class="title-block">审核中....</span>
+                <h1 class="title-block my-title-block">温馨提示</h1>
+                <h4 class="title-block my-title-block">正在审核中,请耐心等待,审核通过后可使用对应功能...</h4>
             </div>
         {% else %}
-            {% if request.session.user_data.role == 1 %}
+            {% if role_id == 1 %}
                 <div class="container-fluid content">
                     <span class="title-block">账户升级成为实名认证用户</span>
                     <form class="form" id="uploadForm">
@@ -105,7 +106,7 @@
                         </div>
                     </form>
                 </div>
-            {% elif request.session.user_data.role == 2 %}
+            {% elif role_id == 2 %}
                 <div class="container-fluid content">
                     <span class="title-block">账户升级成为企业用户</span>
                     <div class="form">

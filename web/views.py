@@ -32,6 +32,8 @@ class Login(views.View):
 
     def get(self, request):
         is_register = ActionSwitch.objects.get(id=1).switch
+        if not request.session.session_key:
+            request.session["has_session"] = True
         return render(request, "login.html", {"registerSwitch": is_register})
 
     def post(self, request):
@@ -40,12 +42,14 @@ class Login(views.View):
         count = UserInfo.objects.filter(phone=get_phone).count()
 
         if count:
-            user_data = UserInfo.objects.filter(phone=get_phone)[0]
-            if get_password == user_data.password:
-                request.session["user_data"] = {"nickname": user_data.nickname, "phone": user_data.phone,
-                                                "score": user_data.score,
-                                                "uid": user_data.id,
-                                                "role": user_data.role_id}
+            user_data = UserInfo.objects.filter(phone=get_phone)
+            if get_password == user_data[0].password:
+                request.session["user_data"] = {"nickname": user_data[0].nickname, "phone": user_data[0].phone,
+                                                "score": user_data[0].score,
+                                                "uid": user_data[0].id,
+                                                "role": user_data[0].role_id}
+                # 更新session_id
+                user_data.update(session_key=request.session.session_key)
                 return JsonResponse({"code": 0, "msg": "success"})
         return JsonResponse({"code": 1, "msg": "账号或密码错误"})
 
@@ -74,9 +78,10 @@ class Register(views.View):
                 logger.info(e)
             else:
                 uid = UserInfo.objects.filter(phone=register_dict["phone"])[0].id
-                request.session["user_data"] = {"nick": register_dict["nick"], "phone": register_dict["phone"]
+                request.session["user_data"] = {"nickname": register_dict["nickname"], "phone": register_dict["phone"]
                     , "score": 0, "uid": uid, "role": 1}
-                logger.info("用户 %s 注册成功手机号为 %s" % (register_dict["name"], register_dict["phone"]))
+                UserInfo.objects.filter(phone=register_dict["phone"]).update(session_key=request.session.session_key)
+                logger.info("用户 %s 注册成功手机号为 %s" % (register_dict["nickname"], register_dict["phone"]))
                 res = {"code": 0, "msg": "注册成功"}
         return JsonResponse(res)
 
@@ -97,6 +102,7 @@ class GetMsgCode(views.View):
     """获取短信验证码"""
 
     def get(self, request):
+        res_type = request.GET.get("res_type")
         phone_num = request.GET.get("phone")
         msg_code = create_msg_code()
         logger.info("%s 请求获取手机验证码 %s" % (phone_num, msg_code))
@@ -107,14 +113,13 @@ class GetMsgCode(views.View):
             "appkey": MSG_CODE_DEFINE["app_key"]
         }
         res_msg = requests.post(MSG_CODE_DEFINE["url"], data_json, json=True)
-        print(res_msg.text)
         data_text = json.loads(res_msg.text)
         if data_text["code"] == "10000":
             logger.info("手机号%s获取验证码%s成功" % (phone_num, msg_code))
             request.session["phoneVerifyCode"] = {"time": int(time.time()), "code": msg_code}
             res_json = {"code": 0, "msg": "success"}
-            is_login = request.session.get("user_data")
-            if is_login:
+            # 如果为1,返回生产的验证码
+            if res_type == "1":
                 res_json["msgCode"] = msg_code
             return JsonResponse(res_json)
         else:
@@ -161,7 +166,6 @@ class ModifyPwd(views.View):
         phone = request.POST.get("phone")
         old_pwd = request.POST.get("oldPwd")
         new_pwd = request.POST.get("newPwd")
-        print("%s %s" % (phone, old_pwd))
         obj = UserInfo.objects.filter(phone=phone, password=old_pwd)
         if obj.count():
             obj.update(**{"password": new_pwd})
@@ -208,14 +212,12 @@ class ExaminationRealNameExamAdmin(views.View):
         exam_obj.update(is_exam=True, is_adopt=(is_adopt == '0'))
 
         if is_adopt == "0":
-            uid = request.session.get("user_data")["uid"]
+            uid = request.POST.get("uid")
 
             UserInfo.objects.filter(id=uid).update(real_name=exam_obj[0].real_name, id_card=exam_obj[0].id_card,
                                                    pros_id_card_img=exam_obj[0].pros_id_card_img,
-                                                   cons_id_card_img=exam_obj[0].cons_id_card_img, role=2)
-            user_data = request.session.get("user_data")
-            user_data["role"] = 2
-            request.session["user_data"] = user_data
+                                                   cons_id_card_img=exam_obj[0].cons_id_card_img, role_id=2)
+
         return JsonResponse({"code": 0, "msg": "success"})
 
 

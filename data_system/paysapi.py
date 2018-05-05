@@ -19,15 +19,15 @@ class PaysApi(object):
         self.goods_name = "商品名称"
         self.is_type = pay_type
         # 支付后payapi通知系统更新订单状态URL
-        self.notify_url = os.path.join(BASE_URL, 'recharge/pay_success/')
+        self.notify_url = "%s%s" % (BASE_URL, '/record/recharge/pay_success/')
         # 支付后paysapi跳转URL
-        self.return_url = os.path.join(BASE_URL, '/record/index/')
+        self.return_url = "%s%s" % (BASE_URL, '/record/recharge/pay_complete/')
         self.order_uid = uid
         self.string_key = self._get_string_key()
         self.api_key = doMd5(self.string_key)
 
     def _get_string_key(self):
-        return self.goods_name + self.is_type + self.notify_url + self.order_id + str(self.price) + str(
+        return self.goods_name + self.is_type + self.notify_url + self.order_id + str(self.order_uid) + str(
             self.price) + self.return_url + self.token + self.pay_uid
 
     def get_order_json(self):

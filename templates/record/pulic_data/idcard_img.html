@@ -1,13 +1,13 @@
 {% extends 'record/pulic_data/nav.html' %} {% load static %} {% block contianer %}
     <div class="container-fluid form content">
-        <div class="form-title">手机实名认证</div>
+        <div class="form-title">身份证实名核验及返照</div>
         {% if switch %}
             <div class="form-inline">
                 <input class="form-control name" type="text" placeholder="姓名">
-                <input class="form-control idCard" type="text" placeholder="身份证号码">
+                <input class="form-control idCard" type="text" placeholder="身份证号码"></br>
                 <input class="form-control phone" type="text" placeholder="手机号码">
-{#                <input class="form-control msgCode" type="text" placeholder="被查询人手机验证码">#}
-{#                <button class="btn m-btn" id="getMsgCode">获取验证码</button>#}
+                <input class="form-control msgCode" type="text" placeholder="被查询人手机验证码">
+                <button class="btn m-btn" id="getMsgCode">获取验证码</button>
                 </br>
                 <a class="m-btn" id="sub">确定（{{ service_fee }}分/次）</a>
             </div>
@@ -32,25 +32,20 @@
             </ul>
             <div class="tabs-content">
                 <div id="result" class="tabs-main">
-                    <div class="container-fluid-min">
-                        <p class="tab-title">手机实名认证<img class="icon-sample" src="{% static 'img/icon_sample.png' %}">
-                        </p>
-                        <table class="table m-t-2">
-                            <tbody>
-                            <tr>
-                                <td class="title">姓名</td>
-                                <td>张*三</td>
-                                <td class="title">手机号</td>
-                                <td>180****5214</td>
+                    <div class="container-fluid-min total">
+                        <p class="tab-title">身份证照片查询<img class="icon-sample" src="{% static "img/icon_sample.png" %}"></p>
+                        <table class="text-left m-t-2">
+                            <tbody><tr>
+                                <td><span>姓名：</span>张*三</td>
+                                <td rowspan="3" class="text-center">
+                                    <img src="{% static "img/icon_portrait_01.png" %}" class="img-responsive center-block">
+                                </td>
                             </tr>
+
                             <tr>
-                                <td class="title">运营商</td>
-                                <td>中国移动</td>
-                                <td class="title">实名检验</td>
-                                <td>相同</td>
+                                <td><span>证件号码：</span>1101****6924</td>
                             </tr>
-                            </tbody>
-                        </table>
+                            </tbody></table>
                     </div>
                 </div>
                 <div id="record" class="tabs-main">
@@ -61,7 +56,6 @@
                                 <th>序号</th>
                                 <th>姓名</th>
                                 <th>身份证号</th>
-                                <th>手机号</th>
                                 <th>查询时间</th>
                                 <th>查询状态</th>
                                 <th>操作</th>
@@ -98,86 +92,92 @@
             }
             let name_input = $(".name");
             let idCard_input = $(".idCard");
-            let phone_input = $(".phone");
-            {#let msgCode_input = $(".msgCode");#}
+            let msgCode_input = $(".msgCode");
 
             let name = name_input.val();
             let idCard = idCard_input.val();
-            let phone = phone_input.val();
-            {#let msgCode = msgCode_input.val();#}
+            let msgCode = msgCode_input.val();
 
             if (!Utils.IsChineseName(name)) {
                 name_input.addClass("warn");
                 sky.msg("您姓名格式错误！");
                 return
             }
-            if (!Utils.IsMobile(phone)) {
-                phone_input.addClass("warn");
-                sky.msg("您手机输入错误！");
-                return
-            }
+
             if (!Utils.IsIdcard(idCard)) {
                 idCard_input.addClass("warn");
                 sky.msg("您身份证号码输入错误！");
                 return
             }
-            {% comment %}if (!Utils.IsPhoneCode(msgCode)) {
+            if (!Utils.IsPhoneCode(msgCode)) {
                 msgCode_input.addClass("warn");
                 sky.msg("您短信验证码输入错误！");
                 return
-            }{% endcomment %}
+            }
             sky.loding();
             t.addClass("disabled");
             $.ajax({
                 type: 'post',
-                url: urls.checkTelRealName,
+                url: urls.checkIdCardImg,
                 dataType: 'json',
                 data: {
                     'realName': name,
                     'idCard': idCard,
-                    'mobile': phone,
-                    {#'msgCode': msgCode,#}
-                    'service': 'Telecom_realname'
+                    'msgCode': msgCode,
                 },
-                success: function (res) {
+                success: function(res){
                     t.removeClass("disabled");
-                    sky.lodingClose();
-                    console.log(res);
-                    $("#score").text((res.new_score).toFixed(2));
-
-                    try {
-                        if (returnCode(res.code)) {
+                    try{
+                        $(".icon-sample").remove();
+                        sky.lodingClose();
+                        var html=null;
+                        $("#score").text((res.new_score).toFixed(2));
+                        if(returnCode(res.code)){
                             sucPrompt();
-                            res.status = res.data.MESSAGE;
-                            let html = '<p class="tab-title">手机实名认证</p>' +
-                                '<table class="table m-t-2">' +
-                                '<tr>' +
-                                '<td class="title">姓名</td>' +
-                                '<td>' + res.info.realName + '</td>' +
-                                '<td class="title">手机号</td>' +
-                                '<td>' + res.info.mobile + '</td>' +
-                                '</tr>' +
-                                '<tr>' +
-                                '<td class="title">运营商</td>' +
-                                '<td>' + res.data.isp + '</td>' +
-                                '<td class="title">实名检验</td>' +
-                                '<td>' + res.status + '</td>' +
-                                '</tr>' +
-                                '</table>';
-                            $("#result > div").html(html);
-                        } else {
-                            let html = '<p class="tab-title">手机实名历史</p>' +
-                                '<table class="table m-t-2">' +
-                                '<tr>' +
-                                '<td colspan="4">查询失败！暂无相关数据</td>' +
-                                '</tr>' +
-                                '</table>';
-                            ;
-                            $("#result > div").html(html);
-                            sky.msg(res.msg);
+                            var data=res.data.result.result;
+                            if(data.description=="一致"){
+                                if(data.photo!=null){
+                                    html='<p class="tab-title">身份证核查及返照查询</p>'+
+                                        '<table class="text-left m-t-2">'+
+                                        '<tr><td><span>姓名：</span>'+data.name+'</td>'+
+                                        '<td rowspan="2" class="text-center">'+
+                                        '<img src="data:img/jpeg;base64,'+data.photo+'" class="photo">'+
+                                        '</td>'+
+                                        '</tr>'+
+                                        '<tr>'+
+                                        '<td colspan="2"><span>证件号码：</span>'+data.idcard+'</td>'+
+                                        '</tr>'+
+                                        '</table>';
+                                }else{
+                                    html='<p class="tab-title">身份证核查及返照查询</p>'+
+                                        '<table class="text-left m-t-2">'+
+                                        '<tr><td><span>姓名：</span>'+data.name+'</td>'+
+                                        '<td rowspan="2" class="text-center">'+
+                                        '<img src="/static/img/icon_portrait_01.png" class="img-responsive center-block">'+
+                                        '</td>'+
+                                        '</tr>'+
+                                        '<tr>'+
+                                        '<td colspan="2"><span>证件号码：</span>'+data.idcard+'</td>'+
+                                        '</tr>'+
+                                        '</table>';
+                                }
+                            }
+                            else{
+                                html='<p class="tab-title m-t-2">身份证照片查询</p>'+
+                                    '<div class="queryFails">'+
+                                    '<img src="/static/img/icon_fails.png" class="img-responsive">'+
+                                    '<p class="text color-red">姓名身份证号不一致！</p></div>';
+                            }
+                        }else{
+                            html='<p class="tab-title  m-t-2">身份证照片查询</p>'+
+                                '<div class="queryFails">'+
+                                '<img src="/satic/img/icon_fails.png" class="img-responsive">'+
+                                '<p class="text color-red">查询失败</p></div>';
+                            sky.msg(res.data.message);
                         }
-                    } catch (e) {
-                        sky.msg("系统发生异常！" + e);
+                        $("#result .total").html(html);
+                    }catch (e){
+                        sky.msg("系统发生异常！"+e);
                     }
                 },
                 error: function (xhr, type) {
@@ -200,7 +200,7 @@
                 url: urls.getSearchHistory,
                 dataType: 'json',
                 data: {
-                    service: "Telecom_realname",
+                    service: "idcard_img",
                     page: curr
                 },
                 success: function (res) {
@@ -241,7 +241,6 @@
                                 '<th>序号</th>' +
                                 '<th>姓名</th>' +
                                 '<th>身份证号</th>' +
-                                '<th>手机号</th>' +
                                 '<th>查询时间</th>' +
                                 '<th>查询状态</th>' +
                                 '<th>操作</th>' +
@@ -252,7 +251,6 @@
                                         '<td>' + (parseInt(i) + 1) + '</td>' +
                                         '<td>' + res.resultList[i].real_name + '</td>' +
                                         '<td>' + res.resultList[i].id_card + '</td>' +
-                                        '<td>' + res.resultList[i].mobile + '</td>' +
                                         '<td>' + res.resultList[i].date + '</td>' +
                                         '<td>完成</td>' +
                                         '<td><a class="info" data="' + res.resultList[i].id + '">详情</a></td>' +
@@ -266,7 +264,7 @@
                             html += '</table>';
                             $("#record .stretch-box").html(html);
                             $("#record .info").click(function () {
-                                sky.phoneRealName($(this).attr("data"));
+                                sky.idCardQueryRecord($(this).attr("data"));
                             });
                         }
                     } catch (e) {

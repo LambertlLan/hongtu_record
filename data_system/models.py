@@ -8,11 +8,14 @@ class UserInfo(models.Model):
     email = models.EmailField()
     nickname = models.CharField(max_length=32, verbose_name="昵称")
     date = models.DateTimeField(auto_now_add=True, verbose_name="注册日期")
-    score = models.PositiveIntegerField(default=0, verbose_name="剩余积分")
+    score = models.FloatField(default=0, verbose_name="剩余积分")
+    session_key = models.CharField(max_length=64, default=None, null=True)
     # 自定义各个接口需要积分
-    tel_score = models.PositiveIntegerField(default=10, verbose_name="运营商三要素消耗积分")
-    miguan_score = models.PositiveIntegerField(default=20, verbose_name="蜜罐数据消耗积分")
-    invest_score = models.PositiveIntegerField(default=30, verbose_name="个人对外投资消耗积分")
+    tel_score = models.FloatField(default=2.4, verbose_name="运营商三要素消耗积分")
+    idcard_name_score = models.FloatField(default=3, verbose_name="身份中二要素查询消耗积分")
+    idcard_img_score = models.FloatField(default=7, verbose_name="身份证实名核验及返照消耗积分")
+    miguan_score = models.FloatField(default=10, verbose_name="蜜罐数据消耗积分")
+    invest_score = models.FloatField(default=12, verbose_name="个人对外投资消耗积分")
     role = models.ForeignKey("Role", verbose_name="角色", on_delete=True, default=1)
     # 实名认证字段
     real_name = models.CharField(max_length=32, verbose_name="真实姓名", blank=True, null=True, default=None)
@@ -41,7 +44,6 @@ class Role(models.Model):
 
     name = models.CharField(max_length=32, verbose_name="角色名称")
     service = models.ManyToManyField("ServiceInterFace", verbose_name="对应权限", blank=True)
-    null = True,
 
     def __str__(self):
         return "%s-%s" % (self.name, self.service)
@@ -52,6 +54,7 @@ class Role(models.Model):
 
 class ServiceInterFace(models.Model):
     """接口权限表"""
+    active_name = models.CharField(max_length=32, verbose_name="激活名称", default=None)
     service = models.CharField(max_length=32, verbose_name="服务名称")
     url = models.CharField(max_length=64, verbose_name="接口地址")
 
@@ -65,7 +68,7 @@ class ServiceInterFace(models.Model):
 class RechargeRecords(models.Model):
     """充值记录"""
     user = models.ForeignKey('UserInfo', None, verbose_name="用户-电话号码")
-    amount = models.PositiveIntegerField(verbose_name="充值金额")
+    amount = models.FloatField(verbose_name="充值金额")
     date = models.DateTimeField(auto_now_add=True, verbose_name="充值日期")
 
     def __str__(self):
@@ -91,6 +94,38 @@ class TelecomRealName(models.Model):
 
     class Meta:
         verbose_name_plural = "运营商三要素查询记录"
+
+
+class IdCardImgModel(models.Model):
+    """ 身份证返照查询记录"""
+    user = models.ForeignKey("UserInfo", None, verbose_name="查询人-手机号")
+    real_name = models.CharField(max_length=64, verbose_name="被查询人姓名")
+    id_card = models.CharField(max_length=64, verbose_name="被查询人身份证")
+    data = models.TextField(verbose_name="查询返回数据")
+    date = models.DateField(auto_now_add=True, verbose_name="查询时间")
+    msg = models.CharField(max_length=64, verbose_name="查询结果")
+
+    def __str__(self):
+        return " 查询%s %s" % (self.real_name, self.msg)
+
+    class Meta:
+        verbose_name_plural = "身份证返照查询记录"
+
+
+class IdCardRealNameModel(models.Model):
+    """ 身份证二要素查询记录"""
+    user = models.ForeignKey("UserInfo", None, verbose_name="查询人-手机号")
+    real_name = models.CharField(max_length=64, verbose_name="被查询人姓名")
+    id_card = models.CharField(max_length=64, verbose_name="被查询人身份证")
+    data = models.TextField(verbose_name="查询返回数据")
+    date = models.DateField(auto_now_add=True, verbose_name="查询时间")
+    msg = models.CharField(max_length=64, verbose_name="查询结果")
+
+    def __str__(self):
+        return " 查询%s %s" % (self.real_name, self.msg)
+
+    class Meta:
+        verbose_name_plural = "身份证二要素查询记录"
 
 
 class AntifraudMiGuan(models.Model):
@@ -134,6 +169,7 @@ class RecentSearchRecord(models.Model):
     name = models.CharField(max_length=64)
     date = models.DateField(auto_now_add=True)
     service = models.CharField(max_length=64)
+    service_id = models.PositiveIntegerField(default=1, blank=True)
     service_chinese = models.CharField(max_length=64)
 
     def __str__(self):
@@ -182,12 +218,12 @@ class EnterpriseExamine(models.Model):
 class Order(models.Model):
     """订单表"""
     goods_name = models.CharField(max_length=64, verbose_name="商品名称")
-    user = models.ForeignKey("UserInfo", None)
-    price = models.PositiveIntegerField(verbose_name="充值金额")
-    pay_type = models.CharField(max_length=32, verbose_name="充值方式")
+    user = models.ForeignKey("UserInfo", None, verbose_name="昵称-手机号")
+    price = models.FloatField(verbose_name="充值金额")
+    pay_type = models.CharField(max_length=32, verbose_name="充值方式(1=支付宝,2=微信)")
     order_id = models.CharField(max_length=64, verbose_name="订单编号")
-    is_success = models.BooleanField(default=False)
-    date = models.DateTimeField(auto_now_add=True)
+    is_success = models.BooleanField(default=False, verbose_name="是否成功")
+    date = models.DateTimeField(auto_now_add=True, verbose_name="下单时间")
 
     def __str__(self):
         return "用户%s充值金额%s" % (self.user_id, self.price)
@@ -197,6 +233,7 @@ class Order(models.Model):
 
 
 class ActionSwitch(models.Model):
+    """功能开关"""
     name = models.CharField(max_length=64, verbose_name="功能名称")
     switch = models.BooleanField(default=False, verbose_name="开关")
 
@@ -205,3 +242,17 @@ class ActionSwitch(models.Model):
 
     class Meta:
         verbose_name_plural = "功能开关"
+
+
+class Notice(models.Model):
+    """公告通知"""
+    title = models.CharField(max_length=64, verbose_name="公告标题")
+    content = models.TextField(verbose_name="公告内容")
+    switch = models.BooleanField(default=True, verbose_name="是否显示")
+    date = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+
+    def __str__(self):
+        return "%s创建时间 %s" % (self.title, self.date)
+
+    class Meta:
+        verbose_name_plural = "公告管理"

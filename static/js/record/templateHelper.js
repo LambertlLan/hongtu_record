@@ -26,11 +26,23 @@ template.helper("fomateDateTime", function (val) {
 template.helper("trueOrFalse", function (key) {
     if (key === 0) {
         return "是"
-    } else {
+    }else if(key === null){
+        return "未知"
+    }
+    else {
         return "否"
     }
     
 });
 template.helper("cheng", function (v) {
     return v * 2
+});
+template.helper("nu", function (v) {
+    if (v){
+        return v
+    }else{
+        return "无"
+    }
+    
+    
 });

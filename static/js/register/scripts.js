@@ -64,7 +64,7 @@ jQuery(document).ready(function () {
     //获取验证码
     $("#getMsgBtn").click(function () {
         let phoneNumber = $("#phoneNumber").val();
-        getMsgCode($(this), phoneNumber);
+        getMsgCode($(this), phoneNumber,0);
     });
     //提交验证码
     $("#subMsgBtn").click(function () {
@@ -114,6 +114,15 @@ jQuery(document).ready(function () {
             return false;
         }
         let name = $("#form-name").val();
+        if (name === "") {
+            alert("昵称不能为空");
+            return false
+        }
+        let declareCheck = $("#declareCheck");
+        if (!declareCheck.is(":checked")) {
+            alert("请先阅读并同意免责声明");
+            return false
+        }
         /*if (!checkChinese(name)) {
             alert("姓名必须是中文");
             return false
@@ -127,6 +136,7 @@ jQuery(document).ready(function () {
         };
         $.post(urls.register, data, function (res) {
             if (res.code === 0) {
+                alert("注册成功,点击确定自动进入");
                 window.location.href = "/record/index/"
             } else {
                 alert(res.msg)

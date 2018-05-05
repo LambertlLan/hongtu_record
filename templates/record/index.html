@@ -11,9 +11,9 @@
                     <div class="text">
                         <p>欢迎，{{ request.session.user_data.nickname }}</p>
                         <p>当前等级:
-                            {% if request.session.user_data.role == 1 %}
+                            {% if role_id == 1 %}
                                 普通用户
-                            {% elif request.session.user_data.role == 2 %}
+                            {% elif role_id == 2 %}
                                 实名认证用户
                             {% else %}
                                 企业用户
@@ -57,7 +57,7 @@
                     <i>
                         <img src="{% static 'img/icon_02.png' %}" class="img-responsive">
                     </i>
-                    <p>蜜罐数据</p>
+                    <p>个人反欺诈报告</p>
                 </a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
@@ -89,7 +89,7 @@
                                 <td>{{ item.date | date:"Y-m-d" }}</td>
                                 <td class="type">{{ item.service_chinese }}</td>
                                 <td>
-                                    <a class="info" data="{{ item.id }}" data-service="{{ item.service }}">详情</a>
+                                    <a class="info" data="{{ item.service_id }}" data-service="{{ item.service }}">详情</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -99,17 +99,23 @@
 
                         </tr>
                     {% endif %}
-
-
                     </tbody>
                 </table>
                 <div class="layer-page" id="page"></div>
             </div>
         </div>
     </div>
+    <input id="noticeFlag" type="hidden" value="{{ notice.switch }}">
 {% endblock %}
 {% block javascript %}
-    <script>
+    <script type="text/javascript">
+        let refer = document.referrer;
+        refer = refer.split("/");
+
+        if ($("#noticeFlag").val() === "True" && refer[3] !== "record") {
+            sky.notice("{{ notice.title }}", "{{ notice.content }}");
+        }
+
         $(".info").click(function () {
             var service = $(this).data("service");
             var id = $(this).attr("data");
@@ -122,6 +128,12 @@
                     break;
                 case "Finance_investment":
                     sky.financeInvestment(id);
+                    break;
+                case "idcard_name":
+                    sky.idCardRealName(id);
+                    break;
+                case "idcard_img":
+                    sky.idCardQueryRecord(id);
                     break;
                 default:
                     break

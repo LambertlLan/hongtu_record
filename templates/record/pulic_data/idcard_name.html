@@ -1,11 +1,11 @@
 {% extends 'record/pulic_data/nav.html' %} {% load static %} {% block contianer %}
     <div class="container-fluid form content">
-        <div class="form-title">手机实名认证</div>
+        <div class="form-title">身份证二要素认证</div>
         {% if switch %}
             <div class="form-inline">
                 <input class="form-control name" type="text" placeholder="姓名">
                 <input class="form-control idCard" type="text" placeholder="身份证号码">
-                <input class="form-control phone" type="text" placeholder="手机号码">
+{#                <input class="form-control phone" type="text" placeholder="手机号码">#}
 {#                <input class="form-control msgCode" type="text" placeholder="被查询人手机验证码">#}
 {#                <button class="btn m-btn" id="getMsgCode">获取验证码</button>#}
                 </br>
@@ -33,21 +33,20 @@
             <div class="tabs-content">
                 <div id="result" class="tabs-main">
                     <div class="container-fluid-min">
-                        <p class="tab-title">手机实名认证<img class="icon-sample" src="{% static 'img/icon_sample.png' %}">
+                        <p class="tab-title">身份证二要素认证<img class="icon-sample" src="{% static 'img/icon_sample.png' %}">
                         </p>
                         <table class="table m-t-2">
                             <tbody>
                             <tr>
                                 <td class="title">姓名</td>
                                 <td>张*三</td>
-                                <td class="title">手机号</td>
-                                <td>180****5214</td>
+                                <td class="title">身份证号</td>
+                                <td>447***********5214</td>
                             </tr>
                             <tr>
-                                <td class="title">运营商</td>
-                                <td>中国移动</td>
+
                                 <td class="title">实名检验</td>
-                                <td>相同</td>
+                                <td colspan="3">匹配</td>
                             </tr>
                             </tbody>
                         </table>
@@ -61,7 +60,6 @@
                                 <th>序号</th>
                                 <th>姓名</th>
                                 <th>身份证号</th>
-                                <th>手机号</th>
                                 <th>查询时间</th>
                                 <th>查询状态</th>
                                 <th>操作</th>
@@ -98,12 +96,10 @@
             }
             let name_input = $(".name");
             let idCard_input = $(".idCard");
-            let phone_input = $(".phone");
             {#let msgCode_input = $(".msgCode");#}
 
             let name = name_input.val();
             let idCard = idCard_input.val();
-            let phone = phone_input.val();
             {#let msgCode = msgCode_input.val();#}
 
             if (!Utils.IsChineseName(name)) {
@@ -111,11 +107,7 @@
                 sky.msg("您姓名格式错误！");
                 return
             }
-            if (!Utils.IsMobile(phone)) {
-                phone_input.addClass("warn");
-                sky.msg("您手机输入错误！");
-                return
-            }
+
             if (!Utils.IsIdcard(idCard)) {
                 idCard_input.addClass("warn");
                 sky.msg("您身份证号码输入错误！");
@@ -130,14 +122,12 @@
             t.addClass("disabled");
             $.ajax({
                 type: 'post',
-                url: urls.checkTelRealName,
+                url: urls.checkIdCardName,
                 dataType: 'json',
                 data: {
                     'realName': name,
                     'idCard': idCard,
-                    'mobile': phone,
                     {#'msgCode': msgCode,#}
-                    'service': 'Telecom_realname'
                 },
                 success: function (res) {
                     t.removeClass("disabled");
@@ -148,31 +138,34 @@
                     try {
                         if (returnCode(res.code)) {
                             sucPrompt();
-                            res.status = res.data.MESSAGE;
-                            let html = '<p class="tab-title">手机实名认证</p>' +
+                            var status;
+                            if(res.data.result.result.isok){
+                                status = "匹配"
+                            }else{
+                                status = "不匹配"
+                            }
+                            let html = '<p class="tab-title">身份证二要素认证</p>' +
                                 '<table class="table m-t-2">' +
                                 '<tr>' +
                                 '<td class="title">姓名</td>' +
-                                '<td>' + res.info.realName + '</td>' +
-                                '<td class="title">手机号</td>' +
-                                '<td>' + res.info.mobile + '</td>' +
+                                '<td>' + res.data.result.result.realname + '</td>' +
+                                '<td class="title">身份证号</td>' +
+                                '<td>' + res.data.result.result.idcard + '</td>' +
                                 '</tr>' +
                                 '<tr>' +
-                                '<td class="title">运营商</td>' +
-                                '<td>' + res.data.isp + '</td>' +
                                 '<td class="title">实名检验</td>' +
-                                '<td>' + res.status + '</td>' +
+                                '<td colspan="3">' + status + '</td>' +
                                 '</tr>' +
                                 '</table>';
                             $("#result > div").html(html);
                         } else {
-                            let html = '<p class="tab-title">手机实名历史</p>' +
+                            let html = '<p class="tab-title">身份证二要素认证</p>' +
                                 '<table class="table m-t-2">' +
                                 '<tr>' +
                                 '<td colspan="4">查询失败！暂无相关数据</td>' +
                                 '</tr>' +
                                 '</table>';
-                            ;
+
                             $("#result > div").html(html);
                             sky.msg(res.msg);
                         }
@@ -200,7 +193,7 @@
                 url: urls.getSearchHistory,
                 dataType: 'json',
                 data: {
-                    service: "Telecom_realname",
+                    service: "idcard_name",
                     page: curr
                 },
                 success: function (res) {
@@ -241,7 +234,6 @@
                                 '<th>序号</th>' +
                                 '<th>姓名</th>' +
                                 '<th>身份证号</th>' +
-                                '<th>手机号</th>' +
                                 '<th>查询时间</th>' +
                                 '<th>查询状态</th>' +
                                 '<th>操作</th>' +
@@ -252,7 +244,6 @@
                                         '<td>' + (parseInt(i) + 1) + '</td>' +
                                         '<td>' + res.resultList[i].real_name + '</td>' +
                                         '<td>' + res.resultList[i].id_card + '</td>' +
-                                        '<td>' + res.resultList[i].mobile + '</td>' +
                                         '<td>' + res.resultList[i].date + '</td>' +
                                         '<td>完成</td>' +
                                         '<td><a class="info" data="' + res.resultList[i].id + '">详情</a></td>' +
@@ -266,7 +257,7 @@
                             html += '</table>';
                             $("#record .stretch-box").html(html);
                             $("#record .info").click(function () {
-                                sky.phoneRealName($(this).attr("data"));
+                                sky.idCardRealName($(this).attr("data"));
                             });
                         }
                     } catch (e) {

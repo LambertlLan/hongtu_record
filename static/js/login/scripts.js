@@ -62,7 +62,7 @@ jQuery(document).ready(function () {
     $("#getMsgBtn").click(function () {
         let phoneNumber = $("#resetPhone").val();
         
-        getMsgCode($(this), phoneNumber);
+        getMsgCode($(this), phoneNumber,0);
     });
     //重置密码
     $("#resetPwdBtn").click(function () {

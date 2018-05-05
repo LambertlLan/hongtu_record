@@ -8,7 +8,10 @@ urlpatterns = [
     path('', views.Index.as_view()),
     path('index/', views.Index.as_view()),
     path('auth_real_name/', views.AuthRealName.as_view()),
+    # 公众数据查询
     path('public_data/auth_real_name/', views.AuthRealNameView.as_view()),
+    path('public_data/idcard_name/', views.IdCardName.as_view()),
+    path('public_data/idcard_img/', views.IdCardImg.as_view()),
     path('public_data/telecom_realname/', views.PublicData.as_view()),
     path('public_data/antifraud_miguan/', views.AntifraudMiGuan.as_view()),
     path('public_data/finance_investment/', views.FinanceInvestment.as_view()),
@@ -17,6 +20,7 @@ urlpatterns = [
     path('public_data/history_info/', views.SearchHistoryInfo.as_view()),
     path('debt_search/', views.DebtSearch.as_view()),
     path('customize_report/', views.CustomizeReport.as_view()),
+    # 账户信息
     path('account/information/', views.AccountInformation.as_view()),
     path('account/pwd_modify/', views.AccountPWDModify.as_view()),
     path('account/update/', views.AccountUpdate.as_view()),
@@ -24,7 +28,7 @@ urlpatterns = [
     path('account/update/enterprise/', views.EnterpriseExamination.as_view()),
     path('financial_information/recharge/', views.FinancialInformation.as_view()),
     path('recharge/pay_success/', views.PaySuccess.as_view()),
-    path('recharge/pay_complete/', views.PayComplate.as_view()),
+    path('recharge/pay_complete/', views.PayComplete.as_view()),
     path('recharge/getpaypage/', views.GetPayPage.as_view()),
     path('financial_information/recharge_record/', views.RechargeRecordView.as_view()),
     path('recharge/records/', views.RechargeRecord.as_view()),

@@ -27,14 +27,14 @@ import data_system.urls
 
 urlpatterns = [
                   # 实名认证
-                  path('admin/examination/real_name/', web.views.ExaminationRealNameAdmin.as_view()),
-                  path('admin/examination/real_name/info/', web.views.ExaminationRealNameInfoAdmin.as_view()),
-                  path('admin/examination/real_name/exam/', web.views.ExaminationRealNameExamAdmin.as_view()),
+                  path('gz/examination/real_name/', web.views.ExaminationRealNameAdmin.as_view()),
+                  path('gz/examination/real_name/info/', web.views.ExaminationRealNameInfoAdmin.as_view()),
+                  path('gz/examination/real_name/exam/', web.views.ExaminationRealNameExamAdmin.as_view()),
                   # 企业认证
-                  path('admin/examination/enterprise/', web.views.ExaminationEnterpriseAdmin.as_view()),
-                  path('admin/examination/enterprise/info/', web.views.ExaminationEnterpriseInfoAdmin.as_view()),
-                  path('admin/examination/enterprise/exam/', web.views.ExaminationEnterpriseExamAdmin.as_view()),
-                  path('admin/', admin.site.urls),
+                  path('gz/examination/enterprise/', web.views.ExaminationEnterpriseAdmin.as_view()),
+                  path('gz/examination/enterprise/info/', web.views.ExaminationEnterpriseInfoAdmin.as_view()),
+                  path('gz/examination/enterprise/exam/', web.views.ExaminationEnterpriseExamAdmin.as_view()),
+                  path('gz/', admin.site.urls),
                   # favicon.ico
                   path('favicon.ico/', RedirectView.as_view(url=r'static/favicon.ico')),
                   # 查询系统

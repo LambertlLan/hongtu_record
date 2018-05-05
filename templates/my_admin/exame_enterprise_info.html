@@ -99,10 +99,10 @@
                                         未通过
                                     {% endif %}
                                 {% else %}
-                                    <button id="adopt" data-id="{{ exam_info.id }}" type="button"
+                                    <button id="adopt" data-id="{{ exam_info.id }}" data-uid="{{ exam_info.user.id }}" type="button"
                                             class="btn btn-high btn-info" name="_save">通过
                                     </button>
-                                    <button id="unadopt" data-id="{{ exam_info.id }}" type="button"
+                                    <button id="unadopt" data-id="{{ exam_info.id }}" data-uid="{{ exam_info.user.id }}" type="button"
                                             class="btn btn-high btn-info" name="_save">不通过
                                     </button>
 
@@ -115,24 +115,25 @@
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        var examUser = function (isAdopt, id) {
-                            $.post('/admin/examination/enterprise/exam/', {
+                        var examUser = function (isAdopt, id,uid) {
+                            $.post('/gz/examination/enterprise/exam/', {
                                 isAdopt: isAdopt,
-                                id: id
+                                id: id,
+                                uid:uid
                             }, function (res) {
                                 if (res.code === 0) {
                                     alert("操作成功");
-                                    window.location.href = "/admin/examination/enterprise/"
+                                    window.location.href = "/gz/examination/enterprise/"
                                 } else {
                                     alert(res.msg)
                                 }
                             })
                         };
                         $("#adopt").click(function () {
-                            examUser(0, $(this).data("id"))
+                            examUser(0, $(this).data("id"),$(this).data("uid"))
                         });
                         $("#unadopt").click(function () {
-                            examUser(1, $(this).data("id"))
+                            examUser(1, $(this).data("id"),$(this).data("uid"))
                         });
                     })
                 </script>

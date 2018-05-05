@@ -1,6 +1,6 @@
 {% extends 'record/pulic_data/nav.html' %} {% load static %} {% block contianer %}
     <div class="container-fluid form content">
-        <div class="form-title">蜜罐数据查询</div>
+        <div class="form-title">个人反欺诈报告</div>
         {% if switch %}
             <div class="form-inline">
                 <input class="form-control name" type="text" placeholder="姓名">
@@ -44,8 +44,10 @@
                             <tbody>
                             <tr>
 
-                                <td colspan="2" class="title">姓名</td>
-                                <td colspan="2">张三</td>
+                                <td class="title">姓名</td>
+                                <td>张三</td>
+                                <td class="title">运营商类型</td>
+                                <td >移动</td>
                             </tr>
                             <tr>
 
@@ -79,16 +81,7 @@
                                 <td class="title">性别</td>
                                 <td>男</td>
                             </tr>
-                            <tr>
-                                <td colspan="2" class="title">运营商类型</td>
-                                <td colspan="2">移动</td>
-                            </tr>
 
-                            </tbody>
-
-                        </table>
-                        <table class="table m-t-2">
-                            <tbody>
                             <tr>
 
                                 <td class="title">手机号</td>
@@ -114,14 +107,7 @@
                                 <td class="title">被机构查询数量</td>
                                 <td>0</td>
                             </tr>
-                            <tr>
-                                <td class="title">授权查询蜜罐数据的机构账户</td>
-                                <td colspan="3">test***test</td>
-                            </tr>
-                            <tr class="border-x-none">
-                                <td class="title">蜜罐编号</td>
-                                <td colspan="3">5315-9877-0292-912838****</td>
-                            </tr>
+
                             </tbody>
 
                         </table>
@@ -142,7 +128,7 @@
                             <tr>
 
                                 <td colspan="4">
-                                    用这个号码绑定的其他姓名
+                                    【用这个号码绑定的其他姓名】
                                 </td>
 
                             </tr>
@@ -160,7 +146,7 @@
                             <tr>
 
                                 <td colspan="4">
-                                    用这个身份证绑定的其他手机号
+                                    【用这个身份证绑定的其他手机号】
                                 </td>
 
                             </tr>
@@ -196,7 +182,7 @@
                             <tr>
 
                                 <td colspan="4">
-                                    电话号码在哪些类型的机构中使用过
+                                    【电话号码在哪些类型的机构中使用过】
                                 </td>
 
                             </tr>
@@ -214,7 +200,7 @@
                             <tr>
 
                                 <td colspan="4">
-                                    身份证在哪些类型的机构中使用过
+                                    【身份证在哪些类型的机构中使用过】
                                 </td>
 
                             </tr>
@@ -1570,7 +1556,7 @@
 {% endblock %} {% block javascript %}
     <script type="text/javascript">
         $("#getMsgCode").click(function () {
-            getMsgCode($(this), $(".phone").val())
+            getMsgCode($(this), $(".phone").val(),1)
         });
         $(".fnNav .accPhoneRecord").addClass("active");
         $("#sub").click(function () {
@@ -1633,7 +1619,7 @@
                     t.removeClass("disabled");
                     sky.lodingClose();
                     console.log(res);
-                    $("#score").text(res.new_score);
+                    $("#score").text((res.new_score).toFixed(2));
                     try {
                         if (returnCode(res.code)) {
                             sucPrompt();

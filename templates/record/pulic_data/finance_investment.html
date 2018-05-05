@@ -270,7 +270,7 @@
     <script type="text/javascript">
         //获取手机验证码
         $("#getMsgCode").click(function () {
-            getMsgCode($(this), $(".phone").val())
+            getMsgCode($(this), $(".phone").val(),1)
         });
         $(".fnNav .accPhoneRecord").addClass("active");
         $("#sub").click(function () {
@@ -333,12 +333,12 @@
                     t.removeClass("disabled");
                     sky.lodingClose();
                     console.log(res);
-                    $("#score").text(res.new_score);
+                    $("#score").text((res.new_score).toFixed(2));
                     try {
                         if (returnCode(res.code) && res.data.RESULT === "1") {
                             sucPrompt();
                             res.status = res.data.MESSAGE;
-                            let html = template('table-template', res);
+                            let html = template('invest-table-template', res);
                             $("#result > div").html(html);
                         } else {
                             let html = '<p class="tab-title">个人对外投资</p>' +

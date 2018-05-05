@@ -11,6 +11,35 @@
     <link rel="stylesheet" href="{% static 'css/record/sky.css' %}">
     <link rel="stylesheet" href="{% static 'css/record/common.css' %}">
     <link rel="stylesheet" href="{% static 'css/record/base.css' %}">
+    <style rel="stylesheet">
+        .my-title-block {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .my-form-inline {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .account-center .tab-title{
+            margin-top:40px;
+            border:none;
+            color:#00a7f6;
+            background-color: #ececec;
+        }
+        .tabBox .tab-title{
+            padding:10px;
+            text-align: center;
+            margin-top:20px;
+            margin-bottom:0;
+            border:none;
+            color:#00a7f6;
+            background-color: #ececec;
+        }
+        .account-center .tab-title:first-child{
+            margin-top:0;
+        }
+    </style>
 
     <!--[if lte IE 9]>
     <script src="javascript/respond.min.js"></script>
@@ -180,8 +209,8 @@
 <footer>
     <div class="footer">
         <div class="copyright text-center">
-            <p>Copyright @ 2017-2017 深圳宏图数据有限公司粤ICP备00000000号</p>
-            <p>京公网安备 0000000000-00001号</p>
+            <p>Copyright @ 2017-2018 深圳宏图数据有限公司粤ICP备232143264334号</p>
+            <p>联系qq:1820298732 邮箱：postmaster@hongtushuju.com</p>
         </div>
     </div>
 </footer>
@@ -212,7 +241,7 @@
         </tr>
         <tr>
             <td class="title">身份证是否有效</td>
-            <td>{{ data.user_basic.user_idcard_valid }}</td>
+            <td>{{ data.user_basic.user_idcard_valid|trueOrFalse }}</td>
             <td class="title">手机号归属地:省份</td>
             <td>{{ data.user_basic.user_phone_province }}</td>
         </tr>
@@ -241,13 +270,6 @@
             <td class="title">性别</td>
             <td>{{ data.user_basic.user_gender }}</td>
         </tr>
-
-        </tbody>
-
-    </table>
-
-    <table class="table m-t-2">
-        <tbody>
         <tr>
 
             <td class="title">手机号</td>
@@ -267,22 +289,12 @@
             <td class="title">社交影响力</td>
             <td>{{ data.user_gray.social_influence }}</td>
         </tr>
-        <tr>
+        <tr class="border-x-none">
             <td class="title">更新时间</td>
             <td>{{ data.update_time | toLocalDate}}</td>
             <td class="title">被机构查询数量</td>
             <td>{{ data.user_searched_statistic.searched_org_cnt }}</td>
         </tr>
-        <tr>
-            <td class="title">蜜罐编号</td>
-            <td colspan="3">{{ data.user_grid_id }}</td>
-        </tr>
-        <tr class="border-x-none">
-
-            <td class="title">授权查询蜜罐数据的机构账户</td>
-            <td colspan="3">{{ data.auth_org }}</td>
-        </tr>
-
         </tbody>
 
     </table>
@@ -291,54 +303,67 @@
         <tbody>
         <tr>
 
-            <td colspan="4">
-                用这个号码绑定的其他身份证
+            <td colspan="4" class="text-center">
+                【用这个号码绑定的其他身份证】
             </td>
 
         </tr>
-        {{each data.user_phone_suspicion.phone_with_other_idcards}}
+        {{ if  data.user_phone_suspicion.phone_with_other_idcards.length > 0}}
+            {{each data.user_phone_suspicion.phone_with_other_idcards}}
+            <tr>
+                <td class="title">绑定的身份证</td>
+                <td>
+                    {{$value.susp_idcard}}
+                </td>
+                <td class="title">绑定的时间</td>
+                <td>
+                    {{$value.susp_updt |toLocalDate}}
+                </td>
+
+            </tr>
+            {{/each}}
+        {{ else }}
         <tr>
-            <td class="title">绑定的身份证</td>
-            <td>
-                {{$value.susp_idcard}}
-            </td>
-            <td class="title">绑定的时间</td>
-            <td>
-                {{$value.susp_updt |toLocalDate}}
+            <td colspan="4" class="text-center">无</td>
+        </tr>
+        {{ /if }}
+        <tr>
+
+            <td colspan="4" class="text-center">
+                【用这个号码绑定的其他姓名】
             </td>
 
         </tr>
-        {{/each}}
+        {{ if  data.user_phone_suspicion.phone_with_other_names.length > 0}}
+            {{each data.user_phone_suspicion.phone_with_other_names}}
+            <tr>
+                <td class="title">绑定姓名</td>
+                <td>
+                    {{$value.susp_name}}
+                </td>
+                <td class="title">绑定时间</td>
+                <td>
+                    {{$value.susp_updt |toLocalDate}}
+                </td>
+
+            </tr>
+            {{/each}}
+        {{ else }}
+        <tr>
+            <td colspan="4" class="text-center">无</td>
+        </tr>
+        {{ /if }}
         <tr>
 
-            <td colspan="4">
-                用这个号码绑定的其他姓名
+            <td colspan="4" class="text-center">
+                【用这个身份证绑定的其他手机号】
             </td>
 
         </tr>
-        {{each data.user_phone_suspicion.phone_with_other_names}}
+        {{ if  data.user_idcard_suspicion.idcard_with_other_phones.length > 0}}
+        {{each data.user_idcard_suspicion.idcard_with_other_phones}}
         <tr>
-            <td class="title">绑定姓名</td>
-            <td>
-                {{$value.susp_name}}
-            </td>
-            <td class="title">绑定时间</td>
-            <td>
-                {{$value.susp_updt |toLocalDate}}
-            </td>
-
-        </tr>
-        {{/each}}
-        <tr>
-
-            <td colspan="4">
-                用这个身份证绑定的其他手机号
-            </td>
-
-        </tr>
-        {{each data.user_phone_suspicion.idcard_with_other_phones}}
-        <tr>
-            <td class="title">改号码所属省份</td>
+            <td class="title">该号码所属省份</td>
             <td>
                 {{$value.susp_phone_province}}
             </td>
@@ -362,19 +387,25 @@
         <tr>
             <td class="title">存疑手机号</td>
             <td colspan="3">
-                {{$value.phone}}
+                {{$value.susp_phone}}
             </td>
 
         </tr>
 
         {{/each}}
+        {{ else }}
+        <tr>
+            <td colspan="4" class="text-center">无</td>
+        </tr>
+        {{ /if }}
         <tr>
 
-            <td colspan="4">
-                电话号码在哪些类型的机构中使用过
+            <td colspan="4" class="text-center">
+                【电话号码在哪些类型的机构中使用过】
             </td>
 
         </tr>
+        {{ if  data.user_phone_suspicion.phone_applied_in_orgs.length > 0}}
         {{each data.user_phone_suspicion.phone_applied_in_orgs}}
         <tr>
             <td class="title">所属类型</td>
@@ -383,19 +414,25 @@
             </td>
             <td class="title">查询时间</td>
             <td>
-                {{$value.susp_updt |toLocalDate}}
+                {{$value.susp_updt}}
             </td>
 
         </tr>
         {{/each}}
+        {{ else }}
+        <tr>
+            <td colspan="4" class="text-center">无</td>
+        </tr>
+        {{ /if }}
         <tr>
 
-            <td colspan="4">
-                身份证在哪些类型的机构中使用过
+            <td colspan="4" class="text-center">
+                【身份证在哪些类型的机构中使用过】
             </td>
 
         </tr>
-        {{each data.user_phone_suspicion.idcard_applied_in_orgs}}
+        {{ if  data.user_idcard_suspicion.idcard_applied_in_orgs.length > 0}}
+        {{each data.user_idcard_suspicion.idcard_applied_in_orgs}}
         <tr>
             <td class="title">所属类型</td>
             <td>
@@ -403,11 +440,16 @@
             </td>
             <td class="title">查询时间</td>
             <td>
-                {{$value.susp_updt |toLocalDate}}
+                {{$value.susp_updt}}
             </td>
 
         </tr>
         {{/each}}
+        {{ else }}
+        <tr>
+            <td colspan="4" class="text-center">无</td>
+        </tr>
+        {{ /if }}
 
         </tbody>
 
@@ -416,19 +458,23 @@
     <table class="table m-t-2">
         <tbody>
         <tr>
-
             <td class="title">注册总数量</td>
-            <td>{{ data.user_register_orgs.register_cnt }}</td>
+            <td>{{ data.user_register_orgs.register_cnt | nu}}</td>
+
+        </tr>
+        <tr>
             <td class="title">查询手机号码</td>
             <td>{{ data.user_register_orgs.phone_num }}</td>
         </tr>
         <tr>
             <td class="title">每种类型app注册的数量</td>
-            <td>{{ data.user_register_orgs.register_orgs_statistics.count }}</td>
-            <td class="title">注册app的类型</td>
-            <td>{{ data.user_register_orgs.register_orgs_statistics.label }}</td>
-        </tr>
+            <td>{{ data.user_register_orgs.register_orgs_statistics.count | nu}}</td>
 
+        </tr>
+        <tr>
+            <td class="title">注册app的类型</td>
+            <td>{{ data.user_register_orgs.register_orgs_statistics.label | nu}}</td>
+        </tr>
         </tbody>
 
     </table>
@@ -439,13 +485,16 @@
         <tr>
 
             <td class="title">姓名和手机是否在黑名单</td>
-            <td>{{ data.user_blacklist.blacklist_name_with_phone }}</td>
-            <td class="title">身份证和姓名是否在黑名单</td>
-            <td>{{ data.user_blacklist.blacklist_name_with_idcard }}</td>
+            <td>{{ data.user_blacklist.blacklist_name_with_phone | nu}}</td>
+
         </tr>
         <tr>
-            <td colspan="1" class="title">黑名单分类</td>
-            <td colspan="3">{{ each data.user_blacklist.blacklist_category }} {{$value}} {{/each}}
+            <td class="title">身份证和姓名是否在黑名单</td>
+            <td>{{ data.user_blacklist.blacklist_name_with_idcard | nu}}</td>
+        </tr>
+        <tr>
+            <td class="title">黑名单分类</td>
+            <td>{{ each data.user_blacklist.blacklist_category }} {{$value}} {{/each}}
             </td>
 
         </tr>
@@ -453,8 +502,11 @@
 
             <td class="title">姓名和手机黑名单更新时间</td>
             <td>{{ data.user_blacklist.blacklist_update_time_name_phone |toLocalDate}}</td>
+
+        </tr>
+        <tr>
             <td class="title">身份证和姓名黑名单信息更新时间</td>
-            <td>{{ data.user_blacklist.blacklist_update_time_name_idcard |toLocalDate}}</td>
+            <td> {{ data.user_blacklist.blacklist_update_time_name_idcard |toLocalDate}}</td>
         </tr>
         </tbody>
 
@@ -463,12 +515,18 @@
     </p>
     <table class="table m-t-2">
         <tbody>
-        {{each data.user_blacklist.black_details}}
-        <tr>
-            <td colspan="2" class="title">{{$value.details_key}}</td>
-            <td colspan="2">{{$value.details_value}}</td>
-        </tr>
-        {{/each}}
+        {{ if  data.user_blacklist.blacklist_details.length > 0}}
+            {{each data.user_blacklist.blacklist_details}}
+            <tr>
+                <td colspan="2" class="title">{{$value.details_key}}</td>
+                <td colspan="2">{{$value.details_value}}</td>
+            </tr>
+            {{/each}}
+        {{ else }}
+            <tr>
+                <td colspan="2" class="text-center">无</td>
+            </tr>
+        {{ /if }}
         </tbody>
 
     </table>
@@ -479,98 +537,110 @@
 
             <td class="title">主动联系人</td>
             <td>{{ data.user_gray.contacts_number_statistic.cnt_to_all }}</td>
+
+        </tr>
+        <tr>
             <td class="title">被动联系人</td>
             <td>{{ data.user_gray.contacts_number_statistic.cnt_be_all }}</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">一阶联系人总数(前两项合并去重)</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.cnt_all }}</td>
+            <td class="title">一阶联系人总数(前两项合并去重)</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_all }}</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">引起黑名单的一阶联系人总数(一阶联系人中与黑号有联系的人数)</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.cnt_router }}</td>
+            <td class="title">引起黑名单的一阶联系人总数(一阶联系人中与黑号有联系的人数)</td>
+            <td >{{ data.user_gray.contacts_number_statistic.cnt_router }}</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">引起黑名单的一阶联系人占比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.router_ratio }}</td>
+            <td  class="title">引起黑名单的一阶联系人占比</td>
+            <td >{{ data.user_gray.contacts_number_statistic.router_ratio | percent }}%</td>
         </tr>
         <tr>
             <td class="title">主动轮联系的黑号数</td>
             <td>{{ data.user_gray.contacts_number_statistic.cnt_to_black }}</td>
+
+        </tr>
+        <tr>
             <td class="title">被动联系的黑号数</td>
             <td>{{ data.user_gray.contacts_number_statistic.cnt_be_black }}</td>
         </tr>
         <tr>
             <td class="title">一阶联系黑号总数</td>
             <td>{{ data.user_gray.contacts_number_statistic.cnt_black }}</td>
+
+        </tr>
+        <tr>
             <td class="title">一阶联系黑号总数占比</td>
             <td>{{ data.user_gray.contacts_number_statistic.black_ratio }}</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">二阶联系黑号总数(联系人的黑号联系人,并排除一节联系的黑号)</td>
+            <td class="title">二阶联系黑号总数(联系人的黑号联系人,并排除一节联系的黑号)</td>
             <td>{{ data.user_gray.contacts_number_statistic.cnt_black2 }}</td>
         </tr>
         <tr>
             <td class="title">主动联系人中曾为申请人的人数</td>
-            <td>{{ data.user_gray.contacts_number_statistic.cnt_to_aplied }}</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_to_applied }}</td>
+
+        </tr>
+        <tr>
             <td class="title">被动联系人中曾为申请人的人数</td>
-            <td>{{ data.user_gray.contacts_number_statistic.cnt_bt_applied }}</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_be_applied }}</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">联系人曾为申请人的人数(前两项合并去重)</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.cnt_applied }}</td>
+            <td class="title">联系人曾为申请人的人数(前两项合并去重)</td>
+            <td>{{ data.user_gray.contacts_number_statistic.cnt_applied }}</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">主动联系人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_all | percent }}%</td>
+            <td class="title">主动联系人数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_to_all | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">被动联系人在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_be_all | percent }}%</td>
+            <td class="title">被动联系人在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_be_all | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">一阶联系人总数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_all | percent }}%</td>
+            <td class="title">一阶联系人总数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_all | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">引起黑名单的一阶联系人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_router | percent }}%</td>
+            <td class="title">引起黑名单的一阶联系人数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_router | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">引起黑名单的一届联系人占比在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_router_ratio | percent }}%</td>
+            <td class="title">引起黑名单的一届联系人占比在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_router_ratio | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">主动联系的黑号数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_black | percent }}%</td>
+            <td class="title">主动联系的黑号数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_to_black | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">被动联系的黑号数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_be_black | percent }}%</td>
+            <td class="title">被动联系的黑号数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_be_black | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">一阶联系黑号总数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_black | percent }}%</td>
+            <td class="title">一阶联系黑号总数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_black | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">一阶联系黑号总数与一阶联系人总数的比例在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_black_ratio | percent }}%</td>
+            <td class="title">一阶联系黑号总数与一阶联系人总数的比例在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_black_ratio | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">二阶联系黑号总数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_black2 | percent }}%</td>
+            <td class="title">二阶联系黑号总数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_black2 | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">主动联系人中曾为申请人的人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_to_applied | percent }}%</td>
+            <td class="title">主动联系人中曾为申请人的人数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_to_applied | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">联系人中曾为申请人的人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_applied | percent }}%</td>
+            <td class="title">联系人中曾为申请人的人数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_applied | percent }}%</td>
         </tr>
         <tr>
-            <td colspan="2" class="title">联系人中曾为申请人的人数在群体中的百分比</td>
-            <td colspan="2">{{ data.user_gray.contacts_number_statistic.pct_cnt_applied | percent }}%</td>
+            <td class="title">联系人中曾为申请人的人数在群体中的百分比</td>
+            <td>{{ data.user_gray.contacts_number_statistic.pct_cnt_applied | percent }}%</td>
         </tr>
 
         </tbody>
@@ -607,51 +677,51 @@
         </tr>
         <tr>
             <td colspan="2" class="title">与所有联系人的主动总通话次数</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_all |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与所有联系人的被动总通话次数</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_all |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与黑号主动总通话次数</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_black }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_black |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与黑号被动总通话次数</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_black }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_black |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与申请人的主动总通话次数</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_applied }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_to_applied |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与申请人的被动总通话次数</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_applied }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.call_cnt_be_applied |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与所有联系人的主动总通话时长</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_all |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与所有联系人的被动总通话时长</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_all |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与黑号主动总通话时长</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_black }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_black |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与黑号被动动总通话时长</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_black }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_black |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与申请人的主动总通话时长</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_applied }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_to_applied |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与申请人的被动总通话时长</td>
-            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_applied }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_rfm.time_spent_be_applied |nu}}</td>
         </tr>
 
         </tbody>
@@ -662,41 +732,41 @@
         <tbody>
         <tr>
             <td colspan="2" class="title">与所有联系人的最大主动联系亲密度</td>
-            <td colspan="2">{{ data.user_gray.contacts_closest.weight_to_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_to_all |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与所有联系人的最大被动联系亲密度</td>
-            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_all |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与所有联系人的最大互动联系亲密度</td>
-            <td colspan="2">{{ data.user_gray.contacts_closest.weight_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_all |nu}}</td>
         </tr>
 
 
         <tr>
             <td colspan="2" class="title">与黑号的最大主动联系亲密度</td>
-            <td>{{ data.user_gray.contacts_closest.weight_to_black }}</td>
+            <td>{{ data.user_gray.contacts_closest.weight_to_black |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与黑号的最大被动联系亲密度</td>
-            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_black }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_black |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与黑号的最大互动联系亲密度</td>
-            <td colspan="2">{{ data.user_gray.contacts_closest.weight_black }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_black |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与申请人的最大主动联系亲密度</td>
-            <td>{{ data.user_gray.contacts_closest.weight_to_applied }}</td>
+            <td>{{ data.user_gray.contacts_closest.weight_to_applied |nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与申请人的最大被动联系亲密度</td>
-            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_applied }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_be_applied |nu }}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">与申请人的最大互动联系亲密度</td>
-            <td colspan="2">{{ data.user_gray.contacts_closest.weight_applied }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_closest.weight_applied |nu}}</td>
         </tr>
 
         </tbody>
@@ -706,65 +776,65 @@
         <tbody>
         <tr>
             <td colspan="2" class="title">主动联系人最亲密联系人的灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_to_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_to_all | nu }}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">被动联系人最亲密联系人的灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_be_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_be_all | nu }}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">互动联系人最亲密联系人的灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_all }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_all| nu }}</td>
         </tr>
 
 
         <tr>
             <td colspan="2" class="title">主动联系人最亲密申请人的灰度分</td>
-            <td>{{ data.user_gray.contacts_gray_score.most_familiar_to_applied }}</td>
+            <td>{{ data.user_gray.contacts_gray_score.most_familiar_to_applied | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">被动联系人最亲密申请人的灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_be_applied }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_be_applied | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">互动联系人最亲密申请人的灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_applied }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.most_familiar_applied | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">主动联系的联系人的最高灰度分</td>
-            <td>{{ data.user_gray.contacts_gray_score.to_max }}</td>
+            <td>{{ data.user_gray.contacts_gray_score.to_max | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">主动联系的联系人的平均灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.to_mean }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.to_mean | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">主动联系的联系人的最低灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.to_min }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.to_min | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">被动联系的联系人的最高灰度分</td>
-            <td>{{ data.user_gray.contacts_gray_score.be_max }}</td>
+            <td>{{ data.user_gray.contacts_gray_score.be_max | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">被动联系的联系人的平均灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.be_mean }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.be_mean | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">被动联系的联系人的最低灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.be_min }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.be_min | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">联系的联系人的最高灰度分</td>
-            <td>{{ data.user_gray.contacts_gray_score.max }}</td>
+            <td>{{ data.user_gray.contacts_gray_score.max | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">联系的联系人的平均灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.mean }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.mean | nu}}</td>
         </tr>
         <tr>
             <td colspan="2" class="title">联系的联系人的最低灰度分</td>
-            <td colspan="2">{{ data.user_gray.contacts_gray_score.min }}</td>
+            <td colspan="2">{{ data.user_gray.contacts_gray_score.min | nu}}</td>
         </tr>
         </tbody>
     </table>
@@ -1716,7 +1786,7 @@
             <td class="title">是否购买理财产品</td>
             <td>{{ data.consumer_label.if_fin_buy_pre6 |trueOrFalse}}</td>
             <td class="title">消费能力指数</td>
-            <td>{{ data.consumer_label.cst_score_finally }}</td>
+            <td>{{ data.consumer_label.cst_score_finally |nu}}</td>
         </tr>
 
         </tbody>

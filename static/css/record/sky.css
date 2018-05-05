@@ -264,6 +264,8 @@
 
 .sky-win-main .sky-win-content .box .tabBox table tr td {
     border: 2px solid #f3f3f3;
+    line-height: 44px;
+    text-align: center;
 }
 
 .sky-win-main .sky-win-content .box .tabBox table tr td .textarea {

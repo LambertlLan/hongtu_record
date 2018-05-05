@@ -37,17 +37,25 @@ function checkMsgCode(msgCode) {
 }
 
 // 请求后台获取验证码
-function getMsgCode(dom, phoneNumber) {
+/**
+ *
+ * @param dom
+ * @param phoneNumber
+ * @param res_type 是否返回验证码
+ * @returns {boolean}
+ */
+function getMsgCode(dom, phoneNumber,res_type) {
     if (!checkMobile(phoneNumber)) return false;
     dom.attr("disabled", true);
-    $.get(urls.getMsgCode, {phone: phoneNumber}, function (data) {
+    $.get(urls.getMsgCode, {phone: phoneNumber,res_type:res_type}, function (data) {
+        // 客户要求保留
+        console.log(data);
         if (data.code === 0) {
             try {
                 sky.msg("获取验证码成功");
             } catch (err) {
                 alert("获取验证码成功")
             }
-            
             
             //获取完成后进行倒计时
             let restTime = 60;

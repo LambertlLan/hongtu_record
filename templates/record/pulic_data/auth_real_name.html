@@ -1,9 +1,12 @@
-{% extends 'record/layout.html' %} {% load static %} {% block content %}
+{% extends 'record/layout.html' %} {% load static %}
+
+{% block content %}
     <div class="col-lg-9 col-md-9 col-sm-9 info">
         <div class="container-fluid content">
-            <p class="title-block">请先进行实名认证</p>
-            <div class="form-inline">
-                <a class="m-btn" href="/record/account/update/">点我升级</a>
+            <h1 class="title-block my-title-block">温馨提示</h1>
+            <h4 class="title-block my-title-block">宏图数据温馨提示,根据国家法律规定,需要先进行实名认证,再进行数据查询</h4>
+            <div class="form-inline my-form-inline">
+                <a class="m-btn" href="/record/account/update/">点我进行实名认证</a>
             </div>
 
         </div>
