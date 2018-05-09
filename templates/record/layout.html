@@ -209,7 +209,7 @@
 <footer>
     <div class="footer">
         <div class="copyright text-center">
-            <p>Copyright @ 2017-2018 深圳宏图数据有限公司粤ICP备232143264334号</p>
+            <p>Copyright @ 2017-2018 深圳宏图数据有限公司  <a href="http://www.miitbeian.gov.cn/">粤ICP备18052594号-1</a></p>
             <p>联系qq:1820298732 邮箱：postmaster@hongtushuju.com</p>
         </div>
     </div>
@@ -217,6 +217,7 @@
 <script src="{% static 'js/rest-api.js' %}"></script>
 <script src="{% static 'lib/art-template/art-template.js' %}"></script>
 <script src="{% static 'js/record/templateHelper.js' %}"></script>
+<script src="{% static 'lib/base64/jquery.base64.js' %}"></script>
 <script src="{% static 'js/record/base.js' %}"></script>
 <script src="{% static 'lib/laypage/laypage.js' %}"></script>
 <script src="{% static 'js/utils.js' %}"></script>
@@ -363,6 +364,13 @@
         {{ if  data.user_idcard_suspicion.idcard_with_other_phones.length > 0}}
         {{each data.user_idcard_suspicion.idcard_with_other_phones}}
         <tr>
+            <td class="title">存疑手机号</td>
+            <td colspan="3">
+                {{$value.susp_phone}}
+            </td>
+
+        </tr>
+        <tr>
             <td class="title">该号码所属省份</td>
             <td>
                 {{$value.susp_phone_province}}
@@ -384,13 +392,7 @@
             </td>
 
         </tr>
-        <tr>
-            <td class="title">存疑手机号</td>
-            <td colspan="3">
-                {{$value.susp_phone}}
-            </td>
 
-        </tr>
 
         {{/each}}
         {{ else }}

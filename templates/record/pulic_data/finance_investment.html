@@ -335,8 +335,10 @@
                     console.log(res);
                     $("#score").text((res.new_score).toFixed(2));
                     try {
+                        res.data = JSON.parse($.base64.atob(res.data, true));
                         if (returnCode(res.code) && res.data.RESULT === "1") {
                             sucPrompt();
+
                             res.status = res.data.MESSAGE;
                             let html = template('invest-table-template', res);
                             $("#result > div").html(html);

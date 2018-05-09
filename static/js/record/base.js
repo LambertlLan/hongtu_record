@@ -1726,6 +1726,7 @@ var sky = (function () {
                     sky.lodingClose();
                     if (returnCode(res.code)) {
                         var status = null;
+                        res.result.data = JSON.parse($.base64.atob(res.result.data, true));
                         status = res.result.data.MESSAGE;
                         var html = '<div class="box">' +
                             '<div class="tabBox"><table class="td-4 table">' +
@@ -1835,10 +1836,10 @@ var sky = (function () {
                 service: "Finance_investment"
             },
             success: function (res) {
-                console.log(res)
                 try {
                     sky.lodingClose();
                     if (returnCode(res.code)) {
+                        res.result.data = JSON.parse($.base64.atob(res.result.data, true));
                         var status = res.result.data.MESSAGE;
                         if (res.result.data.RESULT === "1") {
                             let dataHtml = template('invest-table-template', res.result);
@@ -1896,7 +1897,7 @@ var sky = (function () {
                     sky.lodingClose();
                     if (returnCode(res.code)) {
                         var status = res.result.data.message;
-                        console.log(res.result.data)
+                        res.result.data = JSON.parse($.base64.atob(res.result.data, true));
                         let dataHtml = template('miguan-table-template', res.result.data);
                         let html = '<div class="box">' +
                             '<div class="tabBox">' + dataHtml + '</div>' +
@@ -1927,7 +1928,7 @@ var sky = (function () {
     var notice = function (title, content) {
         var html = '<div class="box">' +
             '<div class="tabBox">' +
-            '<p>' + content + '</p>' +
+            content +
             '</div>' +
             '</div>';
         win(title, html);

@@ -32,8 +32,8 @@
             <ul class="list-unstyled explain">
                 <li class="title">充值说明：</li>
                 <li>1、我们提供在线充值服务（支付宝、微信）</li>
-                <li>2、请尽量保障账户余额大于保底额度（100元），避免因余额不足造成业务中断</li>
-                <li>3、充值金额必须大于100元</li>
+                <li>2、请尽量保障账户余额大于保底额度（{{ minAmount }}元），避免因余额不足造成业务中断</li>
+                <li>3、充值金额必须大于{{ minAmount }}元</li>
                 <li>4、1元=2积分</li>
             </ul>
         </div>
@@ -118,8 +118,8 @@
             amount = $("#amountInp").val();
             //最低充值金额
             if (amount > 0 && Utils.IsFloat(amount) ) {
-                if(amount < settings.min_recharge_amount){
-                    alert("充值金额不能小于100元")
+                if(amount < {{ minAmount }}){
+                    alert("充值金额不能小于{{ minAmount }}元");
                     return false;
                 }
                 $("#firstStep").fadeOut();

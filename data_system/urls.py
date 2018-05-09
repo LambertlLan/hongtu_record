@@ -27,6 +27,7 @@ urlpatterns = [
     path('account/update/real_name/', views.RealNameExamination.as_view()),
     path('account/update/enterprise/', views.EnterpriseExamination.as_view()),
     path('financial_information/recharge/', views.FinancialInformation.as_view()),
+    # 充值
     path('recharge/pay_success/', views.PaySuccess.as_view()),
     path('recharge/pay_complete/', views.PayComplete.as_view()),
     path('recharge/getpaypage/', views.GetPayPage.as_view()),

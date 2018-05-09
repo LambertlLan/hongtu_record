@@ -7,6 +7,7 @@
  */
 baseUrl = "";
 urls = {
+    checkIsRegister: baseUrl + "/checkIsRegister/",       //验证是否已经注册
     getMsgCode: baseUrl + "/getMsgCode/",       //获取验证码
     checkMsgCode: baseUrl + "/checkMsgCode/",     //检查验证码
     register: baseUrl + "/register/",         //注册
@@ -25,6 +26,3 @@ urls = {
     enterpriseExamination: baseUrl + "/record/account/update/enterprise/",  //企业认证
 };
 services = {};
-settings = {
-    min_recharge_amount: 100
-};

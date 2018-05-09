@@ -25,6 +25,8 @@ Quick start
 
 4. add "STATIC_ROOT = os.path.join(BASE_DIR, 'static')" in settings.py
 
+5. python3 manage.py collectstatic
+
 5. edit DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

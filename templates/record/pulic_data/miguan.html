@@ -1621,6 +1621,7 @@
                     console.log(res);
                     $("#score").text((res.new_score).toFixed(2));
                     try {
+                        res.data = JSON.parse($.base64.atob(res.data, true));
                         if (returnCode(res.code)) {
                             sucPrompt();
                             res.status = res.data.MESSAGE;

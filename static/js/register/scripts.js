@@ -64,7 +64,16 @@ jQuery(document).ready(function () {
     //获取验证码
     $("#getMsgBtn").click(function () {
         let phoneNumber = $("#phoneNumber").val();
-        getMsgCode($(this), phoneNumber,0);
+        let _this = $(this);
+        //验证是否已经注册
+        $.post(urls.checkIsRegister, {"phone": phoneNumber}, function (res) {
+            if (res.code === 0) {
+                getMsgCode(_this, phoneNumber, 0);
+            } else {
+                alert("该手机号已经注册");
+            }
+        });
+        
     });
     //提交验证码
     $("#subMsgBtn").click(function () {

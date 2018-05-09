@@ -47,6 +47,7 @@ urlpatterns = [
                   path('register/', web.views.Register.as_view()),
                   path('getMsgCode/', web.views.GetMsgCode.as_view()),
                   path('checkMsgCode/', web.views.CheckMsgCode.as_view()),
+                  path('checkIsRegister/', web.views.CheckIsRegister.as_view()),
                   path('reset_pwd/', web.views.ResetPwd.as_view()),
                   path('modify_pwd/', web.views.ModifyPwd.as_view()),
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 配置静态文件路径
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 配置媒体文件路径

@@ -43,6 +43,9 @@ class Login(views.View):
 
         if count:
             user_data = UserInfo.objects.filter(phone=get_phone)
+            switch = user_data[0].switch
+            if not switch:
+                return JsonResponse({"code": 1, "msg": "该账号已被封停,请联系管理员"})
             if get_password == user_data[0].password:
                 request.session["user_data"] = {"nickname": user_data[0].nickname, "phone": user_data[0].phone,
                                                 "score": user_data[0].score,
@@ -119,8 +122,8 @@ class GetMsgCode(views.View):
             request.session["phoneVerifyCode"] = {"time": int(time.time()), "code": msg_code}
             res_json = {"code": 0, "msg": "success"}
             # 如果为1,返回生产的验证码
-            if res_type == "1":
-                res_json["msgCode"] = msg_code
+            # if res_type == "1":
+            #    res_json["msgCode"] = msg_code
             return JsonResponse(res_json)
         else:
             logger.info("手机号%s获取验证码%s失败,失败code:%s,msg:%s" % (phone_num, msg_code, data_text["code"], data_text["msg"]))
@@ -138,6 +141,19 @@ class CheckMsgCode(views.View):
             res["msg"] = "success"
             del request.session["phoneVerifyCode"]
         return JsonResponse(res)
+
+
+class CheckIsRegister(views.View):
+    """检查是否已经注册"""
+
+    def post(self, request):
+        phone = request.POST.get("phone")
+        phone_user = UserInfo.objects.filter(phone=phone).count()
+
+        if phone_user != 0:
+            return JsonResponse({"code": 1, "msg": "手机号已注册"})
+        else:
+            return JsonResponse({"code": 0, "msg": "success"})
 
 
 class ResetPwd(views.View):
@@ -259,7 +275,7 @@ class ExaminationEnterpriseExamAdmin(views.View):
         exam_obj.update(is_exam=True, is_adopt=(is_adopt == '0'))
 
         if is_adopt == "0":
-            uid = request.session.get("user_data")["uid"]
+            uid = request.POST.get("uid")
 
             UserInfo.objects.filter(id=uid).update(enterprise_name=exam_obj[0].enterprise_name,
                                                    corporation_name=exam_obj[0].corporation_name,

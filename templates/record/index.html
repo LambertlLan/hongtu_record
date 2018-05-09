@@ -113,7 +113,7 @@
         refer = refer.split("/");
 
         if ($("#noticeFlag").val() === "True" && refer[3] !== "record") {
-            sky.notice("{{ notice.title }}", "{{ notice.content }}");
+            sky.notice("{{ notice.title }}", "{{ notice.content|escape|linebreaks }}");
         }
 
         $(".info").click(function () {

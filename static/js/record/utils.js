@@ -102,5 +102,37 @@ var Utils = {
             return false;
         }
         return reg.test($.trim(value));
+    },
+    //是否是图片
+    IsImage: function (imageName) {
+        var flag = imageName.split("/")[0] === "image";
+        return flag
+    },
+    //限制图片大小,不能大于3mb
+    CheckImageSize: function (size) {
+        var flag = size < 1024 * 1024 * 3;
+        return flag
+    },
+    DecodeBase64(mi, times) {
+        var mingwen = "";
+        var num = 1;
+        if (typeof times == 'undefined' || times == null || times == "") {
+            num = 1;
+        } else {
+            var vt = times + "";
+            num = parseInt(vt);
+        }
+        
+        
+        if (typeof mi == 'undefined' || mi == null || mi == "") {
+        
+        } else {
+            $.base64.utf8encode = true;
+            mingwen = mi;
+            for (var i = 0; i < num; i++) {
+                mingwen = $.base64.atob(mingwen);
+            }
+        }
+        return mingwen;
     }
 };

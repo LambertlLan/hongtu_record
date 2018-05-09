@@ -147,6 +147,7 @@
 
                     try {
                         if (returnCode(res.code)) {
+                            res.data = JSON.parse($.base64.atob(res.data, true));
                             sucPrompt();
                             res.status = res.data.MESSAGE;
                             let html = '<p class="tab-title">手机实名认证</p>' +

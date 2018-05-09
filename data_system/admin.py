@@ -1,6 +1,7 @@
 from django.contrib import admin
 from data_system.models import UserInfo, RechargeRecords, TelecomRealName, AntifraudMiGuan, FinanceInvestment, Role, \
-    ServiceInterFace, RealNameExamine, ActionSwitch, Order, Notice, IdCardRealNameModel, IdCardImgModel
+    ServiceInterFace, RealNameExamine, ActionSwitch, Order, Notice, IdCardRealNameModel, IdCardImgModel, \
+    MinRechargeAmount
 
 admin.site.site_header = '宏图数据后台管理系统'
 admin.site.site_title = '宏图数据'
@@ -9,10 +10,12 @@ admin.site.site_title = '宏图数据'
 @admin.register(UserInfo)
 class UserInfoAdmin(admin.ModelAdmin):
     """用户表"""
+    # 禁用默认的删除功能
+    actions = None
     # 设置只读字段
-    readonly_fields = ('id',)
+    readonly_fields = ('id', 'session_key')
     # 显示的表名
-    list_display = ('id', 'nickname', 'phone', 'date', 'score', 'tel_score', 'miguan_score', 'invest_score')
+    list_display = ('id', 'nickname', 'phone', 'date', 'switch', 'score', 'tel_score', 'miguan_score', 'invest_score')
     # 右侧过滤器
     list_filter = ('nickname', 'date')
     # 搜索关键字
@@ -24,6 +27,10 @@ class UserInfoAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'nickname')
     # 详细时间分层筛选　
     date_hierarchy = 'date'
+
+    def has_delete_permission(self, request, obj=None):
+        """ 取消后台删除附件功能 """
+        return False
 
 
 @admin.register(RechargeRecords)
@@ -100,30 +107,42 @@ class IdCardRealNameAdmin(admin.ModelAdmin):
 @admin.register(ServiceInterFace)
 class ServiceInterFaceAdmin(admin.ModelAdmin):
     """运营商三要素服务接口"""
-
+    actions = None
     readonly_fields = ('id',)
-    list_display = ('id', 'service', 'url','active_name')
+    list_display = ('id', 'service', 'url', 'active_name')
     list_display_links = ('id', 'service')
+
+    def has_delete_permission(self, request, obj=None):
+        """ 取消后台删除附件功能 """
+        return False
 
 
 @admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):
     """角色管理"""
-
+    actions = None
     readonly_fields = ('id',)
     list_display = ('id', 'name',)
     filter_horizontal = ('service',)
     list_display_links = ('id', 'name')
 
+    def has_delete_permission(self, request, obj=None):
+        """ 取消后台删除附件功能 """
+        return False
+
 
 @admin.register(ActionSwitch)
 class ActionSwitchAdmin(admin.ModelAdmin):
     """功能开关管理"""
-
+    actions = None
     readonly_fields = ('id',)
     list_display = ('id', 'name', 'switch')
     list_display_links = ('id', 'name')
     list_editable = ['switch', ]
+
+    def has_delete_permission(self, request, obj=None):
+        """ 取消后台删除附件功能 """
+        return False
 
 
 @admin.register(Order)
@@ -157,3 +176,20 @@ class NoticeAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'title')
     list_filter = ('date',)
     date_hierarchy = 'date'
+
+
+@admin.register(MinRechargeAmount)
+class MinRechargeAmountAdmin(admin.ModelAdmin):
+    """最低充值金额"""
+    actions = None
+    list_display_links = ('id',)
+    list_display = ('id', "amount",)
+    list_editable = ['amount', ]
+
+    def has_add_permission(self, request, obj=None):
+        """ 取消后台添加附件功能 """
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        """ 取消后台删除附件功能 """
+        return False

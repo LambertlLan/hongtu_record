@@ -15,7 +15,7 @@ from django.core.files.base import ContentFile
 
 from .create_md5 import doMd5
 from .models import RechargeRecords, UserInfo, RecentSearchRecord, RealNameExamine, EnterpriseExamine, ActionSwitch, \
-    Order, Notice, IdCardRealNameModel, IdCardImgModel, Role
+    Order, Notice, IdCardRealNameModel, IdCardImgModel, Role, MinRechargeAmount
 from .rc4crypt import rc4crypt
 from .paysapi import PaysApi
 from .setting import MODELS_DEFINE, SCORE_DEFINE, URL_DEFINE, CHINESE_DEFINE, PAGE_NUM, ACTION_ID_DEFINE, BASE_URL, \
@@ -30,6 +30,10 @@ def check_session(func):
         is_login = request.session.get("user_data")
         if is_login:
             uid = is_login["uid"]
+            # 判断开关是否开启
+            if not UserInfo.objects.get(id=uid).switch:
+                return redirect('/login/')
+
             session_key = UserInfo.objects.get(id=uid).session_key
             if request.session.session_key == session_key:
 
@@ -390,14 +394,14 @@ class CheckPublicData(views.View):
                     obj = obj(**database_dict)
                     obj.save()
                     service_id = obj.id
-                    print(service_id)
                     # 存入近期查询表
                     RecentSearchRecord.objects.create(user_id=database_dict["user_id"], name=database_dict["real_name"],
                                                       service=params["service"],
                                                       service_chinese=CHINESE_DEFINE[params["service"]],
                                                       service_id=service_id)
+                    base64_decrypt = bytes.decode(base64.b64encode(decrypt.encode("utf8")))
                     return JsonResponse(
-                        {"code": 0, "msg": "success", "new_score": new_score, "data": json.loads(decrypt),
+                        {"code": 0, "msg": "success", "new_score": new_score, "data": base64_decrypt,
                          "info": request.POST.dict()})
                 else:
                     return JsonResponse({"code": 1, "msg": "存入数据库出错"})
@@ -446,7 +450,7 @@ class SearchHistoryInfo(views.View):
         else:
             result = list(obj.objects.filter(id=tid).values("date", "mobile", "id_card", "real_name", "data", "msg"))[0]
 
-        result["data"] = json.loads(result["data"])
+        result["data"] = bytes.decode(base64.b64encode(result["data"].encode("utf8")))
         return JsonResponse({"code": 0, "result": result, "msg": "查询成功"})
 
 
@@ -530,6 +534,8 @@ class RealNameExamination(views.View):
 
 @method_decorator(check_session, name="dispatch")
 class EnterpriseExamination(views.View):
+    '''企业用户认证'''
+
     def post(self, request):
         uid = request.session.get("user_data")["uid"]
         # 读取上传的文件中的video项为二进制文件
@@ -560,8 +566,9 @@ class EnterpriseExamination(views.View):
 @method_decorator(check_session, name="dispatch")
 class FinancialInformation(views.View):
     def get(self, request):
+        min_recharge_amount = MinRechargeAmount.objects.last().amount
         return render(request, "record/financial_information.html",
-                      {"active": "financial_information"})
+                      {"active": "financial_information", "minAmount": min_recharge_amount})
 
 
 class PaySuccess(views.View):
@@ -612,6 +619,9 @@ class GetPayPage(views.View):
     def post(self, request):
         uid = request.session.get("user_data")["uid"]
         amount = request.POST.get("amount")
+        min_recharge_amount = MinRechargeAmount.objects.last().amount
+        if int(amount) < min_recharge_amount:
+            return redirect('/record/financial_information/recharge/')
         pay_type = request.POST.get("payType")
         pays_api = PaysApi(amount, uid, pay_type)
         pays_api.save_data()

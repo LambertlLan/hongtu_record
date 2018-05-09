@@ -113,12 +113,7 @@
                                         <a class="theme-color" href="#contact">联系我们</a>
                                     </li>
                                     <li class="smooth-scroll">
-                                        {% if request.session.user_data %}
-                                            <a class="theme-color"
-                                               href="javascript:void(0)">欢迎您:{{ request.session.user_data.nickname }}</a>
-                                        {% else %}
-                                            <a class="theme-color" href="/login/">登录</a>
-                                        {% endif %}
+                                        <a class="theme-color" href="/login/">登录</a>
                                     </li>
                                 </ul>
                             </div>
@@ -173,8 +168,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                     <div class="footer-text wow fadeInUp" data-wow-delay="0.2s">
                         <p>联系qq：1820298732 邮箱：postmaster@hongtushuju.com</p>
-                        <p>Copyright &copy; 2018.Hongtu Data All rights reserved.
-                        
+                        <p>Copyright &copy; 2018.Hongtu Data All rights reserved. <a href="http://www.miitbeian.gov.cn/">粤ICP备18052594号-1</a>
                         </p>
                     
                     </div>
