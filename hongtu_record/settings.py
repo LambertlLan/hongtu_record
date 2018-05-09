@@ -21,9 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'z)be5op91#l^_aevnf5z9cydnuy_b=e0laci)&#+g*69mwbv$*'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = "*"
 
 # Application definition
@@ -73,20 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hongtu_record.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hongtu_record',
-        'HOST': "192.168.1.6",
-        'PORT': "3306",
-        'USER': "root",
-        'PASSWORD': ""
-    }
-}
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -130,22 +113,47 @@ SUIT_CONFIG = {
         {'app': 'data_system', 'label': '用户管理', 'icon': 'icon-user', 'models': ('UserInfo',)},
         {'app': 'data_system', 'label': '充值记录', 'icon': 'icon-list-alt', 'models': ('RechargeRecords',)},
         {'app': 'data_system', 'label': '接口查询记录', 'icon': 'icon-eye-open',
-         'models': ('TelecomRealName', 'AntifraudMiGuan', 'FinanceInvestment')},
+         'models': (
+         'TelecomRealName', 'AntifraudMiGuan', 'FinanceInvestment', 'IdCardRealNameModel', 'IdCardImgModel')},
         {'app': 'data_system', 'label': '权限管理', 'icon': 'icon-tags',
          'models': ('Role', 'ServiceInterFace')},
         {'label': '审核管理', 'icon': 'icon-bookmark', 'models': (
-            {'url': '/admin/examination/real_name/', 'label': '实名认证审核'},
-            {'url': '/admin/examination/enterprise/', 'label': '企业认证审核'},
+            {'url': '/gz/examination/real_name/', 'label': '实名认证审核'},
+            {'url': '/gz/examination/enterprise/', 'label': '企业认证审核'},
         )},
         {'app': 'data_system', 'label': '功能管理', 'icon': 'icon-list-alt', 'models': ('ActionSwitch',)},
+        {'app': 'data_system', 'label': '订单管理', 'icon': 'icon-gift', 'models': ('Order',)},
+        {'app': 'data_system', 'label': '公告管理', 'icon': 'icon-bullhorn', 'models': ('Notice',)},
+        {'app': 'data_system', 'label': '最低充值金额', 'icon': 'icon-tint', 'models': ('MinRechargeAmount',)},
     )
 
+}
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hongtu_record',
+        'HOST': "localhost",
+        'PORT': "3306",
+        'USER': "root",
+        'PASSWORD': "lanyu0409"
+        # 'PASSWORD': "hongtu123"  # 服务器
+    }
 }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 部署时需要加上,nginx静态文件夹要加上statics
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
