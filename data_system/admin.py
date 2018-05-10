@@ -93,7 +93,7 @@ class IdCardRealNameAdmin(admin.ModelAdmin):
 
 
 @admin.register(IdCardImgModel)
-class IdCardRealNameAdmin(admin.ModelAdmin):
+class IdCardRealNameImgAdmin(admin.ModelAdmin):
     """身份证核查与返照片查询记录"""
 
     readonly_fields = ('id', 'user', 'real_name', 'id_card', 'msg', 'date', 'data')
@@ -167,7 +167,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Notice)
 class NoticeAdmin(admin.ModelAdmin):
-    """订单管理"""
+    """公告管理"""
 
     readonly_fields = ('id',)
     list_editable = ['switch', ]

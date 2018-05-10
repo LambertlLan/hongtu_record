@@ -193,6 +193,7 @@ class RealNameExamine(models.Model):
     cons_id_card_img = models.ImageField(upload_to='upload', verbose_name="身份证反面照", blank=True, null=True, default=None)
     is_adopt = models.BooleanField(default=False, verbose_name="是否通过")
     is_exam = models.BooleanField(default=False, verbose_name="是否审核")
+    dis_adopt_text = models.TextField(default="", verbose_name="不通过理由")
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -211,6 +212,7 @@ class EnterpriseExamine(models.Model):
     business_license_img = models.ImageField(upload_to='upload', verbose_name="企业营业执照")
     is_adopt = models.BooleanField(default=False, verbose_name="是否通过")
     is_exam = models.BooleanField(default=False, verbose_name="是否审核")
+    dis_adopt_text = models.TextField(default="", verbose_name="不通过理由")
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -96,7 +96,8 @@
                                     {% if exam_info.is_adopt %}
                                         已通过
                                     {% else %}
-                                        未通过
+                                        未通过,理由:{{ exam_info.dis_adopt_text }}
+
                                     {% endif %}
                                 {% else %}
                                     <button id="adopt" data-id="{{ exam_info.id }}" data-uid="{{ exam_info.user.id }}" type="button"
@@ -115,11 +116,12 @@
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        var examUser = function (isAdopt, id,uid) {
+                        var examUser = function (isAdopt, id,uid,unAdoptText) {
                             $.post('/gz/examination/enterprise/exam/', {
                                 isAdopt: isAdopt,
                                 id: id,
-                                uid:uid
+                                uid:uid,
+                                unAdoptText: unAdoptText
                             }, function (res) {
                                 if (res.code === 0) {
                                     alert("操作成功");
@@ -133,7 +135,10 @@
                             examUser(0, $(this).data("id"),$(this).data("uid"))
                         });
                         $("#unadopt").click(function () {
-                            examUser(1, $(this).data("id"),$(this).data("uid"))
+                            var unAdoptText = window.prompt("请输入不通过理由", "企业信息不匹配");
+                            if(unAdoptText) {
+                                examUser(1, $(this).data("id"),$(this).data("uid"),unAdoptText)
+                            }
                         });
                     })
                 </script>

@@ -233,6 +233,9 @@ class ExaminationRealNameExamAdmin(views.View):
             UserInfo.objects.filter(id=uid).update(real_name=exam_obj[0].real_name, id_card=exam_obj[0].id_card,
                                                    pros_id_card_img=exam_obj[0].pros_id_card_img,
                                                    cons_id_card_img=exam_obj[0].cons_id_card_img, role_id=2)
+        else:
+            un_adopt_text = request.POST.get("unAdoptText")
+            exam_obj.update(dis_adopt_text=un_adopt_text)
 
         return JsonResponse({"code": 0, "msg": "success"})
 
@@ -281,7 +284,8 @@ class ExaminationEnterpriseExamAdmin(views.View):
                                                    corporation_name=exam_obj[0].corporation_name,
                                                    organization_code=exam_obj[0].organization_code,
                                                    business_license_img=exam_obj[0].business_license_img, role=3)
-            user_data = request.session.get("user_data")
-            user_data["role"] = 3
-            request.session["user_data"] = user_data
+
+        else:
+            un_adopt_text = request.POST.get("unAdoptText")
+            exam_obj.update(dis_adopt_text=un_adopt_text)
         return JsonResponse({"code": 0, "msg": "success"})

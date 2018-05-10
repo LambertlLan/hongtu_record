@@ -44,6 +44,9 @@
             {% if role_id == 1 %}
                 <div class="container-fluid content">
                     <span class="title-block">账户升级成为实名认证用户</span>
+                    {% if real_name_dis_adopt_text != "" %}
+                        <p style="color:darkred">审核未通过,理由:{{ real_name_dis_adopt_text }}</p>
+                    {% endif %}
                     <form class="form" id="uploadForm">
                         {#                <p class="title-small">（商务合作可直接联系010-58263081线下操作）</p>#}
                         <div class="form-inline">
@@ -109,6 +112,9 @@
             {% elif role_id == 2 %}
                 <div class="container-fluid content">
                     <span class="title-block">账户升级成为企业用户</span>
+                    {% if enterprise_dis_adopt_text != "" %}
+                        <p style="color: darkred">审核未通过,理由:{{ enterprise_dis_adopt_text }}</p>
+                    {% endif %}
                     <div class="form">
                         {#                <p class="title-small">（商务合作可直接联系010-58263081线下操作）</p>#}
                         <div class="form-inline">
@@ -233,7 +239,6 @@
                     processData: false,
                     success: function (res) {
                         sky.lodingClose();
-                        console.log(res);
                         if (res.code === 0) {
                             sky.msg("提交审核成功,请等待审核");
                             window.location.reload();
@@ -243,7 +248,7 @@
                     },
                     error: function (res) {
                         sky.lodingClose();
-                        sky.msg(res.msg);
+                        sky.msg("服务器连接错误");
                     }
                 });
             });
@@ -308,7 +313,7 @@
                     },
                     error: function (res) {
                         sky.lodingClose();
-                        sky.msg(res.msg);
+                        sky.msg("服务器连接错误");
                     }
                 });
             });

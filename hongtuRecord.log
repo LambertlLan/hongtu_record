@@ -252,3 +252,627 @@ django.db.utils.InternalError: (1054, "Unknown column 'data_system_userinfo.swit
 [2018-05-09 01:57:41,299] [INFO] "GET /gz/jsi18n/ HTTP/1.1" 200 7717
 [2018-05-09 01:57:46,830] [INFO] "GET /gz/jsi18n/ HTTP/1.1" 200 7717
 [2018-05-09 01:57:47,028] [INFO] "GET /gz/data_system/minrechargeamount/ HTTP/1.1" 200 13126
+[2018-05-10 15:29:57,531] [INFO] "GET / HTTP/1.1" 200 19693
+[2018-05-10 15:29:57,698] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:29:57,700] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 15:29:57,886] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:29:57,887] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 15:29:57,893] [INFO] "GET /favicon.ico HTTP/1.1" 301 0
+[2018-05-10 15:29:57,898] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 15:29:57,914] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 15:29:57,915] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 15:29:57,942] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:29:57,961] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 15:29:57,976] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:29:57,977] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 15:29:57,985] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 15:29:58,008] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 15:29:58,009] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 15:29:58,217] [INFO] "GET / HTTP/1.1" 200 19693
+[2018-05-10 15:29:58,376] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:29:58,378] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 15:29:58,392] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:29:58,393] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 15:29:58,399] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 15:29:58,411] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 15:29:58,411] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 15:29:58,424] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:29:58,425] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 15:29:58,439] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:29:58,440] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 15:29:58,447] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 15:29:58,474] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 15:29:58,478] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 15:29:58,906] [INFO] "GET /gz/data_system/userinfo/ HTTP/1.1" 302 0
+[2018-05-10 15:29:58,937] [INFO] "GET / HTTP/1.1" 200 19693
+[2018-05-10 15:29:59,151] [INFO] "GET /gz/login/?next=/gz/data_system/userinfo/ HTTP/1.1" 200 3453
+[2018-05-10 15:29:59,310] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:29:59,311] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 15:29:59,324] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:29:59,325] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 15:29:59,331] [INFO] "GET /favicon.ico HTTP/1.1" 301 0
+[2018-05-10 15:29:59,338] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 15:29:59,349] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 15:29:59,350] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 15:29:59,364] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:29:59,366] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 15:29:59,389] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:29:59,390] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 15:29:59,399] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 15:29:59,420] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 15:29:59,421] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 15:29:59,434] [INFO] "GET /gz/data_system/userinfo/ HTTP/1.1" 302 0
+[2018-05-10 15:29:59,499] [INFO] "GET /gz/login/?next=/gz/data_system/userinfo/ HTTP/1.1" 200 3453
+[2018-05-10 15:29:59,597] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:29:59,599] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 15:29:59,621] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:29:59,623] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 15:29:59,633] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 15:29:59,660] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 15:29:59,662] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 15:29:59,684] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:29:59,686] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 15:29:59,708] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:29:59,709] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 15:29:59,719] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 15:29:59,738] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 15:29:59,738] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 15:30:00,346] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:30:00,347] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 15:30:00,364] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:30:00,364] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 15:30:02,330] [INFO] "GET /login/ HTTP/1.1" 200 11252
+[2018-05-10 15:30:02,536] [INFO] "GET /static/js/login/scripts.js HTTP/1.1" 304 0
+[2018-05-10 15:30:02,537] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 15:30:02,539] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 15:30:10,938] [INFO] "POST /login/ HTTP/1.1" 200 64
+[2018-05-10 15:30:16,291] [INFO] "POST /login/ HTTP/1.1" 200 64
+[2018-05-10 15:30:25,442] [INFO] "POST /login/ HTTP/1.1" 200 29
+[2018-05-10 15:30:27,224] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 15:30:27,225] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 15:30:27,226] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 15:30:27,227] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 15:30:27,229] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 15:30:27,237] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 15:30:27,245] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 15:30:27,246] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 15:30:27,247] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 15:30:27,262] [INFO] "GET /record/index/ HTTP/1.1" 302 0
+[2018-05-10 15:30:27,522] [INFO] "GET /login/ HTTP/1.1" 200 11252
+[2018-05-10 15:30:34,359] [INFO] "POST /login/ HTTP/1.1" 200 29
+[2018-05-10 15:30:34,463] [INFO] "GET /record/index/ HTTP/1.1" 200 91906
+[2018-05-10 15:30:35,945] [INFO] "GET /record/account/information/ HTTP/1.1" 200 87044
+[2018-05-10 15:30:42,379] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92726
+[2018-05-10 15:30:42,402] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 200 2283
+[2018-05-10 15:30:42,403] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 200 5653
+[2018-05-10 15:30:48,998] [INFO] "GET / HTTP/1.1" 200 19693
+[2018-05-10 15:30:49,815] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 15:30:49,815] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 15:30:49,826] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 15:30:49,827] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 15:30:54,640] [WARNING] Not Found: /gz'
+[2018-05-10 15:30:54,641] [WARNING] "GET /gz' HTTP/1.1" 404 4170
+[2018-05-10 15:30:58,322] [INFO] "GET /gz/ HTTP/1.1" 200 21425
+[2018-05-10 15:31:04,121] [INFO] "GET /gz/jsi18n/ HTTP/1.1" 200 7717
+[2018-05-10 15:31:04,275] [INFO] "GET /gz/data_system/userinfo/ HTTP/1.1" 200 22422
+[2018-05-10 15:31:09,980] [INFO] "POST /logout/ HTTP/1.1" 200 46
+[2018-05-10 15:31:10,007] [INFO] "GET /login/ HTTP/1.1" 200 11252
+[2018-05-10 15:31:11,463] [INFO] "GET /register/ HTTP/1.1" 200 9340
+[2018-05-10 15:31:11,478] [INFO] "GET /static/js/register/scripts.js HTTP/1.1" 200 4716
+[2018-05-10 15:31:11,480] [INFO] "GET /static/css/register/style.css HTTP/1.1" 200 5951
+[2018-05-10 15:31:11,517] [INFO] "GET /static/img/register_background.jpg HTTP/1.1" 200 751665
+[2018-05-10 15:31:19,310] [INFO] "POST /checkIsRegister/ HTTP/1.1" 200 29
+[2018-05-10 15:31:19,316] [INFO] 13512345678 请求获取手机验证码 6219
+[2018-05-10 15:31:20,812] [INFO] 手机号13512345678获取验证码6219成功
+[2018-05-10 15:31:20,826] [INFO] "GET /getMsgCode/?phone=13512345678&res_type=0 HTTP/1.1" 200 29
+[2018-05-10 15:31:28,589] [INFO] "POST /checkMsgCode/ HTTP/1.1" 200 29
+[2018-05-10 15:31:52,788] [INFO] 用户 lanbert 注册成功手机号为 13512345678
+[2018-05-10 15:31:52,793] [INFO] "POST /register/ HTTP/1.1" 200 46
+[2018-05-10 15:31:55,560] [INFO] "GET /record/index/ HTTP/1.1" 200 90216
+[2018-05-10 15:31:57,468] [INFO] "GET /record/account/information/ HTTP/1.1" 200 87040
+[2018-05-10 15:31:58,628] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96695
+[2018-05-10 15:31:58,653] [INFO] "GET /static/img/noimage.png HTTP/1.1" 200 1537
+[2018-05-10 15:32:16,556] [INFO] "POST /record/account/update/real_name/ HTTP/1.1" 200 29
+[2018-05-10 15:32:16,644] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92821
+[2018-05-10 15:32:16,678] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 15:32:16,681] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 15:32:16,683] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 15:32:16,690] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,695] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,698] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,702] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,706] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 15:32:16,710] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,711] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,714] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,716] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,721] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,724] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,726] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 15:32:16,729] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 15:32:16,730] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 15:32:16,758] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 16:36:53,697] [INFO] "GET /gz/ HTTP/1.1" 302 0
+[2018-05-10 16:36:53,978] [INFO] "GET /gz/login/?next=/gz/ HTTP/1.1" 200 3411
+[2018-05-10 16:37:02,014] [INFO] "GET /gz/login/?next=/gz/ HTTP/1.1" 302 0
+[2018-05-10 16:37:02,109] [INFO] "GET /gz/ HTTP/1.1" 200 21425
+[2018-05-10 16:37:07,136] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 20867
+[2018-05-10 16:37:31,476] [INFO] "GET / HTTP/1.1" 200 19693
+[2018-05-10 16:37:34,227] [INFO] "GET /record/index/ HTTP/1.1" 200 90216
+[2018-05-10 16:37:37,275] [INFO] "POST /logout/ HTTP/1.1" 200 46
+[2018-05-10 16:37:37,303] [INFO] "GET /login/ HTTP/1.1" 200 11252
+[2018-05-10 16:37:39,538] [INFO] "GET /register/ HTTP/1.1" 200 9340
+[2018-05-10 16:37:45,054] [INFO] "POST /checkIsRegister/ HTTP/1.1" 200 29
+[2018-05-10 16:37:45,061] [INFO] 13612345678 请求获取手机验证码 1219
+[2018-05-10 16:37:46,530] [INFO] 手机号13612345678获取验证码1219成功
+[2018-05-10 16:37:46,547] [INFO] "GET /getMsgCode/?phone=13612345678&res_type=0 HTTP/1.1" 200 29
+[2018-05-10 16:37:51,617] [INFO] "POST /checkMsgCode/ HTTP/1.1" 200 29
+[2018-05-10 16:38:06,182] [INFO] 用户 test 注册成功手机号为 13612345678
+[2018-05-10 16:38:06,186] [INFO] "POST /register/ HTTP/1.1" 200 46
+[2018-05-10 16:38:08,742] [INFO] "GET /record/index/ HTTP/1.1" 200 90210
+[2018-05-10 16:38:10,285] [INFO] "GET /record/public_data/telecom_realname/ HTTP/1.1" 302 0
+[2018-05-10 16:38:10,359] [INFO] "GET /record/public_data/auth_real_name/ HTTP/1.1" 200 85802
+[2018-05-10 16:38:11,474] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96682
+[2018-05-10 16:38:29,053] [INFO] "POST /record/account/update/real_name/ HTTP/1.1" 200 29
+[2018-05-10 16:38:29,144] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92808
+[2018-05-10 16:38:29,183] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 16:38:29,191] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,203] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,203] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,206] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 16:38:29,208] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 16:38:29,211] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,218] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,218] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 16:38:29,222] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,236] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,238] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,241] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 16:38:29,242] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,245] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,246] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 16:38:29,252] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 16:38:29,292] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 16:38:37,569] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 21933
+[2018-05-10 16:38:39,960] [INFO] "GET /gz/examination/real_name/info/?id=8 HTTP/1.1" 200 15071
+[2018-05-10 16:38:39,997] [INFO] "GET /media/upload/cons_1525941509_62.jpeg HTTP/1.1" 200 93478
+[2018-05-10 16:38:39,997] [INFO] "GET /media/upload/pro_1525941509_87.jpeg HTTP/1.1" 200 26557
+[2018-05-10 16:43:42,466] [INFO] "GET /media/upload/pro_1525941509_87.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:43:42,468] [INFO] "GET /media/upload/cons_1525941509_62.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:43:42,695] [INFO] "GET /gz/examination/real_name/info/?id=8 HTTP/1.1" 200 15071
+[2018-05-10 16:43:42,720] [INFO] "GET /media/upload/pro_1525941509_87.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:43:42,721] [INFO] "GET /media/upload/cons_1525941509_62.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:43:48,636] [INFO] "GET /gz/examination/real_name/info/?id=8 HTTP/1.1" 200 15071
+[2018-05-10 16:43:49,977] [INFO] "POST /gz/examination/real_name/exam/ HTTP/1.1" 200 29
+[2018-05-10 16:43:51,585] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 22027
+[2018-05-10 16:44:06,125] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96682
+[2018-05-10 16:44:14,476] [INFO] "GET /record/account/update/ HTTP/1.1" 302 0
+[2018-05-10 16:44:14,532] [INFO] "GET /login/ HTTP/1.1" 200 11252
+[2018-05-10 16:44:14,587] [INFO] "GET /static/css/login/form-elements.css HTTP/1.1" 200 2399
+[2018-05-10 16:44:14,589] [INFO] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 30999
+[2018-05-10 16:44:14,596] [INFO] "GET /static/css/login/style.css HTTP/1.1" 200 6348
+[2018-05-10 16:44:14,608] [INFO] "GET /static/css/main.css HTTP/1.1" 200 680
+[2018-05-10 16:44:14,609] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 121214
+[2018-05-10 16:44:14,614] [INFO] "GET /static/js/utils.js HTTP/1.1" 200 1968
+[2018-05-10 16:44:14,615] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 200 1528
+[2018-05-10 16:44:14,619] [INFO] "GET /static/js/login/jquery.backstretch.min.js HTTP/1.1" 200 4233
+[2018-05-10 16:44:14,642] [INFO] "GET /static/js/login/scripts.js HTTP/1.1" 200 3299
+[2018-05-10 16:44:14,647] [INFO] "GET /static/js/login/retina-1.1.0.min.js HTTP/1.1" 200 2993
+[2018-05-10 16:44:14,650] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 200 84353
+[2018-05-10 16:44:14,654] [INFO] "GET /static/img/logo.png HTTP/1.1" 200 24566
+[2018-05-10 16:44:14,655] [INFO] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35452
+[2018-05-10 16:44:14,667] [INFO] "GET /static/fonts/fontawesome-webfont.woff2?v=4.7.0 HTTP/1.1" 200 77160
+[2018-05-10 16:44:14,803] [INFO] "GET /static/img/login_background.jpg HTTP/1.1" 200 831339
+[2018-05-10 16:44:15,482] [INFO] "GET /favicon.ico HTTP/1.1" 301 0
+[2018-05-10 16:44:15,494] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:15,496] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 16:44:15,516] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:15,517] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 16:44:15,552] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:15,617] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:15,619] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 16:44:24,260] [INFO] "POST /login/ HTTP/1.1" 200 29
+[2018-05-10 16:44:24,373] [INFO] "GET /record/index/ HTTP/1.1" 200 90214
+[2018-05-10 16:44:24,407] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 200 14047
+[2018-05-10 16:44:24,413] [INFO] "GET /static/css/record/common.css HTTP/1.1" 200 1426
+[2018-05-10 16:44:24,417] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 200 4173
+[2018-05-10 16:44:24,422] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 200 1843
+[2018-05-10 16:44:24,429] [INFO] "GET /static/img/icon_user_header.png HTTP/1.1" 200 3874
+[2018-05-10 16:44:24,436] [INFO] "GET /static/css/record/base.css HTTP/1.1" 200 91458
+[2018-05-10 16:44:24,439] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 200 4559
+[2018-05-10 16:44:24,470] [INFO] "GET /static/js/record/base.js HTTP/1.1" 200 237826
+[2018-05-10 16:44:24,487] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 200 5330
+[2018-05-10 16:44:24,496] [INFO] "GET /static/img/icon_pig.png HTTP/1.1" 200 2765
+[2018-05-10 16:44:24,504] [INFO] "GET /static/img/icon_02.png HTTP/1.1" 200 1066
+[2018-05-10 16:44:24,506] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 200 994
+[2018-05-10 16:44:24,517] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 200 3810
+[2018-05-10 16:44:24,525] [INFO] "GET /static/img/icon_03.png HTTP/1.1" 200 871
+[2018-05-10 16:44:24,530] [INFO] "GET /static/img/icon_01.png HTTP/1.1" 200 1823
+[2018-05-10 16:44:24,531] [INFO] "GET /static/img/res_01.png HTTP/1.1" 200 11791
+[2018-05-10 16:44:26,103] [INFO] "GET /record/public_data/telecom_realname/ HTTP/1.1" 302 0
+[2018-05-10 16:44:26,161] [INFO] "GET /record/public_data/auth_real_name/ HTTP/1.1" 200 85804
+[2018-05-10 16:44:26,950] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96684
+[2018-05-10 16:44:26,983] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 200 2283
+[2018-05-10 16:44:26,987] [INFO] "GET /static/img/noimage.png HTTP/1.1" 200 1537
+[2018-05-10 16:44:26,991] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 200 5653
+[2018-05-10 16:44:32,273] [INFO] "GET / HTTP/1.1" 200 19693
+[2018-05-10 16:44:32,294] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:32,294] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 16:44:32,303] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:32,303] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 16:44:32,307] [INFO] "GET /favicon.ico HTTP/1.1" 301 0
+[2018-05-10 16:44:32,311] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:32,319] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:32,319] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 16:44:32,327] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:32,328] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 16:44:32,339] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:32,340] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 16:44:32,344] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:32,354] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:32,354] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 16:44:32,371] [INFO] "GET / HTTP/1.1" 200 19693
+[2018-05-10 16:44:32,397] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:32,397] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 16:44:32,406] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:32,406] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 16:44:32,411] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:32,419] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:32,420] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 16:44:32,429] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:32,429] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 16:44:32,439] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:32,439] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 16:44:32,444] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:32,453] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:32,454] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4241
+[2018-05-10 16:44:41,204] [INFO] "POST /record/account/update/real_name/ HTTP/1.1" 200 29
+[2018-05-10 16:44:41,285] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92810
+[2018-05-10 16:44:41,309] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 16:44:41,322] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 16:44:41,326] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 16:44:41,330] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 16:44:41,333] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,339] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 16:44:41,348] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,353] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,369] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,360] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,368] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,380] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,385] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,397] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,398] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,400] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 16:44:41,403] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 16:44:41,414] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 16:44:41,432] [INFO] "GET /gz/data_system/userinfo/ HTTP/1.1" 302 0
+[2018-05-10 16:44:41,451] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:41,452] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4247
+[2018-05-10 16:44:41,467] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:41,469] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4211
+[2018-05-10 16:44:41,507] [INFO] "GET /gz/login/?next=/gz/data_system/userinfo/ HTTP/1.1" 200 3453
+[2018-05-10 16:44:41,534] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:41,535] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 16:44:41,545] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:41,546] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 16:44:41,551] [INFO] "GET /favicon.ico HTTP/1.1" 301 0
+[2018-05-10 16:44:41,555] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:41,567] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:41,568] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 16:44:41,578] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:41,579] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 16:44:41,590] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:41,591] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 16:44:41,598] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:41,609] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:41,610] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 16:44:41,618] [INFO] "GET /gz/data_system/userinfo/ HTTP/1.1" 302 0
+[2018-05-10 16:44:41,664] [INFO] "GET /gz/login/?next=/gz/data_system/userinfo/ HTTP/1.1" 200 3453
+[2018-05-10 16:44:41,694] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:41,695] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 16:44:41,708] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:41,709] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 16:44:41,714] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:41,726] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:41,727] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 16:44:41,738] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:41,739] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 16:44:41,747] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:41,748] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 16:44:41,754] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:41,762] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:41,763] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 16:44:52,604] [INFO] "GET / HTTP/1.1" 200 19693
+[2018-05-10 16:44:52,641] [INFO] "GET /static/css/owl.carousel.css HTTP/1.1" 200 4614
+[2018-05-10 16:44:52,643] [INFO] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 30999
+[2018-05-10 16:44:52,646] [INFO] "GET /static/css/magnific-popup.css HTTP/1.1" 200 6951
+[2018-05-10 16:44:52,648] [INFO] "GET /static/css/style.css HTTP/1.1" 200 20700
+[2018-05-10 16:44:52,651] [INFO] "GET /static/css/animate.css HTTP/1.1" 200 75052
+[2018-05-10 16:44:52,660] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 121214
+[2018-05-10 16:44:52,669] [INFO] "GET /static/js/wow-1.3.0.min.js HTTP/1.1" 200 8155
+[2018-05-10 16:44:52,671] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 200 84353
+[2018-05-10 16:44:52,673] [INFO] "GET /static/js/main.js HTTP/1.1" 200 6917
+[2018-05-10 16:44:52,678] [INFO] "GET /static/js/plugins.js HTTP/1.1" 200 98733
+[2018-05-10 16:44:52,681] [INFO] "GET /static/js/validator.min.js HTTP/1.1" 200 7646
+[2018-05-10 16:44:52,686] [INFO] "GET /static/js/magnific-popup-options.js HTTP/1.1" 200 1069
+[2018-05-10 16:44:52,687] [INFO] "GET /static/css/responsive.css HTTP/1.1" 200 3175
+[2018-05-10 16:44:52,689] [INFO] "GET /static/js/my-app.js HTTP/1.1" 200 3726
+[2018-05-10 16:44:52,691] [INFO] "GET /static/img/logo.png HTTP/1.1" 200 24566
+[2018-05-10 16:44:52,692] [INFO] "GET /static/js/particles.min.js HTTP/1.1" 200 23364
+[2018-05-10 16:44:53,118] [INFO] "GET /static/img/intro-bg.jpg HTTP/1.1" 200 81575
+[2018-05-10 16:44:53,284] [INFO] "GET /static/fonts/fontawesome-webfont.woff2?v=4.7.0 HTTP/1.1" 200 77160
+[2018-05-10 16:44:53,826] [INFO] "GET /favicon.ico HTTP/1.1" 301 0
+[2018-05-10 16:44:53,840] [WARNING] Not Found: /apple-touch-icon-precomposed.png
+[2018-05-10 16:44:53,842] [WARNING] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 4245
+[2018-05-10 16:44:53,844] [INFO] "GET /favicon.ico/ HTTP/1.1" 302 0
+[2018-05-10 16:44:53,859] [WARNING] Not Found: /favicon.ico/static/favicon.ico
+[2018-05-10 16:44:53,865] [WARNING] Not Found: /apple-touch-icon.png
+[2018-05-10 16:44:53,866] [WARNING] "GET /favicon.ico/static/favicon.ico HTTP/1.1" 404 4239
+[2018-05-10 16:44:53,867] [WARNING] "GET /apple-touch-icon.png HTTP/1.1" 404 4209
+[2018-05-10 16:44:54,326] [INFO] "GET /gz/ HTTP/1.1" 200 21425
+[2018-05-10 16:44:54,357] [INFO] "GET /static/suit/css/suit.css HTTP/1.1" 200 62873
+[2018-05-10 16:44:54,361] [INFO] "GET /static/suit/js/suit.js HTTP/1.1" 200 6415
+[2018-05-10 16:44:54,363] [INFO] "GET /static/suit/bootstrap/js/bootstrap.min.js HTTP/1.1" 200 15732
+[2018-05-10 16:44:54,365] [INFO] "GET /static/suit/js/jquery-2.2.4.min.js HTTP/1.1" 200 85578
+[2018-05-10 16:44:54,366] [INFO] "GET /static/suit/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 107369
+[2018-05-10 16:44:54,439] [INFO] "GET /static/suit/bootstrap/img/glyphicons-halflings.png HTTP/1.1" 200 12799
+[2018-05-10 16:44:54,440] [INFO] "GET /static/suit/img/bg_left_white.gif HTTP/1.1" 200 105
+[2018-05-10 16:44:54,441] [INFO] "GET /static/suit/img/cc_active_nav.png HTTP/1.1" 200 432
+[2018-05-10 16:44:54,445] [INFO] "GET /static/suit/img/glyphicons-halflings-white-nav.png HTTP/1.1" 200 40145
+[2018-05-10 16:44:54,446] [INFO] "GET /static/suit/img/glyphicons-halflings-white-shadow.png HTTP/1.1" 200 27257
+[2018-05-10 16:44:57,007] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 23090
+[2018-05-10 16:44:59,943] [INFO] "GET /gz/examination/real_name/info/?id=9 HTTP/1.1" 200 15068
+[2018-05-10 16:44:59,970] [INFO] "GET /media/upload/pro_1525941881_62.jpeg HTTP/1.1" 200 26557
+[2018-05-10 16:44:59,974] [INFO] "GET /media/upload/cons_1525941881_85.jpeg HTTP/1.1" 200 93478
+[2018-05-10 16:45:02,342] [INFO] "POST /gz/examination/real_name/exam/ HTTP/1.1" 200 29
+[2018-05-10 16:45:03,834] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 23184
+[2018-05-10 16:45:30,676] [INFO] "GET /record/account/information/ HTTP/1.1" 200 87036
+[2018-05-10 16:45:31,868] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96684
+[2018-05-10 16:45:52,011] [INFO] "POST /record/account/update/real_name/ HTTP/1.1" 200 29
+[2018-05-10 16:45:52,164] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92810
+[2018-05-10 16:45:52,188] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 16:45:52,197] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 16:45:52,203] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,205] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 16:45:52,216] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,224] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 16:45:52,224] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,230] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,231] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,240] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,241] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,243] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,251] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,252] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 16:45:52,256] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,264] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 16:45:52,266] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 16:45:52,289] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 16:45:54,772] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 24253
+[2018-05-10 16:45:56,061] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 24253
+[2018-05-10 16:45:57,720] [INFO] "GET /gz/examination/real_name/info/?id=10 HTTP/1.1" 200 15162
+[2018-05-10 16:45:57,758] [INFO] "GET /media/upload/pro_1525941951_75.jpeg HTTP/1.1" 200 26557
+[2018-05-10 16:45:57,770] [INFO] "GET /media/upload/cons_1525941951_18.jpeg HTTP/1.1" 200 93478
+[2018-05-10 16:46:01,443] [INFO] "POST /gz/examination/real_name/exam/ HTTP/1.1" 200 29
+[2018-05-10 16:49:15,037] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 24347
+[2018-05-10 16:49:16,435] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 24347
+[2018-05-10 16:49:18,990] [INFO] "GET /media/upload/pro_1525941951_75.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:49:18,992] [INFO] "GET /media/upload/cons_1525941951_18.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:49:19,088] [INFO] "GET /gz/examination/real_name/info/?id=10 HTTP/1.1" 200 15118
+[2018-05-10 16:49:19,128] [INFO] "GET /media/upload/cons_1525941951_18.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:49:19,130] [INFO] "GET /media/upload/pro_1525941951_75.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:49:29,149] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96684
+[2018-05-10 16:49:48,681] [INFO] "POST /record/account/update/real_name/ HTTP/1.1" 200 29
+[2018-05-10 16:49:48,787] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92810
+[2018-05-10 16:49:48,811] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 16:49:48,829] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 16:49:48,838] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 16:49:48,843] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,847] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,857] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 16:49:48,861] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,867] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,870] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,879] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 16:49:48,880] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,899] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,914] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,916] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,920] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,924] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 16:49:48,929] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 16:49:48,937] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 16:49:53,043] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 25413
+[2018-05-10 16:49:55,012] [INFO] "GET /gz/examination/real_name/info/?id=11 HTTP/1.1" 200 15555
+[2018-05-10 16:49:55,057] [INFO] "GET /media/upload/pro_1525942188_77.jpeg HTTP/1.1" 200 26557
+[2018-05-10 16:49:55,061] [INFO] "GET /media/upload/cons_1525942188_72.jpeg HTTP/1.1" 200 93478
+[2018-05-10 16:49:55,903] [INFO] "GET /media/upload/pro_1525942188_77.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:49:55,904] [INFO] "GET /media/upload/cons_1525942188_72.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:49:55,979] [INFO] "GET /gz/examination/real_name/info/?id=11 HTTP/1.1" 200 15555
+[2018-05-10 16:49:56,016] [INFO] "GET /media/upload/pro_1525942188_77.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:49:56,019] [INFO] "GET /media/upload/cons_1525942188_72.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:50:11,058] [INFO] "GET /media/upload/pro_1525942188_77.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:50:11,060] [INFO] "GET /media/upload/cons_1525942188_72.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:50:11,169] [INFO] "GET /gz/examination/real_name/info/?id=11 HTTP/1.1" 200 15453
+[2018-05-10 16:50:11,198] [INFO] "GET /media/upload/pro_1525942188_77.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:50:11,204] [INFO] "GET /media/upload/cons_1525942188_72.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:50:11,898] [INFO] "GET /gz/examination/real_name/info/?id=11 HTTP/1.1" 200 15453
+[2018-05-10 16:59:41,868] [INFO] "POST /gz/examination/real_name/exam/ HTTP/1.1" 200 29
+[2018-05-10 16:59:43,592] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 25507
+[2018-05-10 16:59:46,492] [INFO] "GET /media/upload/cons_1525942188_72.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:59:46,493] [INFO] "GET /media/upload/pro_1525942188_77.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:59:46,591] [INFO] "GET /gz/examination/real_name/info/?id=11 HTTP/1.1" 200 15054
+[2018-05-10 16:59:46,631] [INFO] "GET /media/upload/cons_1525942188_72.jpeg HTTP/1.1" 304 0
+[2018-05-10 16:59:46,633] [INFO] "GET /media/upload/pro_1525942188_77.jpeg HTTP/1.1" 304 0
+[2018-05-10 17:00:09,651] [INFO] "GET /gz/data_system/userinfo/ HTTP/1.1" 200 24514
+[2018-05-10 17:00:09,691] [INFO] "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 363
+[2018-05-10 17:00:09,693] [INFO] "GET /static/admin/js/core.js HTTP/1.1" 200 7134
+[2018-05-10 17:00:09,703] [INFO] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 6897
+[2018-05-10 17:00:09,705] [INFO] "GET /static/admin/js/actions.js HTTP/1.1" 200 6502
+[2018-05-10 17:00:09,717] [INFO] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 128820
+[2018-05-10 17:00:09,719] [INFO] "GET /static/admin/js/urlify.js HTTP/1.1" 200 8729
+[2018-05-10 17:00:09,722] [INFO] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 258648
+[2018-05-10 17:00:09,725] [INFO] "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+[2018-05-10 17:00:09,727] [INFO] "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1538
+[2018-05-10 17:00:09,737] [INFO] "GET /gz/jsi18n/ HTTP/1.1" 200 7717
+[2018-05-10 17:00:09,801] [INFO] "GET /static/suit/bootstrap/img/glyphicons-halflings-white.png HTTP/1.1" 200 8777
+[2018-05-10 17:01:32,261] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 25507
+[2018-05-10 17:09:04,345] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96840
+[2018-05-10 17:09:17,298] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96834
+[2018-05-10 17:09:23,908] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96814
+[2018-05-10 17:09:39,172] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96836
+[2018-05-10 17:10:04,170] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96836
+[2018-05-10 17:10:20,612] [INFO] "POST /logout/ HTTP/1.1" 200 46
+[2018-05-10 17:10:20,640] [INFO] "GET /login/ HTTP/1.1" 200 11252
+[2018-05-10 17:10:26,933] [INFO] "POST /login/ HTTP/1.1" 200 64
+[2018-05-10 17:10:32,091] [INFO] "GET /register/ HTTP/1.1" 200 9340
+[2018-05-10 17:10:32,369] [INFO] "GET /static/js/register/scripts.js HTTP/1.1" 200 4716
+[2018-05-10 17:10:32,371] [INFO] "GET /static/css/register/style.css HTTP/1.1" 200 5951
+[2018-05-10 17:10:32,447] [INFO] "GET /static/img/register_background.jpg HTTP/1.1" 200 751665
+[2018-05-10 17:10:36,712] [INFO] "POST /checkIsRegister/ HTTP/1.1" 200 29
+[2018-05-10 17:10:36,720] [INFO] 13712345678 请求获取手机验证码 7284
+[2018-05-10 17:10:38,256] [INFO] 手机号13712345678获取验证码7284成功
+[2018-05-10 17:10:38,276] [INFO] "GET /getMsgCode/?phone=13712345678&res_type=0 HTTP/1.1" 200 29
+[2018-05-10 17:10:43,941] [INFO] "POST /checkMsgCode/ HTTP/1.1" 200 29
+[2018-05-10 17:10:58,305] [INFO] 用户 test2 注册成功手机号为 13712345678
+[2018-05-10 17:10:58,316] [INFO] "POST /register/ HTTP/1.1" 200 46
+[2018-05-10 17:11:02,369] [INFO] "GET /record/index/ HTTP/1.1" 200 90212
+[2018-05-10 17:11:03,578] [INFO] "GET /record/public_data/telecom_realname/ HTTP/1.1" 302 0
+[2018-05-10 17:11:03,650] [INFO] "GET /record/public_data/auth_real_name/ HTTP/1.1" 200 85803
+[2018-05-10 17:11:04,485] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96704
+[2018-05-10 17:11:27,014] [INFO] "POST /record/account/update/real_name/ HTTP/1.1" 200 29
+[2018-05-10 17:11:27,122] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92809
+[2018-05-10 17:11:27,168] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 17:11:27,179] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 17:11:27,186] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 17:11:27,196] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,198] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 17:11:27,204] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,210] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 17:11:27,220] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,221] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,231] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,232] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,240] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,252] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,252] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,264] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,265] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 17:11:27,269] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 17:11:27,273] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 17:11:31,718] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 26577
+[2018-05-10 17:11:33,010] [INFO] "GET /gz/examination/real_name/info/?id=12 HTTP/1.1" 200 15457
+[2018-05-10 17:11:33,049] [INFO] "GET /media/upload/pro_1525943486_19.jpeg HTTP/1.1" 200 26557
+[2018-05-10 17:11:33,053] [INFO] "GET /media/upload/cons_1525943486_36.jpeg HTTP/1.1" 200 93478
+[2018-05-10 17:11:37,695] [INFO] "POST /gz/examination/real_name/exam/ HTTP/1.1" 200 29
+[2018-05-10 17:11:39,055] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 26671
+[2018-05-10 17:11:40,890] [INFO] "GET /record/account/update/ HTTP/1.1" 200 96835
+[2018-05-10 17:11:57,220] [INFO] "POST /record/account/update/real_name/ HTTP/1.1" 200 29
+[2018-05-10 17:11:57,390] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92809
+[2018-05-10 17:11:57,412] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 17:11:57,421] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 17:11:57,428] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 17:11:57,436] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 17:11:57,449] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,461] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,466] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,467] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,470] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 17:11:57,476] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,484] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,485] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,488] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,493] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,497] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,498] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 17:11:57,499] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 17:11:57,501] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 17:12:00,468] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 27738
+[2018-05-10 17:12:01,456] [INFO] "GET /gz/examination/real_name/info/?id=13 HTTP/1.1" 200 15454
+[2018-05-10 17:12:01,495] [INFO] "GET /media/upload/pro_1525943517_97.jpeg HTTP/1.1" 200 26557
+[2018-05-10 17:12:01,501] [INFO] "GET /media/upload/cons_1525943517_86.jpeg HTTP/1.1" 200 93478
+[2018-05-10 17:12:03,201] [INFO] "POST /gz/examination/real_name/exam/ HTTP/1.1" 200 29
+[2018-05-10 17:12:04,660] [INFO] "GET /gz/examination/real_name/ HTTP/1.1" 200 27832
+[2018-05-10 17:12:07,681] [INFO] "GET /record/account/update/ HTTP/1.1" 200 95391
+[2018-05-10 17:12:15,539] [INFO] "POST /record/account/update/enterprise/ HTTP/1.1" 200 29
+[2018-05-10 17:12:15,634] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92809
+[2018-05-10 17:12:15,668] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 17:12:15,670] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 17:12:15,674] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 17:12:15,676] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,681] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,688] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 17:12:15,701] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,702] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,710] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 17:12:15,713] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,719] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,720] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,726] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,729] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,733] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 17:12:15,734] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,737] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:12:15,743] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 17:12:18,818] [INFO] "GET /gz/examination/enterprise/ HTTP/1.1" 200 19142
+[2018-05-10 17:12:23,822] [INFO] "GET /gz/examination/enterprise/info/?id=5 HTTP/1.1" 200 15146
+[2018-05-10 17:12:23,845] [INFO] "GET /media/upload/ent_1525943535_50.jpeg HTTP/1.1" 200 26557
+[2018-05-10 17:12:29,341] [INFO] "POST /gz/examination/enterprise/exam/ HTTP/1.1" 200 29
+[2018-05-10 17:12:30,566] [INFO] "GET /gz/examination/enterprise/ HTTP/1.1" 200 19236
+[2018-05-10 17:12:37,442] [INFO] "GET /record/account/update/ HTTP/1.1" 200 95523
+[2018-05-10 17:12:58,827] [INFO] "GET /record/account/update/ HTTP/1.1" 200 95523
+[2018-05-10 17:13:06,436] [INFO] "POST /record/account/update/enterprise/ HTTP/1.1" 200 29
+[2018-05-10 17:13:06,606] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92809
+[2018-05-10 17:13:06,627] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 17:13:06,645] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 17:13:06,652] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 17:13:06,662] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,663] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,671] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,672] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 17:13:06,676] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 17:13:06,679] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,684] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,689] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,692] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,697] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,702] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,706] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 17:13:06,707] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,708] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 17:13:06,714] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 17:13:09,308] [INFO] "GET /gz/examination/enterprise/ HTTP/1.1" 200 20353
+[2018-05-10 17:13:10,373] [INFO] "GET /gz/examination/enterprise/info/?id=6 HTTP/1.1" 200 15132
+[2018-05-10 17:13:10,403] [INFO] "GET /media/upload/ent_1525943586_36.jpeg HTTP/1.1" 200 93478
+[2018-05-10 17:13:13,446] [INFO] "POST /gz/examination/enterprise/exam/ HTTP/1.1" 200 29
+[2018-05-10 17:13:14,916] [INFO] "GET /gz/examination/enterprise/ HTTP/1.1" 200 20447
+[2018-05-10 17:13:16,968] [INFO] "GET /record/account/update/ HTTP/1.1" 200 95511
+[2018-05-10 17:13:23,983] [INFO] "POST /record/account/update/enterprise/ HTTP/1.1" 200 29
+[2018-05-10 17:13:24,071] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92809
+[2018-05-10 17:13:24,101] [INFO] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[2018-05-10 17:13:24,104] [INFO] "GET /static/css/record/base.css HTTP/1.1" 304 0
+[2018-05-10 17:13:24,116] [INFO] "GET /static/js/jquery-2.1.4.min.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,121] [INFO] "GET /static/js/record/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,125] [INFO] "GET /static/js/record/acc.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,135] [INFO] "GET /static/css/record/common.css HTTP/1.1" 304 0
+[2018-05-10 17:13:24,138] [INFO] "GET /static/lib/base64/jquery.base64.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,138] [INFO] "GET /static/js/record/templateHelper.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,148] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.css HTTP/1.1" 304 0
+[2018-05-10 17:13:24,151] [INFO] "GET /static/lib/laypage/laypage.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,161] [INFO] "GET /static/js/utils.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,164] [INFO] "GET /static/lib/bootstrap-fileinput/bootstrap-fileinput.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,168] [INFO] "GET /static/css/record/sky.css HTTP/1.1" 304 0
+[2018-05-10 17:13:24,180] [INFO] "GET /static/js/record/base.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,185] [INFO] "GET /static/lib/art-template/art-template.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,187] [INFO] "GET /static/js/rest-api.js HTTP/1.1" 304 0
+[2018-05-10 17:13:24,190] [INFO] "GET /static/img/logo.png HTTP/1.1" 304 0
+[2018-05-10 17:13:24,207] [INFO] "GET /static/img/res_01.png HTTP/1.1" 304 0
+[2018-05-10 17:13:26,069] [INFO] "GET /gz/examination/enterprise/ HTTP/1.1" 200 21568
+[2018-05-10 17:13:26,979] [INFO] "GET /gz/examination/enterprise/info/?id=7 HTTP/1.1" 200 15136
+[2018-05-10 17:13:27,013] [INFO] "GET /media/upload/ent_1525943603_79.jpeg HTTP/1.1" 200 93478
+[2018-05-10 17:13:28,256] [INFO] "POST /gz/examination/enterprise/exam/ HTTP/1.1" 200 29
+[2018-05-10 17:13:29,572] [INFO] "GET /gz/examination/enterprise/ HTTP/1.1" 200 21662
+[2018-05-10 17:13:32,162] [INFO] "GET /record/account/update/ HTTP/1.1" 200 92710
+[2018-05-10 17:13:33,927] [INFO] "GET /record/index/ HTTP/1.1" 200 90212
+[2018-05-10 17:13:36,443] [INFO] "GET /record/account/information/ HTTP/1.1" 200 87036

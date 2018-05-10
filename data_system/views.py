@@ -496,7 +496,17 @@ class AccountUpdate(views.View):
         if real_name_exists or enterprise_exists:
             return render(request, "record/account_update.html", {"active": "account_information", "examining": True})
         else:
-            return render(request, "record/account_update.html", {"active": "account_information", "role_id": role_id})
+            real_name_dis_adopt_obj = RealNameExamine.objects.filter(user_id=uid, is_exam=True, is_adopt=False)
+            enterprise_dis_adopt_obj = EnterpriseExamine.objects.filter(user_id=uid, is_exam=True, is_adopt=False)
+            real_name_dis_adopt_text = ""
+            enterprise_dis_adopt_text = ""
+            if real_name_dis_adopt_obj.exists():
+                real_name_dis_adopt_text = real_name_dis_adopt_obj.last().dis_adopt_text
+            if enterprise_dis_adopt_obj.exists():
+                enterprise_dis_adopt_text = enterprise_dis_adopt_obj.last().dis_adopt_text
+            return render(request, "record/account_update.html", {"active": "account_information", "role_id": role_id,
+                                                                  "real_name_dis_adopt_text": real_name_dis_adopt_text,
+                                                                  "enterprise_dis_adopt_text": enterprise_dis_adopt_text})
 
 
 # 实名认证
